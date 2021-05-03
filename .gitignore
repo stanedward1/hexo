@@ -1,9 +1,4 @@
 .DS_Store
-Thumbs.db
-db.json
 *.log
 node_modules/
-.deploy*/
-.env
-.env.build
 .vercel
