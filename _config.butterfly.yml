@@ -87,10 +87,10 @@ avatar:
 disable_top_img: false
 
 # The banner image of home page
-index_img: https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3461628855,660224469&fm=26&gp=0.jpg
+index_img: https://github.com/stanedward1/MyPicture/blob/master/Hexo/Banner.jpg?raw=true
 
 # If the banner of page not setting, it will show the top_img
-default_top_img: https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3461628855,660224469&fm=26&gp=0.jpg
+default_top_img: https://github.com/stanedward1/MyPicture/blob/master/Hexo/Banner.jpg?raw=true
 
 # The banner image of archive page
 archive_img:
