@@ -4,7 +4,7 @@
 
 menu:
   主页: / || fa fa-home
-  Hello-World: /2021/05/03/Hello-World/ || fa fa-plane
+  Hello-World: /2021/05/03/hello-world/ || fa fa-plane
   归纳||fa fa-graduation-cap:
     总览: /archives/ || fas fa-archive
     标签: /tags/ || fas fa-tags
