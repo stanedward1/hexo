@@ -616,7 +616,7 @@ subtitle:
   # source調用第三方服務
   # source: false 關閉調用
   # source: 1  調用搏天api的隨機語錄（簡體）
-  # source: 2  調用一言網的一句話（簡體）
+  source: 2  調用一言網的一句話（簡體）
   # source: 3  調用一句網（簡體）
   # source: 4  調用今日詩詞（簡體）
   # subtitle 會先顯示 source , 再顯示 sub 的內容
@@ -626,7 +626,6 @@ subtitle:
   # 開頭不允許轉義字元，如需要，請把整個句子用雙引號包住
   # 如果關閉打字效果，subtitle只會顯示sub的第一行文字
   sub:
-    - 高山仰止，景行行止，虽不能至，然心向往之
 
 # Loading Animation (加載動畫)
 preloader: false
