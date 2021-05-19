@@ -8,8 +8,8 @@ subtitle: Longbiu的Hexo
 description: Longbiu的Hexo
 keywords: Ruby on Rails
 author:  Longbiu
-language:
-timezone:
+language: zh-CN
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -40,7 +40,7 @@ relative_link: false
 future: true
 highlight:
   enable: true
-  line_number: true
+  line_number: false
   auto_detect: false
   tab_replace:
   

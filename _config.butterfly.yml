@@ -4,23 +4,16 @@
 
 menu:
   主页: / || fa fa-home
-  Hello-World: /2021/03/05/Hello-World/ || fa fa-plane
+  Hello-World: /2021/05/03/Hello-World/ || fa fa-plane
   归纳||fa fa-graduation-cap:
-    - 总览 || /archives/ || fa fa-folder-open
-    - 分类 || /categories/ || fa fa-archive
-    - 标签 || /tags/ || fa fa-tags
-  #说说: /shuoshuo/ || fa fa-camera-retro
-  # fab fa-algolia
-  碎碎念||fa fa-hashtag:
-    - 说说 || /shuoshuo/ || fa fa-camera-retro
-    - 哔哔(试用) || /bb/ || fa fa-comment
-  #   # - 相册 || /photos/ || fa fa-camera-retro
-  #   - 音乐 || /music/ || fa fa-music
-  #   #- 视频 || /movies/ || fa fa-video-camera
-  友人帐: /link/ || fa fa-link
-  留言板: /comment/ || fa fa-envelope
-  #留言板: /messageboard/ || fa fa-paper-plane
-  关于我: /about/ || fa fa-heart
+    总览: /archives/ || fas fa-archive
+    标签: /tags/ || fas fa-tags
+    分类: /categories/ || fas fa-folder-open
+  List||fas fa-list:
+    Music: /music/ || fas fa-music
+    Movie: /movies/ || fas fa-video
+  友链: /link/ || fas fa-link
+  关于我: /about/ || fas fa-heart
 
 # Hide the child menu items in mobile sidebar
 hide_sidebar_menu_child: false
@@ -39,7 +32,7 @@ code_word_wrap: true
 copy:
   enable: true
   copyright:
-    enable: true
+    enable: false
     limit_count: 50
 
 # social settings (社交圖標設置)
@@ -89,7 +82,7 @@ favicon: /img/favicon.png
 # Avatar (頭像)
 avatar:
   img: https://avatars.githubusercontent.com/u/48550717?v=4
-  effect: false
+  effect: true
 
 # Disable all banner image
 disable_top_img: false
@@ -98,28 +91,28 @@ disable_top_img: false
 index_img: /img/IMG_2317.jpg
 
 # If the banner of page not setting, it will show the top_img
-default_top_img: https://github.com/stanedward1/MyPicture/blob/master/Hexo/Banner.jpg?raw=true
+default_top_img: /img/IMG_2317.jpg
 
 # The banner image of archive page
-archive_img:
+archive_img: /img/IMG_2317.jpg
 
 # If the banner of tag page not setting, it will show the top_img
 # note: tag page, not tags page (子標籤頁面的 top_img)
-tag_img:
+tag_img: /img/IMG_2317.jpg
 
 # The banner image of tag page
 # format:
 #  - tag name: xxxxx
-tag_per_img:
+tag_per_img: /img/IMG_2317.jpg
 
 # If the banner of category page not setting, it will show the top_img
 # note: category page, not categories page (子分類頁面的 top_img)
-category_img:
+category_img: /img/IMG_2317.jpg
 
 # The banner image of category page
 # format:
 #  - category name: xxxxx
-category_per_img:
+category_per_img: /img/IMG_2317.jpg
 
 cover:
   # display the cover or not (是否顯示文章封面)
@@ -130,8 +123,7 @@ cover:
   # left/right/both
   position: both
   # When cover is not set, the default cover is displayed (當沒有設置cover時，默認的封面顯示)
-  default_cover:
-    # - https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg
+  default_cover: /img/pexels-irina-iriser-1366957.jpg
 
 # Replace Broken Images (替換無法顯示的圖片)
 error_img:
@@ -140,20 +132,20 @@ error_img:
 
 # A simple 404 page
 error_404:
-  enable: false
+  enable: true
   subtitle: 'Page Not Found'
   background: https://i.loli.net/2020/05/19/aKOcLiyPl2JQdFD.png
 
 post_meta:
   page: # Home Page
-    date_type: created # created or updated or both 主頁文章日期是創建日或者更新日或都顯示
-    date_format: date # date/relative 顯示日期還是相對日期
+    date_type: both # created or updated or both 主頁文章日期是創建日或者更新日或都顯示
+    date_format: relative # date/relative 顯示日期還是相對日期
     categories: true # true or false 主頁是否顯示分類
-    tags: false # true or false 主頁是否顯示標籤
+    tags: true # true or false 主頁是否顯示標籤
     label: true # true or false 顯示描述性文字
   post:
     date_type: both # created or updated or both 文章頁日期是創建日或者更新日或都顯示
-    date_format: date # date/relative 顯示日期還是相對日期
+    date_format: relative # date/relative 顯示日期還是相對日期
     categories: true # true or false 文章頁是否顯示分類
     tags: true # true or false 文章頁是否顯示標籤
     label: true # true or false 顯示描述性文字
@@ -181,7 +173,7 @@ index_post_content:
 toc:
   enable: true
   number: true
-  style_simple: false
+  style_simple: true
 
 post_copyright:
   enable: true
@@ -193,12 +185,12 @@ post_copyright:
 reward:
   enable: false
   QR_code:
-    # - img: /img/wechat.jpg
-    #   link:
-    #   text: wechat
-    # - img: /img/alipay.jpg
-    #   link:
-    #   text: alipay
+    - img: /img/wechat.jpg
+      link:
+      text: wechat
+    - img: /img/alipay.jpg
+      link:
+      text: alipay
 
 # Post edit
 # Easily browse and edit blog source code online.
@@ -215,18 +207,18 @@ related_post:
   date_type: created # or created or updated 文章日期顯示創建日或者更新日
 
 # figcaption (圖片描述文字)
-photofigcaption: false
+photofigcaption: true
 
 # post_pagination (分頁)
 # value: 1 || 2 || false
 # 1: The 'next post' will link to old post
 # 2: The 'next post' will link to new post
 # false: disable pagination
-post_pagination: 1
+post_pagination: false
 
 # anchor
 # when you scroll in post, the URL will update according to header id.
-anchor: false
+anchor: true
 
 # Displays outdated notice for a post (文章過期提醒)
 noticeOutdate:
@@ -413,7 +405,7 @@ footer:
   owner:
     enable: true
     since: 2020
-  custom_text:
+  custom_text: Hi, welcome to my blog!
   copyright: true # Copyright of theme and framework
 
 # Analysis
@@ -664,7 +656,7 @@ aside:
   card_tags:
     enable: true
     limit: 40 # if set 0 will show all
-    color: false
+    color: true
     sort_order: # Don't modify the setting unless you know how it works
   card_archives:
     enable: true
@@ -684,23 +676,23 @@ aside:
 busuanzi:
   site_uv: true
   site_pv: true
-  page_pv: false
+  page_pv: true
 
 # Time difference between publish date and now (網頁運行時間)
 # Formal: Month/Day/Year Time or Year/Month/Day Time
 runtimeshow:
   enable: true
-  publish_date: 3/1/2021 00:00:00  
+  publish_date: 5/1/2021 00:00:00  
 
 # Aside widget - Newest Comments
 newest_comments:
-  enable: false
+  enable: true
   sort_order: # Don't modify the setting unless you know how it works
   limit: 6
   storage: 10 # unit: mins, save data to localStorage
   avatar: true
   # You can only choose one, or neither
-  valine: false
+  valine: true
   github_issues:
     enable: false
     repo:
@@ -715,13 +707,13 @@ newest_comments:
 # --------------------------------------
 
 # Change font size
-change_font_size: false
+change_font_size: true
 
 # Conversion between Traditional and Simplified Chinese (簡繁轉換)
 translate:
-  enable: false
+  enable: true
   # The text of a button
-  default: 繁
+  default: 简
   # the language of website (1 - Traditional Chinese/ 2 - Simplified Chinese）
   defaultEncoding: 2
   # Time delay
