@@ -95,7 +95,7 @@ avatar:
 disable_top_img: false
 
 # The banner image of home page
-index_img: /img/66839087.jpg
+index_img: /img/IMG_2317.jpg
 
 # If the banner of page not setting, it will show the top_img
 default_top_img: https://github.com/stanedward1/MyPicture/blob/master/Hexo/Banner.jpg?raw=true
