@@ -63,7 +63,7 @@ DS类下面有很多很多方法！都是拿取对应信息的，看起来就很
 
 **Symbol**是不可修改的，&，特别适合用来表示方法名。
 
-### 3.2.2 动态定义方法
+### 动态定义方法
 
 ```ruby
 2.7.2 :001 > class MyClass
@@ -80,13 +80,13 @@ DS类下面有很多很多方法！都是拿取对应信息的，看起来就很
 
 这种在运行时定义方法的技术称为动态方法——**Dynamic Method**
 
-### 3.2.3 重构Computer类
+### 重构Computer类
 
 核心就是接收String || Symbol 作为参数，并调用方法。
 
 ## method_missing方法
 
-什么事动态语言，show me the code
+什么是动态语言，show me the code
 
 ```ruby
 2.7.2 :020 > class Lawyer
