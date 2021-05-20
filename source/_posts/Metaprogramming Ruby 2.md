@@ -6,9 +6,11 @@ categories: ruby
 cover: /img/ruby.png
 ---
 
-# 方法：
+# 元这个字眼
 
-## 序言
+# 对象模型
+
+# 方法：
 
 **static type checking**
 
@@ -20,25 +22,25 @@ Java——Java的编译器会控制代码之间的交谈，对于每一次方法
 
 在某个对象上调用特定的方法时，系统不会发出警告，直到真正的调用此方法时，才会提示无法响应调用。
 
-## 3.1 代码繁复的问题
+## 代码繁复的问题
 
-### 3.1.1 老系统
+###  老系统
 
 ```text
 DS类下面有很多很多方法！都是拿取对应信息的，看起来就很繁复的样子！
 ```
 
-### 3.1.2 代码的优雅化🐶
+### 代码的优雅化🐶
 
 **动态方法**
 
 **method missing**
 
-## 3.2 动态方法
+## 动态方法
 
 调用一个方法——给一个对象发送一个消息
 
-### 3.2.1 动态调用方法
+### 动态调用方法
 
 ```ruby
 2.7.2 :008 > class MyClass
@@ -82,7 +84,7 @@ DS类下面有很多很多方法！都是拿取对应信息的，看起来就很
 
 核心就是接收String || Symbol 作为参数，并调用方法。
 
-## 3.3 method_missing方法
+## method_missing方法
 
 什么事动态语言，show me the code
 
@@ -103,7 +105,7 @@ NoMethodError (undefined method `talk_simple' for #<Lawyer:0x00007f8d6bce27f0>)
  => [Lawyer, ActiveSupport::Dependencies::ZeitwerkIntegration::RequireDependency, ActiveSupport::ForkTracker::CoreExtPrivate, ActiveSupport::ForkTracker::CoreExt, ActiveSupport::ToJsonWithActiveSupportEncoder, Object, JSON::Ext::Generator::GeneratorMethods::Object, ActiveSupport::Dependencies::Loadable, ActiveSupport::Tryable, Kernel, BasicObject] 
 ```
 
-### 3.3.1 覆写method_missing方法
+### 覆写method_missing方法
 
 ```ruby
 2.7.2 :026 > class Lawyer
@@ -118,11 +120,11 @@ NoMethodError (undefined method `talk_simple' for #<Lawyer:0x00007f8d6bce27f0>)
 You called: talk_simple (2)
 ```
 
-### 3.3.2 幽灵方法
+### 幽灵方法
 
 因为要调用的方法其实不存在，所以也叫它幽灵方法。
 
-## 3.4 消灭bug
+## 消灭bug
 
 ```shell
 2.7.2 :121 > class Roulette
@@ -137,7 +139,7 @@ You called: talk_simple (2)
 2.7.2 :130 > end
 ```
 
-![image-20210518225149082](img/image-20210518225149082.png)
+![image-20210518225149082](../img/Metaprogramming Ruby 2/image-20210518225149082.png)
 
 ```shell
 2.7.2 :156 > class Roulette
@@ -155,7 +157,7 @@ erson
 2.7.2 :167 > end
 ```
 
-## 3.5 白板类
+##  白板类
 
 调用类的某个方法返回nil时，可以使用此条语句列出Object中所有以d开头的实例方法
 
@@ -163,9 +165,29 @@ erson
 Object.instance_methods.grep /^d/
 ```
 
-### 3.5.1 BasicObject
+### BasicObject
 
 继承BasicObject类是最简单的定义白板类的方法。
+
+# 代码块
+
+# 类定义
+
+# 编写代码的代码
+
+# 尾声
+
+# 准备Rails之旅
+
+# Active Record的设计
+
+# Active Support的Concern模块
+
+# alias_method_chain方法沉浮表
+
+# 属性方法的发展
+
+# 最后的思考
 
 # 附录（思考）
 
