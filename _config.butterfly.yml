@@ -4,14 +4,11 @@
 
 menu:
   主页: / || fa fa-home
-  Hello-World: /2021/05/03/hello-world/ || fa fa-plane
+  Hello-World: /2021/05/01/hello-world/ || fa fa-plane
   归纳||fa fa-graduation-cap:
     总览: /archives/ || fas fa-archive
     标签: /tags/ || fas fa-tags
     分类: /categories/ || fas fa-folder-open
-  List||fas fa-list:
-    Music: /music/ || fas fa-music
-    Movie: /movies/ || fas fa-video
   友链: /link/ || fas fa-link
   关于我: /about/ || fas fa-heart
 
@@ -20,10 +17,10 @@ hide_sidebar_menu_child: false
 
 # Code Blocks (代碼相關)
 # --------------------------------------
-highlight_theme: darker #  darker / pale night / light / ocean / mac / mac light / false
+highlight_theme: mac light #  darker / pale night / light / ocean / mac / mac light / false
 highlight_copy: true # copy button
 highlight_lang: true # show the code language
-highlight_shrink: true # true: shrink the code blocks / false: expand the code blocks | none: expand code blocks and hide the button
+highlight_shrink: false # true: shrink the code blocks / false: expand the code blocks | none: expand code blocks and hide the button
 code_word_wrap: true
 
 
@@ -41,15 +38,21 @@ formal:
 social:
   fab fa-github: https://github.com/stanedward1 || Github
   fas fa-envelope: mailto:longbiu@foxmail.com || Email
-
+  iconfont icon-bilibili-fill: https://space.bilibili.com/182617726/fans/follow || Bilibili
+  # iconfont icon-qq: "tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=你的QQ号&website=www.oicqzone.com"
 # search (搜索)
 # --------------------------------------
 
 # Algolia search
 algolia_search:
-  enable: false
+  enable: true
   hits:
     per_page: 6
+
+  labels:
+    input_placeholder: Search for Posts
+    hits_empty: "We didn't find any results for the search: ${query}" # if there are no result
+    hits_stats: "${hits} results found in ${time} ms"
 
 # Local search
 local_search:
@@ -77,18 +80,18 @@ katex:
 # --------------------------------------
 
 # Favicon（網站圖標）
-favicon: /img/favicon.png
+favicon: https://avatars.githubusercontent.com/u/48550717?v=4
 
 # Avatar (頭像)
 avatar:
   img: https://avatars.githubusercontent.com/u/48550717?v=4
-  effect: true
+  effect: false
 
 # Disable all banner image
 disable_top_img: false
 
 # The banner image of home page
-index_img: /img/IMG_2317.jpg
+index_img: /img/pexels.jpg
 
 # If the banner of page not setting, it will show the top_img
 default_top_img: /img/IMG_2317.jpg
@@ -121,9 +124,9 @@ cover:
   archives_enable: true
   # the position of cover in home page (封面顯示的位置)
   # left/right/both
-  position: both
+  position: left
   # When cover is not set, the default cover is displayed (當沒有設置cover時，默認的封面顯示)
-  default_cover: /img/pexels-irina-iriser-1366957.jpg
+  default_cover: /img/ruby.png
 
 # Replace Broken Images (替換無法顯示的圖片)
 error_img:
@@ -139,7 +142,7 @@ error_404:
 post_meta:
   page: # Home Page
     date_type: both # created or updated or both 主頁文章日期是創建日或者更新日或都顯示
-    date_format: relative # date/relative 顯示日期還是相對日期
+    date_format: date # date/relative 顯示日期還是相對日期
     categories: true # true or false 主頁是否顯示分類
     tags: true # true or false 主頁是否顯示標籤
     label: true # true or false 顯示描述性文字
@@ -152,7 +155,7 @@ post_meta:
 
 # wordcount (字數統計)
 wordcount:
-  enable: false
+  enable: true
   post_wordcount: true
   min2read: true
   total_wordcount: true
@@ -183,12 +186,12 @@ post_copyright:
 
 # Sponsor/reward
 reward:
-  enable: false
+  enable: true
   QR_code:
-    - img: /img/wechat.jpg
+    - img: /img/wechat.png
       link:
       text: wechat
-    - img: /img/alipay.jpg
+    - img: /img/alipay.png
       link:
       text: alipay
 
@@ -207,7 +210,7 @@ related_post:
   date_type: created # or created or updated 文章日期顯示創建日或者更新日
 
 # figcaption (圖片描述文字)
-photofigcaption: true
+photofigcaption: false
 
 # post_pagination (分頁)
 # value: 1 || 2 || false
@@ -236,7 +239,7 @@ noticeOutdate:
 # https://www.addthis.com/
 addThis:
   enable: false
-  pubid:
+  pubid: ra-60a5f29e92a0a287
 
 # Share.js
 # https://github.com/overtrue/share.js
@@ -257,13 +260,13 @@ comments:
   # Up to two comments system, the first will be shown as default
   # Choose: Disqus/Disqusjs/Livere/Gitalk/Valine/Waline/Utterances/Facebook Comments/Twikoo
   use:
-  # - Valine
+   - Gitalk
   # - Disqus
   text: true # Display the comment name next to the button
   # lazyload: The comment system will be load when comment element enters the browser's viewport.
   # If you set it to true, the comment count will be invalid
-  lazyload: false
-  count: false # Display comment count in post's top_img
+  lazyload: true
+  count: true # Display comment count in post's top_img
   card_post_count: false # Display comment count in Home Page
 
 # disqus
@@ -291,12 +294,12 @@ livere:
 # gitalk
 # https://github.com/gitalk/gitalk
 gitalk:
-  client_id:
-  client_secret:
-  repo:
-  owner:
-  admin:
-  language: en # en, zh-CN, zh-TW, es-ES, fr, ru
+  client_id: bbbefc150f2ac41c4086
+  client_secret: 6826921d2b13feefef509569b8394bf68081782c
+  repo: mygitalk
+  owner: stanedward1
+  admin: stanedward1
+  language: zh-CN # en, zh-CN, zh-TW, es-ES, fr, ru
   perPage: 10 # Pagination size, with maximum 100.
   distractionFreeMode: false # Facebook-like distraction free mode.
   pagerDirection: last # Comment sorting direction, available values are last and first.
@@ -405,8 +408,8 @@ footer:
   owner:
     enable: true
     since: 2020
-  custom_text: Hi, welcome to my <a href="https://www.jiangnanshaojiu.com/">blog</a>!
-  copyright: true # Copyright of theme and framework
+  custom_text: 
+  copyright: true # Copyright of theme aHi,nd framework
 
 # Analysis
 # --------------------------------------
@@ -467,20 +470,20 @@ site_verification:
 # Theme color for customize
 # Notice: color value must in double quotes like "#000" or may cause error!
 
-# theme_color:
-#   enable: true
-#   main: "#49B1F5"
-#   paginator: "#00c4b6"
-#   button_hover: "#FF7242"
-#   text_selection: "#00c4b6"
-#   link_color: "#99a9bf"
-#   meta_color: "#858585"
-#   hr_color: "#A4D8FA"
-#   code_foreground: "#F47466"
-#   code_background: "rgba(27, 31, 35, .05)"
-#   toc_color: "#00c4b6"
-#   blockquote_padding_color: "#49b1f5"
-#   blockquote_background_color: "#49b1f5"
+theme_color:
+  enable: true
+  main: "#49B1F5"
+  paginator: "#00c4b6"
+  button_hover: "#FF7242"
+  text_selection: "#00c4b6"
+  link_color: "#99a9bf"
+  meta_color: "#858585"
+  hr_color: "#A4D8FA"
+  code_foreground: "#F47466"
+  code_background: "rgba(27, 31, 35, .05)"
+  toc_color: "#00c4b6"
+  blockquote_padding_color: "#49b1f5"
+  blockquote_background_color: "#49b1f5"
 
 # The top_img settings of home page
 # default: top img - full screen, site info - middle (默認top_img全屏，site_info在中間)
@@ -524,7 +527,7 @@ canvas_ribbon:
 
 # Fluttering Ribbon (動態彩帶)
 canvas_fluttering_ribbon:
-  enable: false
+  enable: true
   mobile: false
 
 # canvas_nest
@@ -540,14 +543,14 @@ canvas_nest:
 # Typewriter Effect (打字效果)
 # https://github.com/disjukr/activate-power-mode
 activate_power_mode:
-  enable: false
+  enable: true
   colorful: true # open particle animation (冒光特效)
-  shake: true #  open shake (抖動特效)
+  shake: false #  open shake (抖動特效)
   mobile: false
 
 # Mouse click effects: fireworks (鼠標點擊效果: 煙火特效)
 fireworks:
-  enable: false
+  enable: true
   zIndex: 9999 # -1 or 9999
   mobile: false
 
@@ -560,9 +563,9 @@ click_heart:
 ClickShowText:
   enable: false
   text:
-  # - I
-  # - LOVE
-  # - YOU
+  - Ruby
+  - Python
+  - Java
   fontSize: 15px
   random: false
   mobile: false
@@ -573,7 +576,7 @@ display_mode: light
 
 # Beautify (美化頁面顯示)
 beautify:
-  enable: false
+  enable: true
   field: post # site/post
   title-prefix-icon: '\f0c1'
   title-prefix-icon-color: '#F47466'
@@ -620,6 +623,8 @@ subtitle:
   sub:
     - Talk is cheap,Show me the code
     - 大规模的系统架构通常是应用特定的，没有一招鲜吃遍天的通用可伸缩架构
+    - 元编程是编写在运行时操纵语言构件的代码，即编写代码的代码
+
 
 # Loading Animation (加載動畫)
 preloader: false
@@ -643,7 +648,8 @@ aside:
       link: https://github.com/xxxxxx
   card_announcement:
     enable: true
-    content: This is my Blog
+    content: <img src="https://img.shields.io/badge/rubyist-ruby%20on%20rails-red"/>
+              <br>This is my Blog
   card_recent_post:
     enable: true
     limit: 5 # if set 0 will show all
@@ -781,14 +787,14 @@ note:
 # It may contain bugs and unstable, give feedback when you find the bugs.
 # https://github.com/MoOx/pjax
 pjax:
-  enable: false
+  enable: true
   exclude:
   # - xxxx
   # - xxxx
 
 # Inject the css and script (aplayer/meting)
 aplayerInject:
-  enable: false
+  enable: true
   per_page: true
 
 # Snackbar (Toast Notification 彈窗)
@@ -842,9 +848,9 @@ css_prefix: true
 # 插入代码到头部 </head> 之前 和 底部 </body> 之前
 inject:
   head:
-  # - <link rel="stylesheet" href="/xxx.css">
+  - <link rel="stylesheet" href="/css/aliyun.css">
   bottom:
-  # - <script src="xxxx"></script>
+  - <div class="aplayer no-destroy" data-id="000PeZCQ1i4XVs" data-server="tencent" data-type="artist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="true" muted></div>
 
 # CDN
 # Don't modify the following settings unless you know how they work

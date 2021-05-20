@@ -1,39 +1,16 @@
 ---
 title: Hello World
+date: 2021-05-01 09:03:32
+cover: /img/MVC_Rails.png
 ---
 
-Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
+<div align=center>
 
-## Quick Start
+<h1><img src="https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430" width="30"/> Hey! Nice to see you 👋</h1>
 
-### Create a new post
 
-```bash
-$ hexo new "My New Post"
-```
+<p>Welcome to my blog! </br> I'm longbiu, developer from <b>Changsha, China</b></p>
+<p>I want to be a <b>Fullstack developer<img src="https://www.flaticon.com/premium-icon/icons/svg/3242/3242257.svg"width="35"/></b></p>
 
-More info: [Writing](https://hexo.io/docs/writing.html)
 
-### Run server
-
-```bash
-$ hexo server
-```
-
-More info: [Server](https://hexo.io/docs/server.html)
-
-### Generate static files
-
-```bash
-$ hexo generate
-```
-
-More info: [Generating](https://hexo.io/docs/generating.html)
-
-### Deploy to remote sites
-
-```bash
-$ hexo deploy
-```
-
-More info: [Deployment](https://hexo.io/docs/deployment.html)
+</div>

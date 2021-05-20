@@ -50,7 +50,7 @@ highlight:
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
   path: ''
-  per_page: 10
+  per_page: 6
   order_by: -date
   
 # Category & Tag
@@ -79,3 +79,18 @@ theme: butterfly
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type:
+
+algolia:
+  appId: "CUZ2Z1NIWB"
+  apiKey: "b5956af589df93285a5af70d1563a327"
+  adminApiKey: "7f3f75cd9c1a235a48915d93056efc86"
+  chunkSize: 5000
+  indexName: "hexo"
+  fields:
+    - content:strip:truncate,0,500
+    - tags
+    - title
+
+aplayer:
+  meting: true
+  asset_inject: false
