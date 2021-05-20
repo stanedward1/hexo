@@ -12,9 +12,9 @@ cover: /img/vscode-theme/image-20210520224536810.png
 | 2    | SynthWave '84 |
 | 3    | Flat UI       |
 
-![image-20210520224536810](../img/vscode-theme/image-20210520224536810.png)
+![image-20210520224536810](/img/vscode-theme/image-20210520224536810.png)
 
-![image-20210520224601310](../img/vscode-theme/image-20210520224601310.png)
+![image-20210520224601310](/img/vscode-theme/image-20210520224601310.png)
 
-![image-20210520224635558](../img/vscode-theme/image-20210520224635558.png)
+![image-20210520224635558](/img/vscode-theme/image-20210520224635558.png)
 
