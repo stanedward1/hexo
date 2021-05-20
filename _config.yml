@@ -80,17 +80,23 @@ theme: butterfly
 deploy:
   type:
 
-algolia:
-  appId: "CUZ2Z1NIWB"
-  apiKey: "b5956af589df93285a5af70d1563a327"
-  adminApiKey: "7f3f75cd9c1a235a48915d93056efc86"
-  chunkSize: 5000
-  indexName: "hexo"
-  fields:
-    - content:strip:truncate,0,500
-    - tags
-    - title
+# algolia:
+#   appId: "CUZ2Z1NIWB"
+#   apiKey: "b5956af589df93285a5af70d1563a327"
+#   adminApiKey: "7f3f75cd9c1a235a48915d93056efc86"
+#   chunkSize: 5000
+#   indexName: "hexo"
+#   fields:
+#     - content:strip:truncate,0,500
+#     - tags
+#     - title
 
 aplayer:
   meting: true
   asset_inject: false
+
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html

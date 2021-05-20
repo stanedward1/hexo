@@ -6,9 +6,11 @@ categories: ruby
 cover: /img/ruby.png
 ---
 
-# 方法：
+# 元这个字眼
 
-## 序言
+# 对象模型
+
+# 方法：
 
 **static type checking**
 
@@ -20,25 +22,25 @@ Java——Java的编译器会控制代码之间的交谈，对于每一次方法
 
 在某个对象上调用特定的方法时，系统不会发出警告，直到真正的调用此方法时，才会提示无法响应调用。
 
-## 3.1 代码繁复的问题
+## 代码繁复的问题
 
-### 3.1.1 老系统
+###  老系统
 
 ```text
 DS类下面有很多很多方法！都是拿取对应信息的，看起来就很繁复的样子！
 ```
 
-### 3.1.2 代码的优雅化🐶
+### 代码的优雅化🐶
 
 **动态方法**
 
 **method missing**
 
-## 3.2 动态方法
+## 动态方法
 
 调用一个方法——给一个对象发送一个消息
 
-### 3.2.1 动态调用方法
+### 动态调用方法
 
 ```ruby
 2.7.2 :008 > class MyClass
@@ -61,7 +63,7 @@ DS类下面有很多很多方法！都是拿取对应信息的，看起来就很
 
 **Symbol**是不可修改的，&，特别适合用来表示方法名。
 
-### 3.2.2 动态定义方法
+### 动态定义方法
 
 ```ruby
 2.7.2 :001 > class MyClass
@@ -78,13 +80,13 @@ DS类下面有很多很多方法！都是拿取对应信息的，看起来就很
 
 这种在运行时定义方法的技术称为动态方法——**Dynamic Method**
 
-### 3.2.3 重构Computer类
+### 重构Computer类
 
 核心就是接收String || Symbol 作为参数，并调用方法。
 
-## 3.3 method_missing方法
+## method_missing方法
 
-什么事动态语言，show me the code
+什么是动态语言，show me the code
 
 ```ruby
 2.7.2 :020 > class Lawyer
@@ -103,7 +105,7 @@ NoMethodError (undefined method `talk_simple' for #<Lawyer:0x00007f8d6bce27f0>)
  => [Lawyer, ActiveSupport::Dependencies::ZeitwerkIntegration::RequireDependency, ActiveSupport::ForkTracker::CoreExtPrivate, ActiveSupport::ForkTracker::CoreExt, ActiveSupport::ToJsonWithActiveSupportEncoder, Object, JSON::Ext::Generator::GeneratorMethods::Object, ActiveSupport::Dependencies::Loadable, ActiveSupport::Tryable, Kernel, BasicObject] 
 ```
 
-### 3.3.1 覆写method_missing方法
+### 覆写method_missing方法
 
 ```ruby
 2.7.2 :026 > class Lawyer
@@ -118,11 +120,11 @@ NoMethodError (undefined method `talk_simple' for #<Lawyer:0x00007f8d6bce27f0>)
 You called: talk_simple (2)
 ```
 
-### 3.3.2 幽灵方法
+### 幽灵方法
 
 因为要调用的方法其实不存在，所以也叫它幽灵方法。
 
-## 3.4 消灭bug
+## 消灭bug
 
 ```shell
 2.7.2 :121 > class Roulette
@@ -137,7 +139,7 @@ You called: talk_simple (2)
 2.7.2 :130 > end
 ```
 
-![image-20210518225149082](img/image-20210518225149082.png)
+![image-20210518225149082](../img/Metaprogramming Ruby 2/image-20210518225149082.png)
 
 ```shell
 2.7.2 :156 > class Roulette
@@ -155,7 +157,7 @@ erson
 2.7.2 :167 > end
 ```
 
-## 3.5 白板类
+##  白板类
 
 调用类的某个方法返回nil时，可以使用此条语句列出Object中所有以d开头的实例方法
 
@@ -163,9 +165,172 @@ erson
 Object.instance_methods.grep /^d/
 ```
 
-### 3.5.1 BasicObject
+### BasicObject
 
 继承BasicObject类是最简单的定义白板类的方法。
+
+# 代码块
+
+块可以用来控制**作用域(scope)**,作用域是变量和方法可用性范围。
+
+## 学习代码块
+
+### 代码块学习路线
+
+- 代码块的基础知识
+- 作用域的基础知识：用代码块携带变量穿越作用域
+- 通过传递块给instance_eval方法来控制作用域
+- 怎样把块转换为诸如Proc和lambda这样的可调用对象，供以后调用
+
+### 代码块基础知识
+
+```shell
+def a_method(a,b)
+	a+yield(a,b)
+end
+```
+
+## Ruby的#符号
+
+### using关键字
+
+## 代码块是闭包
+
+### 作用域
+
+### 作用域门
+
+### 扁平化作用域
+
+### 闭包小结
+
+## instance_eval方法
+
+### 打破封装
+
+### 洁净室
+
+## 可调用对象
+
+### Proc对象
+
+### Proc与Lambda的对比
+
+### Method对象
+
+### 可调用对象小结
+
+## 编写领域专属语言(DSL)
+
+### 第一个领域专属语言
+
+## 改良的DSL
+
+## 小结
+
+# 类定义
+
+**定义RUby类实际上是在运行代码**
+
+**宏类可以用来修改类**
+
+**环绕别名可以在其他方法前后封装额外代码**
+
+Ruby最优雅的特性之一：**单体类**
+
+## 揭秘类定义
+
+### 深入类定义
+
+### 当前类
+
+### 实例类变量
+
+## Taboo类
+
+## 单件方法
+
+### 使用单件方法
+
+### 类方法的真相
+
+### 类宏
+
+## 单件类
+
+### 单件方法的神奇之处
+
+### 揭秘单件类
+
+### 补充方法查找
+
+## 模块的麻烦
+
+## 方法包装器
+
+### 方法别名
+
+### 更多的方法包装器
+
+### 解决Amazon难题
+
+## 打破数学规律
+
+## 小结
+
+# 编写代码的代码
+
+## 通向周末的编程之路
+
+### 老板的任务
+
+### 开发计划
+
+## Kernel#eval方法
+
+### REST Client的例子
+
+### 绑定对象
+
+### irb的例子
+
+### 对比代码字符串与块
+
+### eval方法的麻烦
+
+## 校验过的属性(第一步)
+
+## 校验过的属性(第二步)
+
+## 校验过的属性(第三步)
+
+## 校验过的属性(第四步)
+
+## 钩子方法
+
+### 更多钩子方法
+
+### VCR的例子
+
+## 校验过的属性(第五步)
+
+## 小结
+
+# 尾声
+
+**根本没有什么元编程，从来只有编程而已**
+
+# 准备Rails之旅
+
+# Active Record的设计
+
+# Active Support的Concern模块
+
+# alias_method_chain方法沉浮表
+
+# 属性方法的发展
+
+# 最后的思考
 
 # 附录（思考）
 
