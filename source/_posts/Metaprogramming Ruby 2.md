@@ -139,7 +139,7 @@ You called: talk_simple (2)
 2.7.2 :130 > end
 ```
 
-![image-20210518225149082](../img/Metaprogramming Ruby 2/image-20210518225149082.png)
+![image-20210518225149082](/img/Metaprogramming/image-20210518225149082.png)
 
 ```shell
 2.7.2 :156 > class Roulette
