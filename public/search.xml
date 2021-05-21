@@ -41,122 +41,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Ruby元编程</title>
-    <url>/2021/05/04/Metaprogramming%20Ruby%202/</url>
-    <content><![CDATA[<h1 id="方法："><a href="#方法：" class="headerlink" title="方法："></a>方法：</h1><h2 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h2><p><strong>static type checking</strong></p>
-<p>Java——Java的编译器会控制代码之间的交谈，对于每一次方法的调用，编译器都会检查接受对象是否有一个匹配的方法，这就叫做——<strong>静态类型检查</strong></p>
-<p>所以Java也叫做静态语言</p>
-<p><strong>动态语言包括Python&amp;Ruby</strong></p>
-<p>在某个对象上调用特定的方法时，系统不会发出警告，直到真正的调用此方法时，才会提示无法响应调用。</p>
-<h2 id="3-1-代码繁复的问题"><a href="#3-1-代码繁复的问题" class="headerlink" title="3.1 代码繁复的问题"></a>3.1 代码繁复的问题</h2><h3 id="3-1-1-老系统"><a href="#3-1-1-老系统" class="headerlink" title="3.1.1 老系统"></a>3.1.1 老系统</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">DS类下面有很多很多方法！都是拿取对应信息的，看起来就很繁复的样子！</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-1-2-代码的优雅化🐶"><a href="#3-1-2-代码的优雅化🐶" class="headerlink" title="3.1.2 代码的优雅化🐶"></a>3.1.2 代码的优雅化🐶</h3><p><strong>动态方法</strong></p>
-<p><strong>method missing</strong></p>
-<h2 id="3-2-动态方法"><a href="#3-2-动态方法" class="headerlink" title="3.2 动态方法"></a>3.2 动态方法</h2><p>调用一个方法——给一个对象发送一个消息</p>
-<h3 id="3-2-1-动态调用方法"><a href="#3-2-1-动态调用方法" class="headerlink" title="3.2.1 动态调用方法"></a>3.2.1 动态调用方法</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">2.7.2 :008 &gt;</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line"><span class="meta">2.7.2 :009 &gt;</span>   <span class="function"><span class="keyword">def</span> <span class="title">my_method</span><span class="params">(my_arg)</span></span></span><br><span class="line"><span class="meta">2.7.2 :010 &gt;</span>     my_arg * <span class="number">2</span></span><br><span class="line"><span class="meta">2.7.2 :011 &gt;</span>   end</span><br><span class="line"><span class="meta">2.7.2 :012 &gt;</span> end</span><br><span class="line"> =&gt; <span class="symbol">:my_method</span> </span><br><span class="line"><span class="meta">2.7.2 :013 &gt;</span> obj = MyClass</span><br><span class="line"> =&gt; MyClass </span><br><span class="line"><span class="meta">2.7.2 :014 &gt;</span> obj = MyClass.new</span><br><span class="line"> =&gt; #&lt;MyClass:0x00007f8d721c8cc8&gt; </span><br><span class="line"><span class="meta">2.7.2 :015 &gt;</span> obj.send(<span class="symbol">:my_method</span>,<span class="number">3</span>)</span><br><span class="line"> =&gt; <span class="number">6</span> </span><br><span class="line"><span class="meta">2.7.2 :016 &gt;</span> obj.my_method(<span class="number">3</span>)</span><br><span class="line"> =&gt; <span class="number">6</span> </span><br></pre></td></tr></table></figure>
-
-<p><strong>send方法里所调用的方法成为了参数</strong></p>
-<p><strong>Symbol</strong>是不可修改的，&amp;，特别适合用来表示方法名。</p>
-<h3 id="3-2-2-动态定义方法"><a href="#3-2-2-动态定义方法" class="headerlink" title="3.2.2 动态定义方法"></a>3.2.2 动态定义方法</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">2.7.2 :001 &gt;</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line"><span class="meta">2.7.2 :002 &gt;</span>   define_method <span class="symbol">:my_method</span> do <span class="params">| my_arg|</span></span><br><span class="line"><span class="meta">2.7.2 :003 &gt;</span>   	my_arg*<span class="number">3</span></span><br><span class="line"><span class="meta">2.7.2 :004 &gt;</span>   end</span><br><span class="line"><span class="meta">2.7.2 :005 &gt;</span> end</span><br><span class="line"> =&gt; <span class="symbol">:my_method</span> </span><br><span class="line"><span class="meta">2.7.2 :006 &gt;</span> obj = MyClass.new</span><br><span class="line"> =&gt; #&lt;MyClass:0x00007f8d6f67a990&gt; </span><br><span class="line"><span class="meta">2.7.2 :007 &gt;</span> obj.my_method(<span class="number">2</span>)</span><br><span class="line"> =&gt; <span class="number">6</span> </span><br></pre></td></tr></table></figure>
-
-<p>这种在运行时定义方法的技术称为动态方法——<strong>Dynamic Method</strong></p>
-<h3 id="3-2-3-重构Computer类"><a href="#3-2-3-重构Computer类" class="headerlink" title="3.2.3 重构Computer类"></a>3.2.3 重构Computer类</h3><p>核心就是接收String || Symbol 作为参数，并调用方法。</p>
-<h2 id="3-3-method-missing方法"><a href="#3-3-method-missing方法" class="headerlink" title="3.3 method_missing方法"></a>3.3 method_missing方法</h2><p>什么事动态语言，show me the code</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">2.7.2 :020 &gt;</span> <span class="class"><span class="keyword">class</span> <span class="title">Lawyer</span></span></span><br><span class="line"><span class="meta">2.7.2 :021 &gt;</span> end</span><br><span class="line"> =&gt; nil </span><br><span class="line"><span class="meta">2.7.2 :022 &gt;</span> nick = Lawyer.new</span><br><span class="line"> =&gt; #&lt;Lawyer:0x00007f8d6bce27f0&gt; </span><br><span class="line"><span class="meta">2.7.2 :023 &gt;</span> nick.talk_simple</span><br><span class="line">Traceback (most recent call last)<span class="symbol">:</span></span><br><span class="line">        <span class="number">1</span>: from (irb)<span class="symbol">:</span><span class="number">23</span></span><br><span class="line">NoMethodError (undefined method <span class="string">`talk_simple&#x27; for #&lt;Lawyer:0x00007f8d6bce27f0&gt;)</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">2.7.2 :025 &gt;</span> Lawyer.ancestors</span><br><span class="line"> =&gt; [Lawyer, ActiveSupport::Dependencies::ZeitwerkIntegration::RequireDependency, ActiveSupport::ForkTracker::CoreExtPrivate, ActiveSupport::ForkTracker::CoreExt, ActiveSupport::ToJsonWithActiveSupportEncoder, Object, JSON::Ext::Generator::GeneratorMethods::Object, ActiveSupport::Dependencies::Loadable, ActiveSupport::Tryable, Kernel, BasicObject] </span><br></pre></td></tr></table></figure>
-
-<h3 id="3-3-1-覆写method-missing方法"><a href="#3-3-1-覆写method-missing方法" class="headerlink" title="3.3.1 覆写method_missing方法"></a>3.3.1 覆写method_missing方法</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">2.7.2 :026 &gt;</span> <span class="class"><span class="keyword">class</span> <span class="title">Lawyer</span></span></span><br><span class="line"><span class="meta">2.7.2 :027 &gt;</span>   <span class="function"><span class="keyword">def</span> <span class="title">method_missing</span><span class="params">(method, *args)</span></span></span><br><span class="line"><span class="meta">2.7.2 :028 &gt;</span>     puts <span class="string">&quot;You called: <span class="subst">#&#123;method&#125;</span> (<span class="subst">#&#123;args.join(<span class="string">&#x27;,&#x27;</span>)&#125;</span>)&quot;</span></span><br><span class="line"><span class="meta">2.7.2 :029 &gt;</span>   end</span><br><span class="line"><span class="meta">2.7.2 :030 &gt;</span> end</span><br><span class="line"> =&gt; <span class="symbol">:method_missing</span> </span><br><span class="line"><span class="meta">2.7.2 :032 &gt;</span> lawyer = Lawyer.new</span><br><span class="line"> =&gt; #&lt;Lawyer:0x00007f8d6be08710&gt; </span><br><span class="line"><span class="meta">2.7.2 :034 &gt;</span> lawyer.send(<span class="symbol">:talk_simple</span>,<span class="number">2</span>)</span><br><span class="line">You <span class="symbol">called:</span> talk_simple (<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-3-2-幽灵方法"><a href="#3-3-2-幽灵方法" class="headerlink" title="3.3.2 幽灵方法"></a>3.3.2 幽灵方法</h3><p>因为要调用的方法其实不存在，所以也叫它幽灵方法。</p>
-<h2 id="3-4-消灭bug"><a href="#3-4-消灭bug" class="headerlink" title="3.4 消灭bug"></a>3.4 消灭bug</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :121 &gt; class Roulette</span><br><span class="line">2.7.2 :122 &gt;   def method_missing(name, *args)</span><br><span class="line">2.7.2 :123 &gt;     person = name.to_s.capitalize</span><br><span class="line">2.7.2 :124 &gt;     3.times do</span><br><span class="line">2.7.2 :125 &gt;       number = rand(10) + 1</span><br><span class="line">2.7.2 :126 &gt;       puts &quot;#&#123;number&#125;----&quot;</span><br><span class="line">2.7.2 :127 &gt;     end</span><br><span class="line">2.7.2 :128 &gt;     puts  &quot;#&#123;person&#125; got a #&#123;number&#125;&quot;</span><br><span class="line">2.7.2 :129 &gt;   end</span><br><span class="line">2.7.2 :130 &gt; end</span><br></pre></td></tr></table></figure>
-
-<p><img src="img/image-20210518225149082.png" alt="image-20210518225149082"></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :156 &gt; class Roulette</span><br><span class="line">2.7.2 :157 &gt;   def method_missing(name, *args)</span><br><span class="line">2.7.2 :158 &gt;     person = name.to_s.capitalize</span><br><span class="line">2.7.2 :159 &gt;     super unless %w[Bob Tim Longbiu].include? p</span><br><span class="line">erson</span><br><span class="line">2.7.2 :160 &gt;     number = 0</span><br><span class="line">2.7.2 :161 &gt;     3.times do</span><br><span class="line">2.7.2 :162 &gt;       number = rand(10) +1</span><br><span class="line">2.7.2 :163 &gt;       puts &quot;#&#123;number&#125;---&quot;</span><br><span class="line">2.7.2 :164 &gt;     end</span><br><span class="line">2.7.2 :165 &gt;     &quot;#&#123;person&#125; got a #&#123;number&#125;&quot;</span><br><span class="line">2.7.2 :166 &gt;   end</span><br><span class="line">2.7.2 :167 &gt; end</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-5-白板类"><a href="#3-5-白板类" class="headerlink" title="3.5 白板类"></a>3.5 白板类</h2><p>调用类的某个方法返回nil时，可以使用此条语句列出Object中所有以d开头的实例方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Object.instance_methods.grep &#x2F;^d&#x2F;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-5-1-BasicObject"><a href="#3-5-1-BasicObject" class="headerlink" title="3.5.1 BasicObject"></a>3.5.1 BasicObject</h3><p>继承BasicObject类是最简单的定义白板类的方法。</p>
-<h1 id="附录（思考）"><a href="#附录（思考）" class="headerlink" title="附录（思考）"></a>附录（思考）</h1><h2 id="include-amp-extend的使用场景"><a href="#include-amp-extend的使用场景" class="headerlink" title="include&amp;extend的使用场景"></a>include&amp;extend的使用场景</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">使用<span class="keyword">include</span>把一个<span class="class"><span class="keyword">module</span>包含在一个<span class="title">class</span>||<span class="title">module</span>中，使用.<span class="title">ancestors</span>可以发现，<span class="title">include</span>进来的<span class="title">class</span>||<span class="title">module</span>在上面,一般使用<span class="title">include</span>把自己写的<span class="title">module</span>包含进来</span></span><br><span class="line"><span class="symbol">eg:</span></span><br><span class="line"></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">001</span><span class="symbol">:</span><span class="number">1</span>* <span class="class"><span class="keyword">module</span> <span class="title">A</span></span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">002</span><span class="symbol">:</span><span class="number">1</span>*   <span class="string">&quot;this is A&quot;</span></span><br><span class="line"><span class="meta">irb(main):003:0&gt;</span> end</span><br><span class="line">=&gt; <span class="string">&quot;this is A&quot;</span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">004</span><span class="symbol">:</span><span class="number">1</span>* <span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">005</span><span class="symbol">:</span><span class="number">1</span>*   <span class="keyword">include</span> A</span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">006</span><span class="symbol">:</span><span class="number">1</span>*   <span class="string">&quot;this is B&quot;</span></span><br><span class="line"><span class="meta">irb(main):007:0&gt;</span> end</span><br><span class="line">=&gt; <span class="string">&quot;this is B&quot;</span></span><br><span class="line"><span class="meta">irb(main):008:0&gt;</span> B.ancestors</span><br><span class="line">=&gt; [B, A, Object, Kernel, BasicObject]</span><br><span class="line"></span><br><span class="line">使用extend,继承其他<span class="class"><span class="keyword">module</span>，一般使用<span class="title">extend</span>继承<span class="title">ruby</span>自带的<span class="title">module</span>&amp;<span class="title">gem</span>包的<span class="title">module</span></span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">001</span><span class="symbol">:</span><span class="number">1</span>* <span class="class"><span class="keyword">module</span> <span class="title">A</span></span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">002</span><span class="symbol">:</span><span class="number">1</span>*   <span class="string">&quot;this is A&quot;</span></span><br><span class="line"><span class="meta">irb(main):003:0&gt;</span> end</span><br><span class="line">=&gt; <span class="string">&quot;this is A&quot;</span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">004</span><span class="symbol">:</span><span class="number">1</span>* <span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">005</span><span class="symbol">:</span><span class="number">1</span>*   extend A</span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">006</span><span class="symbol">:</span><span class="number">1</span>*   <span class="string">&quot;this is B&quot;</span></span><br><span class="line"><span class="meta">irb(main):007:0&gt;</span> end</span><br><span class="line">=&gt; <span class="string">&quot;this is B&quot;</span></span><br><span class="line"><span class="meta">irb(main):008:0&gt;</span> B.ancestors</span><br><span class="line">=&gt; [B, Object, Kernel, BasicObject]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="动态创建对象-amp-动态调用方法"><a href="#动态创建对象-amp-动态调用方法" class="headerlink" title="动态创建对象&amp;动态调用方法"></a>动态创建对象&amp;动态调用方法</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">动态创建对象，已知，可以把方法，类看成是对象</span><br><span class="line">所以----</span><br><span class="line"><span class="number">1</span>.动态创建方法----define_method</span><br><span class="line">一般会使用define_method结合method_missing来编写DRY代码！也就是把重复的代码干掉！</span><br><span class="line"></span><br><span class="line"><span class="meta">2.7.2 :001 &gt;</span> <span class="class"><span class="keyword">class</span> <span class="title">Developer</span></span></span><br><span class="line"><span class="meta">2.7.2 :002 &gt;</span>   </span><br><span class="line"><span class="meta">2.7.2 :003 &gt;</span>   <span class="function"><span class="keyword">def</span> <span class="title">coding_frontend</span></span></span><br><span class="line"><span class="meta">2.7.2 :004 &gt;</span>     p <span class="string">&quot;writing frontend&quot;</span></span><br><span class="line"><span class="meta">2.7.2 :005 &gt;</span>   end</span><br><span class="line"><span class="meta">2.7.2 :006 &gt;</span>   </span><br><span class="line"><span class="meta">2.7.2 :007 &gt;</span>   <span class="function"><span class="keyword">def</span> <span class="title">coding_backend</span></span></span><br><span class="line"><span class="meta">2.7.2 :008 &gt;</span>     p <span class="string">&quot;writing backend&quot;</span></span><br><span class="line"><span class="meta">2.7.2 :009 &gt;</span>   end</span><br><span class="line"><span class="meta">2.7.2 :010 &gt;</span>   </span><br><span class="line"><span class="meta">2.7.2 :011 &gt;</span> end</span><br><span class="line"> =&gt; <span class="symbol">:coding_backend</span> </span><br><span class="line"><span class="meta">2.7.2 :012 &gt;</span> developer = Developer.new</span><br><span class="line"> =&gt; #&lt;Developer:0x00007f9168453d68&gt; </span><br><span class="line"><span class="meta">2.7.2 :013 &gt;</span> developer.coding_frontend</span><br><span class="line"><span class="string">&quot;writing frontend&quot;</span></span><br><span class="line"> =&gt; <span class="string">&quot;writing frontend&quot;</span> </span><br><span class="line"><span class="meta">2.7.2 :014 &gt;</span> developer.coding_backend</span><br><span class="line"><span class="string">&quot;writing backend&quot;</span></span><br><span class="line"> =&gt; <span class="string">&quot;writing backend&quot;</span> </span><br><span class="line"><span class="meta">2.7.2 :015 &gt;</span> <span class="class"><span class="keyword">class</span> <span class="title">Developer</span></span></span><br><span class="line"><span class="meta">2.7.2 :016 &gt;</span>   </span><br><span class="line"><span class="meta">2.7.2 :017 &gt;</span>   [<span class="string">&quot;frontend&quot;</span>, <span class="string">&quot;backend&quot;</span>].each do <span class="params">|method|</span></span><br><span class="line"><span class="meta">2.7.2 :018 &gt;</span>     define_method <span class="string">&quot;coding_<span class="subst">#&#123;method&#125;</span>&quot;</span> do</span><br><span class="line"><span class="meta">2.7.2 :019 &gt;</span>     p <span class="string">&quot;writing &quot;</span> + method.to_s</span><br><span class="line"><span class="meta">2.7.2 :020 &gt;</span>     end</span><br><span class="line"><span class="meta">2.7.2 :021 &gt;</span>   end</span><br><span class="line"><span class="meta">2.7.2 :022 &gt;</span>   </span><br><span class="line"><span class="meta">2.7.2 :023 &gt;</span> end</span><br><span class="line"> =&gt; [<span class="string">&quot;frontend&quot;</span>, <span class="string">&quot;backend&quot;</span>] </span><br><span class="line"><span class="meta">2.7.2 :024 &gt;</span> developer = Developer.new</span><br><span class="line"> =&gt; #&lt;Developer:0x00007f916c9be178&gt; </span><br><span class="line"><span class="meta">2.7.2 :025 &gt;</span> developer.coding_frontend</span><br><span class="line"><span class="string">&quot;writing frontend&quot;</span></span><br><span class="line"> =&gt; <span class="string">&quot;writing frontend&quot;</span> </span><br><span class="line"><span class="meta">2.7.2 :026 &gt;</span> developer.coding_backend</span><br><span class="line"><span class="string">&quot;writing backend&quot;</span></span><br><span class="line"> =&gt; <span class="string">&quot;writing backend&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">2</span>.动态创建类----class_eval&amp;instance_eval</span><br><span class="line"></span><br><span class="line">动态调用方法，作用是可以消除繁复的代码</span><br><span class="line"><span class="keyword">and</span></span><br><span class="line">调用一个方法实际上是给一个对象发送一条消息！</span><br><span class="line"></span><br><span class="line">Calling Methods Dynamically</span><br><span class="line"></span><br><span class="line">常规的操作是使用点标志符(.)</span><br><span class="line"></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">001</span><span class="symbol">:</span><span class="number">1</span>* <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">002</span><span class="symbol">:</span><span class="number">2</span>*   <span class="function"><span class="keyword">def</span> <span class="title">my_method</span><span class="params">(my_arg)</span></span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">003</span><span class="symbol">:</span><span class="number">2</span>*     my_arg * <span class="number">2</span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">004</span><span class="symbol">:</span><span class="number">1</span>*   <span class="keyword">end</span></span><br><span class="line"><span class="meta">irb(main):005:0&gt;</span> end</span><br><span class="line">=&gt; <span class="symbol">:my_method</span></span><br><span class="line"><span class="meta">irb(main):006:0&gt;</span> obj = MyClass.new</span><br><span class="line"><span class="meta">irb(main):007:0&gt;</span> obj.my_method(<span class="number">3</span>)</span><br><span class="line">=&gt; <span class="number">6</span></span><br><span class="line"><span class="meta">irb(main):009:0&gt;</span> obj.send(<span class="symbol">:my_method</span>,<span class="number">3</span>)</span><br><span class="line">=&gt; <span class="number">6</span></span><br><span class="line"></span><br><span class="line">在send方法中，想调用的方法变成了参数，可以动态派发！</span><br><span class="line"></span><br><span class="line">值得注意的是在动态调用方法中，方法是以Symbol的形式作为参数的，因为Symbol是不可修改的，所以将方法名表示为Symbol，<span class="keyword">and</span>  String同样也可以作为方法的参数！</span><br><span class="line"></span><br><span class="line">last but <span class="keyword">not</span> least ----</span><br><span class="line"></span><br><span class="line">.send甚至可以调用私有方法，假如不想这么做，可以使用.public_send方法！！！</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="动态执行脚本"><a href="#动态执行脚本" class="headerlink" title="动态执行脚本"></a>动态执行脚本</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># eval</span></span><br><span class="line">代码执行最直接的方法，也是最直接的方式，就是使用eval</span><br><span class="line"><span class="meta">irb(main):009:0&gt;</span> eval(<span class="string">&quot;3-1&quot;</span>)</span><br><span class="line">=&gt; <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># instance_eval</span></span><br><span class="line">将暂时的变化带入对象的上下文中</span><br><span class="line"></span><br><span class="line"><span class="comment"># class_eval(module_eval)</span></span><br><span class="line">临时性的进入类定义块的上下文</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>ruby</category>
-      </categories>
-      <tags>
-        <tag>书籍</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Proc类</title>
-    <url>/2021/05/05/Proc/</url>
-    <content><![CDATA[<h1 id="Proc类"><a href="#Proc类" class="headerlink" title="Proc类"></a>Proc类</h1><h2 id="Proc类是个啥"><a href="#Proc类是个啥" class="headerlink" title="Proc类是个啥"></a>Proc类是个啥</h2><p>用来使块对象化的类！</p>
-<h3 id="创建Proc对象"><a href="#创建Proc对象" class="headerlink" title="创建Proc对象"></a>创建Proc对象</h3><h4 id="Proc-new"><a href="#Proc-new" class="headerlink" title="Proc.new()"></a>Proc.new()</h4><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">irb(main)<span class="symbol">:</span><span class="number">001</span><span class="symbol">:</span><span class="number">1</span>* hello1 = Proc.new <span class="keyword">do</span> <span class="params">|name|</span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">002</span><span class="symbol">:</span><span class="number">1</span>*   puts <span class="string">&quot;Hello, <span class="subst">#&#123;name&#125;</span>.&quot;</span></span><br><span class="line"><span class="meta">irb(main):003:0&gt;</span> end</span><br><span class="line"><span class="meta">irb(main):004:0&gt;</span> hello1.call(<span class="string">&quot;Ruby&quot;</span>)</span><br><span class="line">Hello, Ruby.</span><br></pre></td></tr></table></figure>
-
-<h4 id="proc"><a href="#proc" class="headerlink" title="proc{}"></a>proc{}</h4><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">irb(main)<span class="symbol">:</span><span class="number">005</span><span class="symbol">:</span><span class="number">1</span>* hello = <span class="built_in">proc</span> <span class="keyword">do</span> <span class="params">|name|</span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">006</span><span class="symbol">:</span><span class="number">1</span>*   <span class="string">&quot;hello, <span class="subst">#&#123;name&#125;</span>.&quot;</span></span><br><span class="line"><span class="meta">irb(main):007:0&gt;</span> end</span><br><span class="line"><span class="meta">irb(main):008:0&gt;</span> hello.call(<span class="string">&quot;ruby&quot;</span>)</span><br><span class="line">=&gt; <span class="string">&quot;hello, ruby.&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>调用call方法时的参数会作为块变量，块中最后一个表达式的值则为Proc#call的返回值</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):009:0&gt; hello[&quot;ruby&quot;]</span><br><span class="line">=&gt; &quot;hello, ruby.&quot;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h3><p>通过lambda方法创建的Proc对象的行为会更接近方法。</p>
-<p>and</p>
-<p>Lambda表达式对参数数量的检查更严格，and，Proc对象调用call方法时，参数数量和块变量的数量可以不同</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):010:1* proc = Proc.new do |a,b,c|</span><br><span class="line">irb(main):012:0&gt; end</span><br><span class="line">=&gt; #&lt;Proc:0x00005601b8e140f0 (irb):10&gt;</span><br><span class="line">irb(main):014:0&gt; proc.class</span><br><span class="line">=&gt; Proc</span><br><span class="line">irb(main):015:0&gt; proc.call(1,2)</span><br><span class="line">=&gt; [1, 2, nil]</span><br><span class="line"></span><br><span class="line">irb(main):019:0* lambda = lambda do |a,b,c|</span><br><span class="line">irb(main):020:0*   [a,b,c]</span><br><span class="line">irb(main):021:-&gt; end</span><br><span class="line">irb(main):022:0&gt; lambda</span><br><span class="line">=&gt; #&lt;Proc:0x00005601b8e1d718 (irb):19 (lambda)&gt;</span><br><span class="line">irb(main):026:0&gt; lambda.call(1,2)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">        6: from /usr/bin/irb:23:in `&lt;main&gt;&#x27;</span><br><span class="line">        5: from /usr/bin/irb:23:in `load&#x27;</span><br><span class="line">        4: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.1/exe/irb:11:in `&lt;top (required)&gt;&#x27;</span><br><span class="line">        3: from (irb):25</span><br><span class="line">        2: from (irb):26:in `rescue in irb_binding&#x27;</span><br><span class="line">        1: from (irb):19:in `block in irb_binding&#x27;</span><br><span class="line">ArgumentError (wrong number of arguments (given 2, expected 3))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="to-proc方法"><a href="#to-proc方法" class="headerlink" title="to_proc方法"></a>to_proc方法</h3><p>在方法中指定块时，如果以“&amp;对象”的形式传递参数，对象.to_proc就会被自动调用，从而生成Proc对象。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):029:0&gt; [&quot;1&quot;,&quot;2&quot;,&quot;3&quot;].map(&amp;:to_i)</span><br><span class="line">=&gt; [1, 2, 3]</span><br><span class="line">irb(main):030:0&gt; [&quot;1&quot;,&quot;2&quot;,&quot;3&quot;].map&#123;|i| i.to_i&#125;</span><br><span class="line">=&gt; [1, 2, 3]</span><br></pre></td></tr></table></figure>
-
-<p>符号&amp;会触发:to_i 的 to_proc 方法, to_proc 执行后会返回一个 proc 实例</p>
-<p>一个类名排序的例子</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):031:0&gt; [Integer,String,Array,Hash,File,IO].sort_by(&amp;:name)</span><br><span class="line">=&gt; [Array, File, Hash, IO, Integer, String]</span><br></pre></td></tr></table></figure>
-
-<p>一个计数器</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):032:1* def counter</span><br><span class="line">irb(main):033:1*   c=0</span><br><span class="line">irb(main):034:2*   Proc.new do</span><br><span class="line">irb(main):035:2*     c+=1</span><br><span class="line">irb(main):036:1*   end</span><br><span class="line">irb(main):037:0&gt; end</span><br><span class="line">=&gt; :counter</span><br><span class="line">irb(main):038:0&gt; c1 = counter</span><br><span class="line">irb(main):039:0&gt; c1.call</span><br><span class="line">=&gt; 1</span><br><span class="line">irb(main):040:0&gt; c1.call</span><br><span class="line">=&gt; 2</span><br><span class="line">irb(main):041:0&gt; c1.call</span><br><span class="line">=&gt; 3</span><br><span class="line">irb(main):042:0&gt; c2 = counter</span><br><span class="line">irb(main):043:0&gt; c2.call</span><br><span class="line">=&gt; 1</span><br><span class="line">irb(main):044:0&gt; c2.call</span><br><span class="line">=&gt; 2</span><br><span class="line">irb(main):045:0&gt; c1.call</span><br><span class="line">=&gt; 4</span><br></pre></td></tr></table></figure>
-
-<p>两个变量对引用的Proc对象分别保存并处理了调用counter方法时初始化的本地变量</p>
-<p>像Proc对象这样，将处理内容，变量等环境同时保存的对象，被成为闭包。</p>
-<p>使用Proc对象可以通过少量代码实现处理对象化。</p>
-<h3 id="Proc的实例方法"><a href="#Proc的实例方法" class="headerlink" title="Proc的实例方法"></a>Proc的实例方法</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):048:0&gt; prc = Proc.new&#123;|a,b| a+b&#125;</span><br><span class="line">irb(main):049:0&gt; prc.call(1,2)</span><br><span class="line">=&gt; 3</span><br><span class="line">irb(main):050:0&gt; prc[1,2]</span><br><span class="line">=&gt; 3</span><br><span class="line">irb(main):051:0&gt; prc.yield(5,6)</span><br><span class="line">=&gt; 11</span><br><span class="line">irb(main):052:0&gt; prc.(3,4)</span><br><span class="line">=&gt; 7</span><br><span class="line">irb(main):053:0&gt; prc === [1,4]</span><br><span class="line">=&gt; 5</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):098:0&gt; fizz = proc&#123; |n| n%3==0&#125;</span><br><span class="line">irb(main):099:0&gt; buzz = proc&#123; |n| n%5==0&#125;</span><br><span class="line">irb(main):100:0&gt; fizzbuzz = proc&#123;|n| fizz[n] &amp;&amp; buzz[n]&#125;</span><br><span class="line"></span><br><span class="line">irb(main):090:1* (1..100).each do |i|</span><br><span class="line">irb(main):091:2*   case i</span><br><span class="line">irb(main):092:2*   when fizzbuzz then puts &quot;Fizz Buzz&quot;</span><br><span class="line">irb(main):093:2*   when fizz then puts &quot;Fizz&quot;</span><br><span class="line">irb(main):094:2*   when buzz then  puts &quot;Buzz&quot;</span><br><span class="line">irb(main):095:2*   else puts i</span><br><span class="line">irb(main):096:1*   end</span><br><span class="line">irb(main):097:0&gt; end</span><br></pre></td></tr></table></figure>
-
-<h3 id="prc-arrity"><a href="#prc-arrity" class="headerlink" title="prc.arrity"></a>prc.arrity</h3><p>此方法可以返回作为call方法的参数的块变量的个数，以“|*args|”的形式指定块变量时，返回-1</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">irb(main):004:0&gt;</span> prc0 = Proc.new&#123;nil&#125;</span><br><span class="line"><span class="meta">irb(main):005:0&gt;</span> prc1 = Proc.new&#123;<span class="params">|a|</span> a&#125;</span><br><span class="line"><span class="meta">irb(main):006:0&gt;</span> prc2 = Proc.new&#123;<span class="params">|a,b|</span> a+b&#125;</span><br><span class="line"><span class="meta">irb(main):007:0&gt;</span> prc3 = Proc.new&#123;<span class="params">|a,b,c|</span> a+b+c&#125;</span><br><span class="line"><span class="meta">irb(main):008:0&gt;</span> prc4 = Proc.new&#123;<span class="params">|*args|</span> args&#125;</span><br><span class="line"><span class="meta">irb(main):009:0&gt;</span> prc0.arity</span><br><span class="line">=&gt; <span class="number">0</span></span><br><span class="line"><span class="meta">irb(main):010:0&gt;</span> prc1.arity</span><br><span class="line">=&gt; <span class="number">1</span></span><br><span class="line"><span class="meta">irb(main):011:0&gt;</span> prc2.arity</span><br><span class="line">=&gt; <span class="number">2</span></span><br><span class="line"><span class="meta">irb(main):012:0&gt;</span> prc3.arity</span><br><span class="line">=&gt; <span class="number">3</span></span><br><span class="line"><span class="meta">irb(main):013:0&gt;</span> prc4.arity</span><br><span class="line">=&gt; -<span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="prc-parameters"><a href="#prc-parameters" class="headerlink" title="prc.parameters"></a>prc.parameters</h3><p>使用此方法可以返回“[种类，变量名]”形式的数组的列表</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">irb(main):015:0&gt;</span> prc0.parameters</span><br><span class="line">=&gt; []</span><br><span class="line"><span class="meta">irb(main):016:0&gt;</span> prc1.parameters</span><br><span class="line">=&gt; [[<span class="symbol">:opt</span>, <span class="symbol">:a</span>]]</span><br><span class="line"><span class="meta">irb(main):017:0&gt;</span> prc2.parameters</span><br><span class="line">=&gt; [[<span class="symbol">:opt</span>, <span class="symbol">:a</span>], [<span class="symbol">:opt</span>, <span class="symbol">:b</span>]]</span><br><span class="line"><span class="meta">irb(main):018:0&gt;</span> prc3.parameters</span><br><span class="line">=&gt; [[<span class="symbol">:opt</span>, <span class="symbol">:a</span>], [<span class="symbol">:opt</span>, <span class="symbol">:b</span>], [<span class="symbol">:opt</span>, <span class="symbol">:c</span>]]</span><br><span class="line"><span class="meta">irb(main):019:0&gt;</span> prc4.parameters</span><br><span class="line">=&gt; [[<span class="symbol">:rest</span>, <span class="symbol">:args</span>]]</span><br></pre></td></tr></table></figure>
-
-<h3 id="prc-source-location"><a href="#prc-source-location" class="headerlink" title="prc.source_location"></a>prc.source_location</h3><p>返回定义prc的程序的位置，返回值为“[代码文件名，行编号]”形式的数组</p>
-<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">irb(main):020:0&gt;</span> prc0.source_location</span><br><span class="line">=&gt; [<span class="string">&quot;(irb)&quot;</span>, <span class="number">4</span>]</span><br><span class="line"><span class="meta">irb(main):021:0&gt;</span> prc1.source_location</span><br><span class="line">=&gt; [<span class="string">&quot;(irb)&quot;</span>, <span class="number">5</span>]</span><br><span class="line"><span class="meta">irb(main):022:0&gt;</span> prc2.source_location</span><br><span class="line">=&gt; [<span class="string">&quot;(irb)&quot;</span>, <span class="number">6</span>]</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):024:0&gt; to_class.call(&quot;test&quot;)</span><br><span class="line">=&gt; String</span><br><span class="line">irb(main):025:0&gt; to_class.call(123)</span><br><span class="line">=&gt; Integer</span><br><span class="line">irb(main):026:0&gt; to_class.call(2**100)</span><br><span class="line">=&gt; Integer</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="Proc-amp-Lambda"><a href="#Proc-amp-Lambda" class="headerlink" title="Proc&amp;Lambda"></a>Proc&amp;Lambda</h3><ol>
-<li><p>对参数的容忍程度不同，lambda比较严格，Proc比较宽松，数量有差异也不会报错</p>
-</li>
-<li><p>回传的scope不同，Proc里面的return会结束整个method，而lambda的return只会结束lambda本身。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):061:1* def method_proc</span><br><span class="line">irb(main):062:1*   thing = Proc.new&#123; return 1 &#125;</span><br><span class="line">irb(main):063:1*   thing.call</span><br><span class="line">irb(main):064:1*   puts &quot;hi proc&quot;</span><br><span class="line">irb(main):065:1*   return 2</span><br><span class="line">irb(main):066:0&gt; end</span><br><span class="line">=&gt; :method_proc</span><br><span class="line">irb(main):067:1* def method_lambda</span><br><span class="line">irb(main):068:1*   thing = lambda&#123; return 1 &#125;</span><br><span class="line">irb(main):069:1*   thing.call</span><br><span class="line">irb(main):070:1*   puts &quot;hi lambda&quot;</span><br><span class="line">irb(main):071:1*   return 2</span><br><span class="line">irb(main):072:0&gt; end</span><br><span class="line">=&gt; :method_lambda</span><br><span class="line">irb(main):073:0&gt; method_proc</span><br><span class="line">=&gt; 1</span><br><span class="line">irb(main):074:0&gt; method_lambda</span><br><span class="line">hi lambda</span><br><span class="line">=&gt; 2</span><br></pre></td></tr></table></figure></li>
-</ol>
-]]></content>
-      <categories>
-        <category>ruby</category>
-      </categories>
-      <tags>
-        <tag>ruby</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Mysql45讲</title>
     <url>/2021/05/03/Mysql%E5%AE%9E%E6%88%9845%E8%AE%B2/</url>
     <content><![CDATA[<h1 id="基础篇"><a href="#基础篇" class="headerlink" title="基础篇"></a>基础篇</h1><h2 id="基础架构：一条sql语句是如何执行的？"><a href="#基础架构：一条sql语句是如何执行的？" class="headerlink" title="基础架构：一条sql语句是如何执行的？"></a>基础架构：一条sql语句是如何执行的？</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> T <span class="keyword">where</span> ID<span class="operator">=</span><span class="number">10</span>；</span><br></pre></td></tr></table></figure>
@@ -228,6 +112,115 @@
       </tags>
   </entry>
   <entry>
+    <title>Proc类</title>
+    <url>/2021/05/05/Proc/</url>
+    <content><![CDATA[<h1 id="Proc类"><a href="#Proc类" class="headerlink" title="Proc类"></a>Proc类</h1><h2 id="Proc类是个啥"><a href="#Proc类是个啥" class="headerlink" title="Proc类是个啥"></a>Proc类是个啥</h2><p>用来使块对象化的类！</p>
+<h3 id="创建Proc对象"><a href="#创建Proc对象" class="headerlink" title="创建Proc对象"></a>创建Proc对象</h3><h4 id="Proc-new"><a href="#Proc-new" class="headerlink" title="Proc.new()"></a>Proc.new()</h4><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">irb(main)<span class="symbol">:</span><span class="number">001</span><span class="symbol">:</span><span class="number">1</span>* hello1 = Proc.new <span class="keyword">do</span> <span class="params">|name|</span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">002</span><span class="symbol">:</span><span class="number">1</span>*   puts <span class="string">&quot;Hello, <span class="subst">#&#123;name&#125;</span>.&quot;</span></span><br><span class="line"><span class="meta">irb(main):003:0&gt;</span> end</span><br><span class="line"><span class="meta">irb(main):004:0&gt;</span> hello1.call(<span class="string">&quot;Ruby&quot;</span>)</span><br><span class="line">Hello, Ruby.</span><br></pre></td></tr></table></figure>
+
+<h4 id="proc"><a href="#proc" class="headerlink" title="proc{}"></a>proc{}</h4><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">irb(main)<span class="symbol">:</span><span class="number">005</span><span class="symbol">:</span><span class="number">1</span>* hello = <span class="built_in">proc</span> <span class="keyword">do</span> <span class="params">|name|</span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">006</span><span class="symbol">:</span><span class="number">1</span>*   <span class="string">&quot;hello, <span class="subst">#&#123;name&#125;</span>.&quot;</span></span><br><span class="line"><span class="meta">irb(main):007:0&gt;</span> end</span><br><span class="line"><span class="meta">irb(main):008:0&gt;</span> hello.call(<span class="string">&quot;ruby&quot;</span>)</span><br><span class="line">=&gt; <span class="string">&quot;hello, ruby.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>调用call方法时的参数会作为块变量，块中最后一个表达式的值则为Proc#call的返回值</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):009:0&gt; hello[&quot;ruby&quot;]</span><br><span class="line">=&gt; &quot;hello, ruby.&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h3><p>通过lambda方法创建的Proc对象的行为会更接近方法。</p>
+<p>and</p>
+<p>Lambda表达式对参数数量的检查更严格，and，Proc对象调用call方法时，参数数量和块变量的数量可以不同</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):010:1* proc = Proc.new do |a,b,c|</span><br><span class="line">irb(main):012:0&gt; end</span><br><span class="line">=&gt; #&lt;Proc:0x00005601b8e140f0 (irb):10&gt;</span><br><span class="line">irb(main):014:0&gt; proc.class</span><br><span class="line">=&gt; Proc</span><br><span class="line">irb(main):015:0&gt; proc.call(1,2)</span><br><span class="line">=&gt; [1, 2, nil]</span><br><span class="line"></span><br><span class="line">irb(main):019:0* lambda = lambda do |a,b,c|</span><br><span class="line">irb(main):020:0*   [a,b,c]</span><br><span class="line">irb(main):021:-&gt; end</span><br><span class="line">irb(main):022:0&gt; lambda</span><br><span class="line">=&gt; #&lt;Proc:0x00005601b8e1d718 (irb):19 (lambda)&gt;</span><br><span class="line">irb(main):026:0&gt; lambda.call(1,2)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">        6: from /usr/bin/irb:23:in `&lt;main&gt;&#x27;</span><br><span class="line">        5: from /usr/bin/irb:23:in `load&#x27;</span><br><span class="line">        4: from /usr/lib/ruby/gems/2.7.0/gems/irb-1.2.1/exe/irb:11:in `&lt;top (required)&gt;&#x27;</span><br><span class="line">        3: from (irb):25</span><br><span class="line">        2: from (irb):26:in `rescue in irb_binding&#x27;</span><br><span class="line">        1: from (irb):19:in `block in irb_binding&#x27;</span><br><span class="line">ArgumentError (wrong number of arguments (given 2, expected 3))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="to-proc方法"><a href="#to-proc方法" class="headerlink" title="to_proc方法"></a>to_proc方法</h3><p>在方法中指定块时，如果以“&amp;对象”的形式传递参数，对象.to_proc就会被自动调用，从而生成Proc对象。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):029:0&gt; [&quot;1&quot;,&quot;2&quot;,&quot;3&quot;].map(&amp;:to_i)</span><br><span class="line">=&gt; [1, 2, 3]</span><br><span class="line">irb(main):030:0&gt; [&quot;1&quot;,&quot;2&quot;,&quot;3&quot;].map&#123;|i| i.to_i&#125;</span><br><span class="line">=&gt; [1, 2, 3]</span><br></pre></td></tr></table></figure>
+
+<p>符号&amp;会触发:to_i 的 to_proc 方法, to_proc 执行后会返回一个 proc 实例</p>
+<p>一个类名排序的例子</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):031:0&gt; [Integer,String,Array,Hash,File,IO].sort_by(&amp;:name)</span><br><span class="line">=&gt; [Array, File, Hash, IO, Integer, String]</span><br></pre></td></tr></table></figure>
+
+<p>一个计数器</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):032:1* def counter</span><br><span class="line">irb(main):033:1*   c=0</span><br><span class="line">irb(main):034:2*   Proc.new do</span><br><span class="line">irb(main):035:2*     c+=1</span><br><span class="line">irb(main):036:1*   end</span><br><span class="line">irb(main):037:0&gt; end</span><br><span class="line">=&gt; :counter</span><br><span class="line">irb(main):038:0&gt; c1 = counter</span><br><span class="line">irb(main):039:0&gt; c1.call</span><br><span class="line">=&gt; 1</span><br><span class="line">irb(main):040:0&gt; c1.call</span><br><span class="line">=&gt; 2</span><br><span class="line">irb(main):041:0&gt; c1.call</span><br><span class="line">=&gt; 3</span><br><span class="line">irb(main):042:0&gt; c2 = counter</span><br><span class="line">irb(main):043:0&gt; c2.call</span><br><span class="line">=&gt; 1</span><br><span class="line">irb(main):044:0&gt; c2.call</span><br><span class="line">=&gt; 2</span><br><span class="line">irb(main):045:0&gt; c1.call</span><br><span class="line">=&gt; 4</span><br></pre></td></tr></table></figure>
+
+<p>两个变量对引用的Proc对象分别保存并处理了调用counter方法时初始化的本地变量</p>
+<p>像Proc对象这样，将处理内容，变量等环境同时保存的对象，被成为闭包。</p>
+<p>使用Proc对象可以通过少量代码实现处理对象化。</p>
+<h3 id="Proc的实例方法"><a href="#Proc的实例方法" class="headerlink" title="Proc的实例方法"></a>Proc的实例方法</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):048:0&gt; prc = Proc.new&#123;|a,b| a+b&#125;</span><br><span class="line">irb(main):049:0&gt; prc.call(1,2)</span><br><span class="line">=&gt; 3</span><br><span class="line">irb(main):050:0&gt; prc[1,2]</span><br><span class="line">=&gt; 3</span><br><span class="line">irb(main):051:0&gt; prc.yield(5,6)</span><br><span class="line">=&gt; 11</span><br><span class="line">irb(main):052:0&gt; prc.(3,4)</span><br><span class="line">=&gt; 7</span><br><span class="line">irb(main):053:0&gt; prc === [1,4]</span><br><span class="line">=&gt; 5</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):098:0&gt; fizz = proc&#123; |n| n%3==0&#125;</span><br><span class="line">irb(main):099:0&gt; buzz = proc&#123; |n| n%5==0&#125;</span><br><span class="line">irb(main):100:0&gt; fizzbuzz = proc&#123;|n| fizz[n] &amp;&amp; buzz[n]&#125;</span><br><span class="line"></span><br><span class="line">irb(main):090:1* (1..100).each do |i|</span><br><span class="line">irb(main):091:2*   case i</span><br><span class="line">irb(main):092:2*   when fizzbuzz then puts &quot;Fizz Buzz&quot;</span><br><span class="line">irb(main):093:2*   when fizz then puts &quot;Fizz&quot;</span><br><span class="line">irb(main):094:2*   when buzz then  puts &quot;Buzz&quot;</span><br><span class="line">irb(main):095:2*   else puts i</span><br><span class="line">irb(main):096:1*   end</span><br><span class="line">irb(main):097:0&gt; end</span><br></pre></td></tr></table></figure>
+
+<h3 id="prc-arrity"><a href="#prc-arrity" class="headerlink" title="prc.arrity"></a>prc.arrity</h3><p>此方法可以返回作为call方法的参数的块变量的个数，以“|*args|”的形式指定块变量时，返回-1</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">irb(main):004:0&gt;</span> prc0 = Proc.new&#123;nil&#125;</span><br><span class="line"><span class="meta">irb(main):005:0&gt;</span> prc1 = Proc.new&#123;<span class="params">|a|</span> a&#125;</span><br><span class="line"><span class="meta">irb(main):006:0&gt;</span> prc2 = Proc.new&#123;<span class="params">|a,b|</span> a+b&#125;</span><br><span class="line"><span class="meta">irb(main):007:0&gt;</span> prc3 = Proc.new&#123;<span class="params">|a,b,c|</span> a+b+c&#125;</span><br><span class="line"><span class="meta">irb(main):008:0&gt;</span> prc4 = Proc.new&#123;<span class="params">|*args|</span> args&#125;</span><br><span class="line"><span class="meta">irb(main):009:0&gt;</span> prc0.arity</span><br><span class="line">=&gt; <span class="number">0</span></span><br><span class="line"><span class="meta">irb(main):010:0&gt;</span> prc1.arity</span><br><span class="line">=&gt; <span class="number">1</span></span><br><span class="line"><span class="meta">irb(main):011:0&gt;</span> prc2.arity</span><br><span class="line">=&gt; <span class="number">2</span></span><br><span class="line"><span class="meta">irb(main):012:0&gt;</span> prc3.arity</span><br><span class="line">=&gt; <span class="number">3</span></span><br><span class="line"><span class="meta">irb(main):013:0&gt;</span> prc4.arity</span><br><span class="line">=&gt; -<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="prc-parameters"><a href="#prc-parameters" class="headerlink" title="prc.parameters"></a>prc.parameters</h3><p>使用此方法可以返回“[种类，变量名]”形式的数组的列表</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">irb(main):015:0&gt;</span> prc0.parameters</span><br><span class="line">=&gt; []</span><br><span class="line"><span class="meta">irb(main):016:0&gt;</span> prc1.parameters</span><br><span class="line">=&gt; [[<span class="symbol">:opt</span>, <span class="symbol">:a</span>]]</span><br><span class="line"><span class="meta">irb(main):017:0&gt;</span> prc2.parameters</span><br><span class="line">=&gt; [[<span class="symbol">:opt</span>, <span class="symbol">:a</span>], [<span class="symbol">:opt</span>, <span class="symbol">:b</span>]]</span><br><span class="line"><span class="meta">irb(main):018:0&gt;</span> prc3.parameters</span><br><span class="line">=&gt; [[<span class="symbol">:opt</span>, <span class="symbol">:a</span>], [<span class="symbol">:opt</span>, <span class="symbol">:b</span>], [<span class="symbol">:opt</span>, <span class="symbol">:c</span>]]</span><br><span class="line"><span class="meta">irb(main):019:0&gt;</span> prc4.parameters</span><br><span class="line">=&gt; [[<span class="symbol">:rest</span>, <span class="symbol">:args</span>]]</span><br></pre></td></tr></table></figure>
+
+<h3 id="prc-source-location"><a href="#prc-source-location" class="headerlink" title="prc.source_location"></a>prc.source_location</h3><p>返回定义prc的程序的位置，返回值为“[代码文件名，行编号]”形式的数组</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">irb(main):020:0&gt;</span> prc0.source_location</span><br><span class="line">=&gt; [<span class="string">&quot;(irb)&quot;</span>, <span class="number">4</span>]</span><br><span class="line"><span class="meta">irb(main):021:0&gt;</span> prc1.source_location</span><br><span class="line">=&gt; [<span class="string">&quot;(irb)&quot;</span>, <span class="number">5</span>]</span><br><span class="line"><span class="meta">irb(main):022:0&gt;</span> prc2.source_location</span><br><span class="line">=&gt; [<span class="string">&quot;(irb)&quot;</span>, <span class="number">6</span>]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):024:0&gt; to_class.call(&quot;test&quot;)</span><br><span class="line">=&gt; String</span><br><span class="line">irb(main):025:0&gt; to_class.call(123)</span><br><span class="line">=&gt; Integer</span><br><span class="line">irb(main):026:0&gt; to_class.call(2**100)</span><br><span class="line">=&gt; Integer</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Proc-amp-Lambda"><a href="#Proc-amp-Lambda" class="headerlink" title="Proc&amp;Lambda"></a>Proc&amp;Lambda</h3><ol>
+<li><p>对参数的容忍程度不同，lambda比较严格，Proc比较宽松，数量有差异也不会报错</p>
+</li>
+<li><p>回传的scope不同，Proc里面的return会结束整个method，而lambda的return只会结束lambda本身。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">irb(main):061:1* def method_proc</span><br><span class="line">irb(main):062:1*   thing = Proc.new&#123; return 1 &#125;</span><br><span class="line">irb(main):063:1*   thing.call</span><br><span class="line">irb(main):064:1*   puts &quot;hi proc&quot;</span><br><span class="line">irb(main):065:1*   return 2</span><br><span class="line">irb(main):066:0&gt; end</span><br><span class="line">=&gt; :method_proc</span><br><span class="line">irb(main):067:1* def method_lambda</span><br><span class="line">irb(main):068:1*   thing = lambda&#123; return 1 &#125;</span><br><span class="line">irb(main):069:1*   thing.call</span><br><span class="line">irb(main):070:1*   puts &quot;hi lambda&quot;</span><br><span class="line">irb(main):071:1*   return 2</span><br><span class="line">irb(main):072:0&gt; end</span><br><span class="line">=&gt; :method_lambda</span><br><span class="line">irb(main):073:0&gt; method_proc</span><br><span class="line">=&gt; 1</span><br><span class="line">irb(main):074:0&gt; method_lambda</span><br><span class="line">hi lambda</span><br><span class="line">=&gt; 2</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>ruby</category>
+      </categories>
+      <tags>
+        <tag>ruby</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/05/01/hello-world/</url>
+    <content><![CDATA[<div align=center>
+
+<h1><img src="https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430" width="30"/> Hey! Nice to see you 👋</h1>
+
+
+<p>Welcome to my blog! </br> I'm longbiu, developer from <b>Changsha, China</b></p>
+<p>I want to be a <b>Fullstack developer<img src="https://www.flaticon.com/premium-icon/icons/svg/3242/3242257.svg"width="35"/></b></p>
+
+
+</div>
+]]></content>
+  </entry>
+  <entry>
+    <title>vscode theme</title>
+    <url>/2021/05/20/vscode-theme/</url>
+    <content><![CDATA[<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Tokyo Night</td>
+</tr>
+<tr>
+<td>2</td>
+<td>SynthWave ‘84</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Flat UI</td>
+</tr>
+</tbody></table>
+<p><img src="/img/vscode-theme/image-20210520224536810.png" alt="image-20210520224536810"></p>
+<p><img src="/img/vscode-theme/image-20210520224601310.png" alt="image-20210520224601310"></p>
+<p><img src="/img/vscode-theme/image-20210520224635558.png" alt="image-20210520224635558"></p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>颜值正义</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>三小时mysql</title>
     <url>/2021/05/02/%E4%B8%89%E5%B0%8F%E6%97%B6mysql/</url>
     <content><![CDATA[<h1 id="3小时Mysql入门"><a href="#3小时Mysql入门" class="headerlink" title="3小时Mysql入门"></a><a href="https://www.bilibili.com/video/BV1iJ411m7Fj">3小时Mysql入门</a></h1><h2 id="sql语句中-lt-gt-与-作用一样"><a href="#sql语句中-lt-gt-与-作用一样" class="headerlink" title="sql语句中&lt;&gt;与!=作用一样"></a>sql语句中&lt;&gt;与!=作用一样</h2><h2 id="REGEXP–正则"><a href="#REGEXP–正则" class="headerlink" title="REGEXP–正则"></a>REGEXP–正则</h2><ol>
@@ -277,62 +270,476 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/05/01/hello-world/</url>
-    <content><![CDATA[<div align=center>
+    <title>《Ruby元编程》</title>
+    <url>/2021/05/04/Metaprogramming%20Ruby%202/</url>
+    <content><![CDATA[<h1 id="元这个字眼"><a href="#元这个字眼" class="headerlink" title="元这个字眼"></a>元这个字眼</h1><h1 id="对象模型"><a href="#对象模型" class="headerlink" title="对象模型"></a>对象模型</h1><p>Ruby的世界除了对象，还有其他的语言构件，比如class，module，instance variable等，元编程操作的就是这些语言构件。</p>
+<p>所有这些语言构件存在的系统称之为对象模型。</p>
+<h2 id="打开类"><a href="#打开类" class="headerlink" title="打开类"></a>打开类</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :011 &gt; def to_alphanumeric(s)</span><br><span class="line">2.7.2 :012 &gt;   s.gsub(/[^\w\s]/,&#x27;&#x27;)</span><br><span class="line">2.7.2 :013 &gt; end</span><br><span class="line"> =&gt; :to_alphanumeric </span><br><span class="line">2.7.2 :014 &gt; to_alphanumeric(&quot;hello, %% world&quot;)</span><br><span class="line"> =&gt; &quot;hello  world&quot; </span><br></pre></td></tr></table></figure>
 
-<h1><img src="https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430" width="30"/> Hey! Nice to see you 👋</h1>
+<p><strong>更好的方法是让字符串本身来做这种转换</strong></p>
+<p><strong>可以去String类植入to_alphanumeric方法</strong></p>
+<h3 id="类定义揭秘"><a href="#类定义揭秘" class="headerlink" title="类定义揭秘"></a>类定义揭秘</h3><p>Ruby中，定义类的语句和其他语句没有本质区别</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :015 &gt; 3.times do</span><br><span class="line">2.7.2 :016 &gt;   class C</span><br><span class="line">2.7.2 :017 &gt;     puts &quot;Hello Longbiu&quot;</span><br><span class="line">2.7.2 :018 &gt;   end</span><br><span class="line">2.7.2 :019 &gt; end</span><br><span class="line">Hello Longbiu</span><br><span class="line">Hello Longbiu</span><br><span class="line">Hello Longbiu</span><br><span class="line"> =&gt; 3 </span><br></pre></td></tr></table></figure>
+
+<p>Ruby的class关键字更像是一个作用域操作符，而不是类型声明语句。class关键字的核心任务是把你带到类的上下文中，让你可以在里面定义方法。</p>
+<p><strong>重新打开已经存在的类并对之进行动态修改——打开类（open class）</strong></p>
+<h3 id="打开类的问题"><a href="#打开类的问题" class="headerlink" title="打开类的问题"></a>打开类的问题</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :005 &gt; [].methods.grep /^re/</span><br><span class="line"> =&gt; [:reject!, :repeated_permutation, :repeated_combination, :reject, :reverse_each, :replace, :reverse, :reverse!, :reduce, :remove_instance_variable, :respond_to?] </span><br></pre></td></tr></table></figure>
+
+<p>方法名冲突时可能会出现bug，这种粗暴的修改类的方法也叫做——<strong>猴子补丁(Monkeypatch)</strong></p>
+<p>一般来说，添加新方法比修改已有的方法安全。</p>
+<h2 id="类的真相"><a href="#类的真相" class="headerlink" title="类的真相"></a>类的真相</h2><h3 id="对象中有什么"><a href="#对象中有什么" class="headerlink" title="对象中有什么"></a>对象中有什么</h3><p><img src="/img/Metaprogramming/image-20210521101716315.png" alt="image-20210521101716315"></p>
+<p>假如说，my_method()是MyClass的一个实例方法，这就意味着这个方法定义在MyClass中，需要定义一个MyClass的实例才能调用它。</p>
+<p>同一个类的对象共享同样的方法，但不共享实例变量。</p>
+<h3 id="类的真相-1"><a href="#类的真相-1" class="headerlink" title="类的真相"></a>类的真相</h3><p>类本身也是对象。</p>
+<p>其他语言只允许你读取类的相关信息，而Ruby允许你在运行时修改这些信息。</p>
+<p><strong>Ruby的类继承自它的超类</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :006 &gt; Array.superclass</span><br><span class="line"> =&gt; Object </span><br><span class="line">2.7.2 :007 &gt; Object.superclass</span><br><span class="line"> =&gt; BasicObject </span><br><span class="line">2.7.2 :008 &gt; BasicObject.superclass</span><br><span class="line"> =&gt; nil </span><br><span class="line">2.7.2 :009 &gt; Class.superclass</span><br><span class="line"> =&gt; Module </span><br></pre></td></tr></table></figure>
+
+<p>Ruby中，类与模块这两个概念十分接近，保留这两个概念的主要原因是为了获得代码的清晰性。</p>
+<p>把自己的代码include到别的代码——Module</p>
+<p>希望某段代码被实例化或被继承——Class</p>
+<p><img src="/img/Metaprogramming/image-20210521103307143.png" alt="image-20210521103307143"></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :010 &gt; class MyClass;</span><br><span class="line">2.7.2 :011 &gt; end</span><br><span class="line"> =&gt; nil </span><br><span class="line">2.7.2 :012 &gt; obj1 = MyClass.new</span><br><span class="line"> =&gt; #&lt;MyClass:0x00007f8fa4353dc0&gt; </span><br><span class="line">2.7.2 :013 &gt; obj2=MyClass.new</span><br><span class="line"> =&gt; #&lt;MyClass:0x00007f8fa43f14d0&gt; </span><br><span class="line">2.7.2 :014 &gt; MyClass.superclass</span><br><span class="line"> =&gt; Object </span><br><span class="line">2.7.2 :016 &gt; Class.new(MyClass)</span><br><span class="line"> =&gt; #&lt;Class:0x00007f8fa42d7608&gt; </span><br><span class="line">2.7.2 :017 &gt; Class.new(MyClass).superclass</span><br><span class="line"> =&gt; MyClass </span><br></pre></td></tr></table></figure>
+
+<h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><p>任何以大写字母开头的引用(包括类名和模块名)都是常量。</p>
+<p>Ruby中，常量和变量的区别在于它们的scope不同。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :018 &gt; module MyModule</span><br><span class="line">2.7.2 :019 &gt;   MyConstant = &quot;A&quot;</span><br><span class="line">2.7.2 :020 &gt;   class MyClass</span><br><span class="line">2.7.2 :021 &gt;     MyConstant = &quot;B&quot;</span><br><span class="line">2.7.2 :022 &gt;   end</span><br><span class="line">2.7.2 :023 &gt; end</span><br></pre></td></tr></table></figure>
+
+<p>我们可以使用Module来组织常量</p>
+<h3 id="对象和类的小结"><a href="#对象和类的小结" class="headerlink" title="对象和类的小结"></a>对象和类的小结</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>对象</td>
+<td>一组实例变量+指向其类的引用</td>
+</tr>
+<tr>
+<td>类</td>
+<td>一个对象+一组实例方法+对其superclass的引用</td>
+</tr>
+</tbody></table>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Bookworm</span></span></span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Text</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="缺失的连接线"><a href="#缺失的连接线" class="headerlink" title="缺失的连接线"></a>缺失的连接线</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :026 &gt; Object.class</span><br><span class="line"> =&gt; Class </span><br><span class="line">2.7.2 :027 &gt; Module.superclass</span><br><span class="line"> =&gt; Object </span><br><span class="line">2.7.2 :028 &gt; Class.class</span><br><span class="line"> =&gt; Class </span><br></pre></td></tr></table></figure>
+
+<h2 id="调用方法时发生了什么？"><a href="#调用方法时发生了什么？" class="headerlink" title="调用方法时发生了什么？"></a>调用方法时发生了什么？</h2><ol>
+<li><strong>方法查找</strong></li>
+<li><strong>执行方法</strong></li>
+</ol>
+<h3 id="方法查找"><a href="#方法查找" class="headerlink" title="方法查找"></a>方法查找</h3><p>调用一个方法前，Ruby会在对象的类中查找那个方法</p>
+<p><strong>两个概念：receiver+ancestors chain</strong></p>
+<p>receiver就是你调用方法所在的对象</p>
+<p><strong>Ruby首先在接受者的类中查找，然后顺着祖先链向上查找，直到找到这个方法为止</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :037 &gt; class MyClass</span><br><span class="line">2.7.2 :038 &gt;   def my_method;</span><br><span class="line">2.7.2 :039 &gt;     &#x27;my_method()&#x27;;</span><br><span class="line">2.7.2 :040 &gt;   end</span><br><span class="line">2.7.2 :041 &gt; end</span><br><span class="line"> =&gt; :my_method </span><br><span class="line">2.7.2 :042 &gt; class MySubclass &lt; MyClass</span><br><span class="line">2.7.2 :043 &gt; end</span><br><span class="line"> =&gt; nil </span><br><span class="line">2.7.2 :044 &gt; obj = MySubclass.new</span><br><span class="line"> =&gt; #&lt;MySubclass:0x00007f8fa44b33c8&gt; </span><br><span class="line">2.7.2 :045 &gt; obj.my_method()</span><br><span class="line"> =&gt; &quot;my_method()&quot; </span><br></pre></td></tr></table></figure>
+
+<p><strong>“向右一步，再向上”——先向右一步来到接收者所在的类，然后沿着祖先链向上查找。</strong></p>
+<p><strong>模块与方法查找</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :046 &gt; module M1</span><br><span class="line">2.7.2 :047 &gt;   def my_method</span><br><span class="line">2.7.2 :048 &gt;     &quot;M1#my_method()&quot;</span><br><span class="line">2.7.2 :049 &gt;   end</span><br><span class="line">2.7.2 :050 &gt; end</span><br><span class="line"> =&gt; :my_method </span><br><span class="line">2.7.2 :051 &gt; class C</span><br><span class="line">2.7.2 :052 &gt;   include M1</span><br><span class="line">2.7.2 :053 &gt; end</span><br><span class="line"> =&gt; C </span><br><span class="line">2.7.2 :054 &gt; class D &lt; C;</span><br><span class="line">2.7.2 :055 &gt; end</span><br><span class="line"> =&gt; nil </span><br><span class="line">2.7.2 :056 &gt; D.ancestors</span><br><span class="line"> =&gt; [D, C, M1, Object, JSON::Ext::Generator::GeneratorMethods::Object, Kernel, BasicObject] </span><br></pre></td></tr></table></figure>
+
+<p>使用prepend方法，可以把module插入ancestors chain中包含它的该类的下方，而不是像include方法那样插入到上方。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :057 &gt; class C2</span><br><span class="line">2.7.2 :058 &gt;   prepend M1</span><br><span class="line">2.7.2 :059 &gt; end</span><br><span class="line"> =&gt; C2 </span><br><span class="line">2.7.2 :060 &gt; class D2 &lt; C2;</span><br><span class="line">2.7.2 :061 &gt; end</span><br><span class="line"> =&gt; nil </span><br><span class="line">2.7.2 :062 &gt; D2.ancestors</span><br><span class="line"> =&gt; [D2, M1, C2, Object, JSON::Ext::Generator::GeneratorMethods::Object, Kernel, BasicObject] </span><br></pre></td></tr></table></figure>
+
+<p><strong>多重包含</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :063 &gt; module M1;</span><br><span class="line">2.7.2 :064 &gt; end</span><br><span class="line"> =&gt; nil </span><br><span class="line">2.7.2 :065 &gt; module M2</span><br><span class="line">2.7.2 :066 &gt;   include M1</span><br><span class="line">2.7.2 :067 &gt; end</span><br><span class="line"> =&gt; M2 </span><br><span class="line">2.7.2 :068 &gt; module M3</span><br><span class="line">2.7.2 :069 &gt;   prepend M1</span><br><span class="line">2.7.2 :070 &gt;   include M2</span><br><span class="line">2.7.2 :071 &gt; end</span><br><span class="line"> =&gt; M3 </span><br><span class="line">2.7.2 :072 &gt; M3.ancestors</span><br><span class="line"> =&gt; [M1, M3, M2] </span><br></pre></td></tr></table></figure>
+
+<p>如果该module已经存在于祖先链中，那么Ruby会悄悄忽略这个include或prepend指令。</p>
+<p><strong>Kernel模块</strong></p>
+<p>print方法其实是Kernel模块的私有实例方法</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :075 &gt; Kernel.private_instance_methods.grep(/^pr/)</span><br><span class="line"> =&gt; [:proc, :printf, :print] </span><br></pre></td></tr></table></figure>
+
+<p>Object类包含了kernel模块，所以无论哪个对象都可以随意调用Kernel模块的方法。</p>
+<p><strong>内核方法</strong>——给Kernel模块增加一个方法</p>
+<h3 id="执行方法"><a href="#执行方法" class="headerlink" title="执行方法"></a>执行方法</h3><p>当前对象用self表示，因此可以用self关键字来对他进行访问。任何时刻，只有一个对象能充当当前对象，而且没有哪个对象可以长期充当此角色。</p>
+<p><strong>顶层上下文——top level context</strong></p>
+<p>对象main有时被称为顶层上下文—-此时开发者处在堆栈的顶层，要没还没有调用任何方法，要么调用的方法已经返回。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :079 &gt; self</span><br><span class="line"> =&gt; main </span><br><span class="line">2.7.2 :080 &gt; self.class</span><br><span class="line"> =&gt; Object </span><br></pre></td></tr></table></figure>
+
+<p>在类和模块定义之中，self的角色由这个类或者模块本身担任。</p>
+<h3 id="细化"><a href="#细化" class="headerlink" title="细化"></a>细化</h3><p>细化解决的问题是：解决破坏性的猴子补丁</p>
+<p><strong>细化</strong>用法如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :081 &gt; module StringExtensions</span><br><span class="line">2.7.2 :082 &gt;   refine String do</span><br><span class="line">2.7.2 :083 &gt;     def to_alphanumeric</span><br><span class="line">2.7.2 :084 &gt;       gsub(/[^\w\s]/,&#x27;&#x27;)</span><br><span class="line">2.7.2 :085 &gt;     end</span><br><span class="line">2.7.2 :086 &gt;   end</span><br><span class="line">2.7.2 :087 &gt; end</span><br><span class="line"> =&gt; #&lt;refinement:String@StringExtensions&gt;</span><br></pre></td></tr></table></figure>
+
+<p>细化在默认情况下不生效，为了使细化生效，必须调用using方法。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :081 &gt; module StringExtensions</span><br><span class="line">2.7.2 :082 &gt;   refine String do</span><br><span class="line">2.7.2 :083 &gt;     def to_alphanumeric</span><br><span class="line">2.7.2 :084 &gt;       gsub(/[^\w\s]/,&#x27;&#x27;)</span><br><span class="line">2.7.2 :085 &gt;     end</span><br><span class="line">2.7.2 :086 &gt;   end</span><br><span class="line">2.7.2 :087 &gt; end</span><br><span class="line"> =&gt; #&lt;refinement:String@StringExtensions&gt; </span><br><span class="line">2.7.2 :088 &gt; module StringStuff</span><br><span class="line">2.7.2 :089 &gt;   using StringExtensions</span><br><span class="line">2.7.2 :090 &gt;   &quot;my_string..&quot;.to_alphanumeric</span><br><span class="line">2.7.2 :091 &gt; end</span><br><span class="line"> =&gt; &quot;my_string&quot; </span><br><span class="line">2.7.2 :092 &gt; &quot;my_string...##&quot;.to_alphanumeric</span><br><span class="line">Traceback (most recent call last):</span><br></pre></td></tr></table></figure>
+
+<p>细化只在两种场合有效：refine代码内部，从using语句的位置开始到模块结束。</p>
+<p>细化并非全局性的，所以它不会带来类所具有的问题，可以让细化只作用在你希望生效的地方。</p>
+<h2 id="混乱的模块"><a href="#混乱的模块" class="headerlink" title="混乱的模块"></a>混乱的模块</h2><h2 id="对象模型小结"><a href="#对象模型小结" class="headerlink" title="对象模型小结"></a>对象模型小结</h2><ul>
+<li>对象由一组实例变量和类的引用组成。</li>
+<li>对象的方法存在于对象所属的类中（对类来说是实例方法）。类本身是Class类的对象。类的名字只是一个常量。</li>
+<li>Class类是Module的子类。一个模块基本上就是由一组方法组成的包。类除了具有模块的特性之外，还可以被实例化（使用new方法） ，或者按一定的层次结构来组织（使用superclass方法）。</li>
+<li>常量像文件系统一样，是按照树形结构组织的。其中，模块和类的名字扮演目录的角色，其他普通的常量则扮演文件的角色。</li>
+<li>每个类都有一个祖先链，这个链从每个类自己开始，向上直到Basicobject结束。</li>
+<li>调用方法时， Ruby首先向右找到接收者所属的类，然后向上查找祖先链，直到找到该方法或到达链的顶端为止。</li>
+<li>在类中包含一个模块（使用include方法）时，这个模块会被插入祖先链中，位置就在类的正上方；而使用prepend方法包含一个模块时，这个模块也会被插入祖先链中，位置在类的正下方。</li>
+<li>调用一个方法时，接收者会扮演self的角色。</li>
+<li>定义一个模块（或类）时，该模块会扮演self的角色。实例变量永远被认定为self的实例变量。</li>
+<li>任何没有明确指定接收者的方法调用，都当做是调用self的方法。</li>
+<li>细化就像在原来的类上添加了一块补丁，而且它会覆盖正常的方法查找。此外，细化只在程序的部分区域生效：从using语句的位置开始，直到模块结束，或者直到文件结束。</li>
+</ul>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><p><strong>static type checking</strong></p>
+<p>Java——Java的编译器会控制代码之间的交谈，对于每一次方法的调用，编译器都会检查接受对象是否有一个匹配的方法，这就叫做——<strong>静态类型检查</strong></p>
+<p>所以Java也叫做静态语言</p>
+<p><strong>动态语言包括Python&amp;Ruby</strong></p>
+<p>在某个对象上调用特定的方法时，系统不会发出警告，直到真正的调用此方法时，才会提示无法响应调用。</p>
+<h2 id="代码繁复的问题"><a href="#代码繁复的问题" class="headerlink" title="代码繁复的问题"></a>代码繁复的问题</h2><h3 id="老系统"><a href="#老系统" class="headerlink" title="老系统"></a>老系统</h3><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">DS类下面有很多很多方法！都是拿取对应信息的，看起来就很繁复的样子！</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码的优雅化🐶"><a href="#代码的优雅化🐶" class="headerlink" title="代码的优雅化🐶"></a>代码的优雅化🐶</h3><p><strong>动态方法</strong></p>
+<p><strong>method missing</strong></p>
+<h2 id="动态方法"><a href="#动态方法" class="headerlink" title="动态方法"></a>动态方法</h2><p>调用一个方法——给一个对象发送一个消息</p>
+<h3 id="动态调用方法"><a href="#动态调用方法" class="headerlink" title="动态调用方法"></a>动态调用方法</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">2.7.2 :008 &gt;</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line"><span class="meta">2.7.2 :009 &gt;</span>   <span class="function"><span class="keyword">def</span> <span class="title">my_method</span><span class="params">(my_arg)</span></span></span><br><span class="line"><span class="meta">2.7.2 :010 &gt;</span>     my_arg * <span class="number">2</span></span><br><span class="line"><span class="meta">2.7.2 :011 &gt;</span>   end</span><br><span class="line"><span class="meta">2.7.2 :012 &gt;</span> end</span><br><span class="line"> =&gt; <span class="symbol">:my_method</span> </span><br><span class="line"><span class="meta">2.7.2 :013 &gt;</span> obj = MyClass</span><br><span class="line"> =&gt; MyClass </span><br><span class="line"><span class="meta">2.7.2 :014 &gt;</span> obj = MyClass.new</span><br><span class="line"> =&gt; #&lt;MyClass:0x00007f8d721c8cc8&gt; </span><br><span class="line"><span class="meta">2.7.2 :015 &gt;</span> obj.send(<span class="symbol">:my_method</span>,<span class="number">3</span>)</span><br><span class="line"> =&gt; <span class="number">6</span> </span><br><span class="line"><span class="meta">2.7.2 :016 &gt;</span> obj.my_method(<span class="number">3</span>)</span><br><span class="line"> =&gt; <span class="number">6</span> </span><br></pre></td></tr></table></figure>
+
+<p><strong>send方法里所调用的方法成为了参数</strong></p>
+<p><strong>Symbol</strong>是不可修改的，&amp;，特别适合用来表示方法名。</p>
+<h3 id="动态定义方法"><a href="#动态定义方法" class="headerlink" title="动态定义方法"></a>动态定义方法</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">2.7.2 :001 &gt;</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line"><span class="meta">2.7.2 :002 &gt;</span>   define_method <span class="symbol">:my_method</span> do <span class="params">| my_arg|</span></span><br><span class="line"><span class="meta">2.7.2 :003 &gt;</span>   	my_arg*<span class="number">3</span></span><br><span class="line"><span class="meta">2.7.2 :004 &gt;</span>   end</span><br><span class="line"><span class="meta">2.7.2 :005 &gt;</span> end</span><br><span class="line"> =&gt; <span class="symbol">:my_method</span> </span><br><span class="line"><span class="meta">2.7.2 :006 &gt;</span> obj = MyClass.new</span><br><span class="line"> =&gt; #&lt;MyClass:0x00007f8d6f67a990&gt; </span><br><span class="line"><span class="meta">2.7.2 :007 &gt;</span> obj.my_method(<span class="number">2</span>)</span><br><span class="line"> =&gt; <span class="number">6</span> </span><br></pre></td></tr></table></figure>
+
+<p>这种在运行时定义方法的技术称为动态方法——<strong>Dynamic Method</strong></p>
+<h3 id="重构Computer类"><a href="#重构Computer类" class="headerlink" title="重构Computer类"></a>重构Computer类</h3><p>核心就是接收String || Symbol 作为参数，并调用方法。</p>
+<h2 id="method-missing方法"><a href="#method-missing方法" class="headerlink" title="method_missing方法"></a>method_missing方法</h2><p>什么是动态语言，show me the code</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">2.7.2 :020 &gt;</span> <span class="class"><span class="keyword">class</span> <span class="title">Lawyer</span></span></span><br><span class="line"><span class="meta">2.7.2 :021 &gt;</span> end</span><br><span class="line"> =&gt; nil </span><br><span class="line"><span class="meta">2.7.2 :022 &gt;</span> nick = Lawyer.new</span><br><span class="line"> =&gt; #&lt;Lawyer:0x00007f8d6bce27f0&gt; </span><br><span class="line"><span class="meta">2.7.2 :023 &gt;</span> nick.talk_simple</span><br><span class="line">Traceback (most recent call last)<span class="symbol">:</span></span><br><span class="line">        <span class="number">1</span>: from (irb)<span class="symbol">:</span><span class="number">23</span></span><br><span class="line">NoMethodError (undefined method <span class="string">`talk_simple&#x27; for #&lt;Lawyer:0x00007f8d6bce27f0&gt;)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">2.7.2 :025 &gt;</span> Lawyer.ancestors</span><br><span class="line"> =&gt; [Lawyer, ActiveSupport::Dependencies::ZeitwerkIntegration::RequireDependency, ActiveSupport::ForkTracker::CoreExtPrivate, ActiveSupport::ForkTracker::CoreExt, ActiveSupport::ToJsonWithActiveSupportEncoder, Object, JSON::Ext::Generator::GeneratorMethods::Object, ActiveSupport::Dependencies::Loadable, ActiveSupport::Tryable, Kernel, BasicObject] </span><br></pre></td></tr></table></figure>
+
+<h3 id="覆写method-missing方法"><a href="#覆写method-missing方法" class="headerlink" title="覆写method_missing方法"></a>覆写method_missing方法</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">2.7.2 :026 &gt;</span> <span class="class"><span class="keyword">class</span> <span class="title">Lawyer</span></span></span><br><span class="line"><span class="meta">2.7.2 :027 &gt;</span>   <span class="function"><span class="keyword">def</span> <span class="title">method_missing</span><span class="params">(method, *args)</span></span></span><br><span class="line"><span class="meta">2.7.2 :028 &gt;</span>     puts <span class="string">&quot;You called: <span class="subst">#&#123;method&#125;</span> (<span class="subst">#&#123;args.join(<span class="string">&#x27;,&#x27;</span>)&#125;</span>)&quot;</span></span><br><span class="line"><span class="meta">2.7.2 :029 &gt;</span>   end</span><br><span class="line"><span class="meta">2.7.2 :030 &gt;</span> end</span><br><span class="line"> =&gt; <span class="symbol">:method_missing</span> </span><br><span class="line"><span class="meta">2.7.2 :032 &gt;</span> lawyer = Lawyer.new</span><br><span class="line"> =&gt; #&lt;Lawyer:0x00007f8d6be08710&gt; </span><br><span class="line"><span class="meta">2.7.2 :034 &gt;</span> lawyer.send(<span class="symbol">:talk_simple</span>,<span class="number">2</span>)</span><br><span class="line">You <span class="symbol">called:</span> talk_simple (<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="幽灵方法"><a href="#幽灵方法" class="headerlink" title="幽灵方法"></a>幽灵方法</h3><p>因为要调用的方法其实不存在，所以也叫它幽灵方法。</p>
+<h2 id="消灭bug"><a href="#消灭bug" class="headerlink" title="消灭bug"></a>消灭bug</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :121 &gt; class Roulette</span><br><span class="line">2.7.2 :122 &gt;   def method_missing(name, *args)</span><br><span class="line">2.7.2 :123 &gt;     person = name.to_s.capitalize</span><br><span class="line">2.7.2 :124 &gt;     3.times do</span><br><span class="line">2.7.2 :125 &gt;       number = rand(10) + 1</span><br><span class="line">2.7.2 :126 &gt;       puts &quot;#&#123;number&#125;----&quot;</span><br><span class="line">2.7.2 :127 &gt;     end</span><br><span class="line">2.7.2 :128 &gt;     puts  &quot;#&#123;person&#125; got a #&#123;number&#125;&quot;</span><br><span class="line">2.7.2 :129 &gt;   end</span><br><span class="line">2.7.2 :130 &gt; end</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/Metaprogramming/image-20210518225149082.png" alt="image-20210518225149082"></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :156 &gt; class Roulette</span><br><span class="line">2.7.2 :157 &gt;   def method_missing(name, *args)</span><br><span class="line">2.7.2 :158 &gt;     person = name.to_s.capitalize</span><br><span class="line">2.7.2 :159 &gt;     super unless %w[Bob Tim Longbiu].include? p</span><br><span class="line">erson</span><br><span class="line">2.7.2 :160 &gt;     number = 0</span><br><span class="line">2.7.2 :161 &gt;     3.times do</span><br><span class="line">2.7.2 :162 &gt;       number = rand(10) +1</span><br><span class="line">2.7.2 :163 &gt;       puts &quot;#&#123;number&#125;---&quot;</span><br><span class="line">2.7.2 :164 &gt;     end</span><br><span class="line">2.7.2 :165 &gt;     &quot;#&#123;person&#125; got a #&#123;number&#125;&quot;</span><br><span class="line">2.7.2 :166 &gt;   end</span><br><span class="line">2.7.2 :167 &gt; end</span><br></pre></td></tr></table></figure>
+
+<h2 id="白板类"><a href="#白板类" class="headerlink" title="白板类"></a>白板类</h2><p>调用类的某个方法返回nil时，可以使用此条语句列出Object中所有以d开头的实例方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Object.instance_methods.grep &#x2F;^d&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h3 id="BasicObject"><a href="#BasicObject" class="headerlink" title="BasicObject"></a>BasicObject</h3><p>继承BasicObject类是最简单的定义白板类的方法。</p>
+<h3 id="删除方法"><a href="#删除方法" class="headerlink" title="删除方法"></a>删除方法</h3><table>
+<thead>
+<tr>
+<th>name</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>undef_method</td>
+<td>删除所有（包括继承来的）方法</td>
+</tr>
+<tr>
+<td>remove_method</td>
+<td>仅删除接受者自己的方法</td>
+</tr>
+</tbody></table>
+<h3 id="修改Computer"><a href="#修改Computer" class="headerlink" title="修改Computer"></a>修改Computer</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Computer</span> &lt; BasicObject</span></span><br><span class="line">	……</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>幽灵方法产生风险的根本原因是它们并非真正的方法，它们只是对方法调用的拦截。</p>
+<p>有动态方法则是普通的方法，不过它们不是用def定义，而是用define_method定义，它们的行为跟其他方法没什么两样。</p>
+<h1 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h1><p>块可以用来控制<strong>作用域(scope)</strong>,作用域是变量和方法可用性范围。</p>
+<h2 id="学习代码块"><a href="#学习代码块" class="headerlink" title="学习代码块"></a>学习代码块</h2><h3 id="代码块学习路线"><a href="#代码块学习路线" class="headerlink" title="代码块学习路线"></a>代码块学习路线</h3><ul>
+<li>代码块的基础知识</li>
+<li>作用域的基础知识：用代码块携带变量穿越作用域</li>
+<li>通过传递块给instance_eval方法来控制作用域</li>
+<li>怎样把块转换为诸如Proc和lambda这样的可调用对象，供以后调用</li>
+</ul>
+<h3 id="代码块基础知识"><a href="#代码块基础知识" class="headerlink" title="代码块基础知识"></a>代码块基础知识</h3><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">a_method</span><span class="params">(a,b)</span></span></span><br><span class="line">	a+<span class="keyword">yield</span>(a,b)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :103 &gt; def a_method(a,b)</span><br><span class="line">2.7.2 :104 &gt;   a+yield(a,b)</span><br><span class="line">2.7.2 :105 &gt; end</span><br><span class="line"> =&gt; :a_method </span><br><span class="line">2.7.2 :106 &gt; a_method(1,2) &#123;|x,y| (x+y)*3&#125;</span><br><span class="line"> =&gt; 10 </span><br></pre></td></tr></table></figure>
+
+<p>代码块可以用大括号定义，也可以用do……end关键字定义，通常来说，只有一行的块用大括号，而多行的块用do……end。</p>
+<p>只有调用一个方法时，才可以定义一个块。块会被直接传递给这个方法，该方法可以用yield关键字调用这个块。</p>
+<p><strong>使用Kernel#block_given?方法询问当前的方法调用是否包含块</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :107 &gt; def a_method</span><br><span class="line">2.7.2 :108 &gt;   return yield if block_given?</span><br><span class="line">2.7.2 :109 &gt;   &#x27;no block&#x27;</span><br><span class="line">2.7.2 :110 &gt; end</span><br><span class="line"> =&gt; :a_method </span><br><span class="line">2.7.2 :111 &gt; a_method</span><br><span class="line"> =&gt; &quot;no block&quot; </span><br><span class="line">2.7.2 :112 &gt; a_method &#123; &quot;here is a block&quot; &#125;</span><br><span class="line"> =&gt; &quot;here is a block&quot; </span><br></pre></td></tr></table></figure>
+
+<h2 id="Ruby的-符号"><a href="#Ruby的-符号" class="headerlink" title="Ruby的#符号"></a><del>Ruby的#符号</del></h2><h3 id="using关键字"><a href="#using关键字" class="headerlink" title="using关键字"></a><del>using关键字</del></h3><h2 id="代码块是闭包"><a href="#代码块是闭包" class="headerlink" title="代码块是闭包"></a>代码块是闭包</h2><p>代码块还可以把变量偷偷带出原来的作用域。</p>
+<p>代码块不能独立的运行。<img src="/img/Metaprogramming/screenshot-20210521-170353.png" alt="screenshot-20210521-170353"></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2.7.2 :128 &gt; def my_method</span><br><span class="line">2.7.2 :129 &gt;   x = &quot;goodbye&quot;</span><br><span class="line">2.7.2 :130 &gt;   yield(&quot;cruel&quot;)</span><br><span class="line">2.7.2 :131 &gt; end</span><br><span class="line"> =&gt; :my_method </span><br><span class="line">2.7.2 :132 &gt; x = &quot;hello&quot;</span><br><span class="line"> =&gt; &quot;hello&quot; </span><br><span class="line">2.7.2 :133 &gt; my_method &#123; |y| &quot;#&#123;x&#125;, #&#123;y&#125; world&quot; &#125;</span><br><span class="line"> =&gt; &quot;hello, cruel world&quot; </span><br><span class="line">2.7.2 :134 &gt; my_method &#123; |x| &quot;#&#123;x&#125;, world&quot; &#125;</span><br><span class="line"> =&gt; &quot;cruel, world&quot; </span><br></pre></td></tr></table></figure>
+
+<p>绑定在代码块里的变量在代码块结束之后，也跟着结束了。基于这样的特性，代码块也叫做闭包——closure。</p>
+<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><h3 id="作用域门"><a href="#作用域门" class="headerlink" title="作用域门"></a>作用域门</h3><h3 id="扁平化作用域"><a href="#扁平化作用域" class="headerlink" title="扁平化作用域"></a>扁平化作用域</h3><h3 id="闭包小结"><a href="#闭包小结" class="headerlink" title="闭包小结"></a>闭包小结</h3><h2 id="instance-eval方法"><a href="#instance-eval方法" class="headerlink" title="instance_eval方法"></a>instance_eval方法</h2><h3 id="打破封装"><a href="#打破封装" class="headerlink" title="打破封装"></a>打破封装</h3><h3 id="洁净室"><a href="#洁净室" class="headerlink" title="洁净室"></a>洁净室</h3><h2 id="可调用对象"><a href="#可调用对象" class="headerlink" title="可调用对象"></a>可调用对象</h2><h3 id="Proc对象"><a href="#Proc对象" class="headerlink" title="Proc对象"></a>Proc对象</h3><h3 id="Proc与Lambda的对比"><a href="#Proc与Lambda的对比" class="headerlink" title="Proc与Lambda的对比"></a>Proc与Lambda的对比</h3><h3 id="Method对象"><a href="#Method对象" class="headerlink" title="Method对象"></a>Method对象</h3><h3 id="可调用对象小结"><a href="#可调用对象小结" class="headerlink" title="可调用对象小结"></a>可调用对象小结</h3><h2 id="编写领域专属语言-DSL"><a href="#编写领域专属语言-DSL" class="headerlink" title="编写领域专属语言(DSL)"></a>编写领域专属语言(DSL)</h2><h3 id="第一个领域专属语言"><a href="#第一个领域专属语言" class="headerlink" title="第一个领域专属语言"></a>第一个领域专属语言</h3><h2 id="改良的DSL"><a href="#改良的DSL" class="headerlink" title="改良的DSL"></a>改良的DSL</h2><h2 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h2><h1 id="类定义"><a href="#类定义" class="headerlink" title="类定义"></a>类定义</h1><p><strong>定义RUby类实际上是在运行代码</strong></p>
+<p><strong>宏类可以用来修改类</strong></p>
+<p><strong>环绕别名可以在其他方法前后封装额外代码</strong></p>
+<p>Ruby最优雅的特性之一：<strong>单体类</strong></p>
+<h2 id="揭秘类定义"><a href="#揭秘类定义" class="headerlink" title="揭秘类定义"></a>揭秘类定义</h2><h3 id="深入类定义"><a href="#深入类定义" class="headerlink" title="深入类定义"></a>深入类定义</h3><h3 id="当前类"><a href="#当前类" class="headerlink" title="当前类"></a>当前类</h3><h3 id="实例类变量"><a href="#实例类变量" class="headerlink" title="实例类变量"></a>实例类变量</h3><h2 id="Taboo类"><a href="#Taboo类" class="headerlink" title="Taboo类"></a>Taboo类</h2><h2 id="单件方法"><a href="#单件方法" class="headerlink" title="单件方法"></a>单件方法</h2><h3 id="使用单件方法"><a href="#使用单件方法" class="headerlink" title="使用单件方法"></a>使用单件方法</h3><h3 id="类方法的真相"><a href="#类方法的真相" class="headerlink" title="类方法的真相"></a>类方法的真相</h3><h3 id="类宏"><a href="#类宏" class="headerlink" title="类宏"></a>类宏</h3><h2 id="单件类"><a href="#单件类" class="headerlink" title="单件类"></a>单件类</h2><h3 id="单件方法的神奇之处"><a href="#单件方法的神奇之处" class="headerlink" title="单件方法的神奇之处"></a>单件方法的神奇之处</h3><h3 id="揭秘单件类"><a href="#揭秘单件类" class="headerlink" title="揭秘单件类"></a>揭秘单件类</h3><h3 id="补充方法查找"><a href="#补充方法查找" class="headerlink" title="补充方法查找"></a>补充方法查找</h3><h2 id="模块的麻烦"><a href="#模块的麻烦" class="headerlink" title="模块的麻烦"></a>模块的麻烦</h2><h2 id="方法包装器"><a href="#方法包装器" class="headerlink" title="方法包装器"></a>方法包装器</h2><h3 id="方法别名"><a href="#方法别名" class="headerlink" title="方法别名"></a>方法别名</h3><h3 id="更多的方法包装器"><a href="#更多的方法包装器" class="headerlink" title="更多的方法包装器"></a>更多的方法包装器</h3><h3 id="解决Amazon难题"><a href="#解决Amazon难题" class="headerlink" title="解决Amazon难题"></a>解决Amazon难题</h3><h2 id="打破数学规律"><a href="#打破数学规律" class="headerlink" title="打破数学规律"></a>打破数学规律</h2><h2 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h2><h1 id="编写代码的代码"><a href="#编写代码的代码" class="headerlink" title="编写代码的代码"></a>编写代码的代码</h1><h2 id="通向周末的编程之路"><a href="#通向周末的编程之路" class="headerlink" title="通向周末的编程之路"></a>通向周末的编程之路</h2><h3 id="老板的任务"><a href="#老板的任务" class="headerlink" title="老板的任务"></a>老板的任务</h3><h3 id="开发计划"><a href="#开发计划" class="headerlink" title="开发计划"></a>开发计划</h3><h2 id="Kernel-eval方法"><a href="#Kernel-eval方法" class="headerlink" title="Kernel#eval方法"></a>Kernel#eval方法</h2><h3 id="REST-Client的例子"><a href="#REST-Client的例子" class="headerlink" title="REST Client的例子"></a>REST Client的例子</h3><h3 id="绑定对象"><a href="#绑定对象" class="headerlink" title="绑定对象"></a>绑定对象</h3><h3 id="irb的例子"><a href="#irb的例子" class="headerlink" title="irb的例子"></a>irb的例子</h3><h3 id="对比代码字符串与块"><a href="#对比代码字符串与块" class="headerlink" title="对比代码字符串与块"></a>对比代码字符串与块</h3><h3 id="eval方法的麻烦"><a href="#eval方法的麻烦" class="headerlink" title="eval方法的麻烦"></a>eval方法的麻烦</h3><h2 id="校验过的属性-第一步"><a href="#校验过的属性-第一步" class="headerlink" title="校验过的属性(第一步)"></a>校验过的属性(第一步)</h2><h2 id="校验过的属性-第二步"><a href="#校验过的属性-第二步" class="headerlink" title="校验过的属性(第二步)"></a>校验过的属性(第二步)</h2><h2 id="校验过的属性-第三步"><a href="#校验过的属性-第三步" class="headerlink" title="校验过的属性(第三步)"></a>校验过的属性(第三步)</h2><h2 id="校验过的属性-第四步"><a href="#校验过的属性-第四步" class="headerlink" title="校验过的属性(第四步)"></a>校验过的属性(第四步)</h2><h2 id="钩子方法"><a href="#钩子方法" class="headerlink" title="钩子方法"></a>钩子方法</h2><h3 id="更多钩子方法"><a href="#更多钩子方法" class="headerlink" title="更多钩子方法"></a>更多钩子方法</h3><h3 id="VCR的例子"><a href="#VCR的例子" class="headerlink" title="VCR的例子"></a>VCR的例子</h3><h2 id="校验过的属性-第五步"><a href="#校验过的属性-第五步" class="headerlink" title="校验过的属性(第五步)"></a>校验过的属性(第五步)</h2><h2 id="小结-3"><a href="#小结-3" class="headerlink" title="小结"></a>小结</h2><h1 id="尾声"><a href="#尾声" class="headerlink" title="尾声"></a>尾声</h1><p><strong>根本没有什么元编程，从来只有编程而已</strong></p>
+<h1 id="准备Rails之旅"><a href="#准备Rails之旅" class="headerlink" title="准备Rails之旅"></a>准备Rails之旅</h1><h1 id="Active-Record的设计"><a href="#Active-Record的设计" class="headerlink" title="Active Record的设计"></a>Active Record的设计</h1><h1 id="Active-Support的Concern模块"><a href="#Active-Support的Concern模块" class="headerlink" title="Active Support的Concern模块"></a>Active Support的Concern模块</h1><h1 id="alias-method-chain方法沉浮表"><a href="#alias-method-chain方法沉浮表" class="headerlink" title="alias_method_chain方法沉浮表"></a>alias_method_chain方法沉浮表</h1><h1 id="属性方法的发展"><a href="#属性方法的发展" class="headerlink" title="属性方法的发展"></a>属性方法的发展</h1><h1 id="最后的思考"><a href="#最后的思考" class="headerlink" title="最后的思考"></a>最后的思考</h1><h1 id="附录（思考）"><a href="#附录（思考）" class="headerlink" title="附录（思考）"></a>附录（思考）</h1><h2 id="include-amp-extend的使用场景"><a href="#include-amp-extend的使用场景" class="headerlink" title="include&amp;extend的使用场景"></a>include&amp;extend的使用场景</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">使用<span class="keyword">include</span>把一个<span class="class"><span class="keyword">module</span>包含在一个<span class="title">class</span>||<span class="title">module</span>中，使用.<span class="title">ancestors</span>可以发现，<span class="title">include</span>进来的<span class="title">class</span>||<span class="title">module</span>在上面,一般使用<span class="title">include</span>把自己写的<span class="title">module</span>包含进来</span></span><br><span class="line"><span class="symbol">eg:</span></span><br><span class="line"></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">001</span><span class="symbol">:</span><span class="number">1</span>* <span class="class"><span class="keyword">module</span> <span class="title">A</span></span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">002</span><span class="symbol">:</span><span class="number">1</span>*   <span class="string">&quot;this is A&quot;</span></span><br><span class="line"><span class="meta">irb(main):003:0&gt;</span> end</span><br><span class="line">=&gt; <span class="string">&quot;this is A&quot;</span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">004</span><span class="symbol">:</span><span class="number">1</span>* <span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">005</span><span class="symbol">:</span><span class="number">1</span>*   <span class="keyword">include</span> A</span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">006</span><span class="symbol">:</span><span class="number">1</span>*   <span class="string">&quot;this is B&quot;</span></span><br><span class="line"><span class="meta">irb(main):007:0&gt;</span> end</span><br><span class="line">=&gt; <span class="string">&quot;this is B&quot;</span></span><br><span class="line"><span class="meta">irb(main):008:0&gt;</span> B.ancestors</span><br><span class="line">=&gt; [B, A, Object, Kernel, BasicObject]</span><br><span class="line"></span><br><span class="line">使用extend,继承其他<span class="class"><span class="keyword">module</span>，一般使用<span class="title">extend</span>继承<span class="title">ruby</span>自带的<span class="title">module</span>&amp;<span class="title">gem</span>包的<span class="title">module</span></span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">001</span><span class="symbol">:</span><span class="number">1</span>* <span class="class"><span class="keyword">module</span> <span class="title">A</span></span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">002</span><span class="symbol">:</span><span class="number">1</span>*   <span class="string">&quot;this is A&quot;</span></span><br><span class="line"><span class="meta">irb(main):003:0&gt;</span> end</span><br><span class="line">=&gt; <span class="string">&quot;this is A&quot;</span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">004</span><span class="symbol">:</span><span class="number">1</span>* <span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">005</span><span class="symbol">:</span><span class="number">1</span>*   extend A</span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">006</span><span class="symbol">:</span><span class="number">1</span>*   <span class="string">&quot;this is B&quot;</span></span><br><span class="line"><span class="meta">irb(main):007:0&gt;</span> end</span><br><span class="line">=&gt; <span class="string">&quot;this is B&quot;</span></span><br><span class="line"><span class="meta">irb(main):008:0&gt;</span> B.ancestors</span><br><span class="line">=&gt; [B, Object, Kernel, BasicObject]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
-<p>Welcome to my blog! </br> I'm longbiu, developer from <b>Changsha, China</b></p>
-<p>I want to be a <b>Fullstack developer<img src="https://www.flaticon.com/premium-icon/icons/svg/3242/3242257.svg"width="35"/></b></p>
+
+<h2 id="动态创建对象-amp-动态调用方法"><a href="#动态创建对象-amp-动态调用方法" class="headerlink" title="动态创建对象&amp;动态调用方法"></a>动态创建对象&amp;动态调用方法</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">动态创建对象，已知，可以把方法，类看成是对象</span><br><span class="line">所以----</span><br><span class="line"><span class="number">1</span>.动态创建方法----define_method</span><br><span class="line">一般会使用define_method结合method_missing来编写DRY代码！也就是把重复的代码干掉！</span><br><span class="line"></span><br><span class="line"><span class="meta">2.7.2 :001 &gt;</span> <span class="class"><span class="keyword">class</span> <span class="title">Developer</span></span></span><br><span class="line"><span class="meta">2.7.2 :002 &gt;</span>   </span><br><span class="line"><span class="meta">2.7.2 :003 &gt;</span>   <span class="function"><span class="keyword">def</span> <span class="title">coding_frontend</span></span></span><br><span class="line"><span class="meta">2.7.2 :004 &gt;</span>     p <span class="string">&quot;writing frontend&quot;</span></span><br><span class="line"><span class="meta">2.7.2 :005 &gt;</span>   end</span><br><span class="line"><span class="meta">2.7.2 :006 &gt;</span>   </span><br><span class="line"><span class="meta">2.7.2 :007 &gt;</span>   <span class="function"><span class="keyword">def</span> <span class="title">coding_backend</span></span></span><br><span class="line"><span class="meta">2.7.2 :008 &gt;</span>     p <span class="string">&quot;writing backend&quot;</span></span><br><span class="line"><span class="meta">2.7.2 :009 &gt;</span>   end</span><br><span class="line"><span class="meta">2.7.2 :010 &gt;</span>   </span><br><span class="line"><span class="meta">2.7.2 :011 &gt;</span> end</span><br><span class="line"> =&gt; <span class="symbol">:coding_backend</span> </span><br><span class="line"><span class="meta">2.7.2 :012 &gt;</span> developer = Developer.new</span><br><span class="line"> =&gt; #&lt;Developer:0x00007f9168453d68&gt; </span><br><span class="line"><span class="meta">2.7.2 :013 &gt;</span> developer.coding_frontend</span><br><span class="line"><span class="string">&quot;writing frontend&quot;</span></span><br><span class="line"> =&gt; <span class="string">&quot;writing frontend&quot;</span> </span><br><span class="line"><span class="meta">2.7.2 :014 &gt;</span> developer.coding_backend</span><br><span class="line"><span class="string">&quot;writing backend&quot;</span></span><br><span class="line"> =&gt; <span class="string">&quot;writing backend&quot;</span> </span><br><span class="line"><span class="meta">2.7.2 :015 &gt;</span> <span class="class"><span class="keyword">class</span> <span class="title">Developer</span></span></span><br><span class="line"><span class="meta">2.7.2 :016 &gt;</span>   </span><br><span class="line"><span class="meta">2.7.2 :017 &gt;</span>   [<span class="string">&quot;frontend&quot;</span>, <span class="string">&quot;backend&quot;</span>].each do <span class="params">|method|</span></span><br><span class="line"><span class="meta">2.7.2 :018 &gt;</span>     define_method <span class="string">&quot;coding_<span class="subst">#&#123;method&#125;</span>&quot;</span> do</span><br><span class="line"><span class="meta">2.7.2 :019 &gt;</span>     p <span class="string">&quot;writing &quot;</span> + method.to_s</span><br><span class="line"><span class="meta">2.7.2 :020 &gt;</span>     end</span><br><span class="line"><span class="meta">2.7.2 :021 &gt;</span>   end</span><br><span class="line"><span class="meta">2.7.2 :022 &gt;</span>   </span><br><span class="line"><span class="meta">2.7.2 :023 &gt;</span> end</span><br><span class="line"> =&gt; [<span class="string">&quot;frontend&quot;</span>, <span class="string">&quot;backend&quot;</span>] </span><br><span class="line"><span class="meta">2.7.2 :024 &gt;</span> developer = Developer.new</span><br><span class="line"> =&gt; #&lt;Developer:0x00007f916c9be178&gt; </span><br><span class="line"><span class="meta">2.7.2 :025 &gt;</span> developer.coding_frontend</span><br><span class="line"><span class="string">&quot;writing frontend&quot;</span></span><br><span class="line"> =&gt; <span class="string">&quot;writing frontend&quot;</span> </span><br><span class="line"><span class="meta">2.7.2 :026 &gt;</span> developer.coding_backend</span><br><span class="line"><span class="string">&quot;writing backend&quot;</span></span><br><span class="line"> =&gt; <span class="string">&quot;writing backend&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">2</span>.动态创建类----class_eval&amp;instance_eval</span><br><span class="line"></span><br><span class="line">动态调用方法，作用是可以消除繁复的代码</span><br><span class="line"><span class="keyword">and</span></span><br><span class="line">调用一个方法实际上是给一个对象发送一条消息！</span><br><span class="line"></span><br><span class="line">Calling Methods Dynamically</span><br><span class="line"></span><br><span class="line">常规的操作是使用点标志符(.)</span><br><span class="line"></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">001</span><span class="symbol">:</span><span class="number">1</span>* <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">002</span><span class="symbol">:</span><span class="number">2</span>*   <span class="function"><span class="keyword">def</span> <span class="title">my_method</span><span class="params">(my_arg)</span></span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">003</span><span class="symbol">:</span><span class="number">2</span>*     my_arg * <span class="number">2</span></span><br><span class="line">irb(main)<span class="symbol">:</span><span class="number">004</span><span class="symbol">:</span><span class="number">1</span>*   <span class="keyword">end</span></span><br><span class="line"><span class="meta">irb(main):005:0&gt;</span> end</span><br><span class="line">=&gt; <span class="symbol">:my_method</span></span><br><span class="line"><span class="meta">irb(main):006:0&gt;</span> obj = MyClass.new</span><br><span class="line"><span class="meta">irb(main):007:0&gt;</span> obj.my_method(<span class="number">3</span>)</span><br><span class="line">=&gt; <span class="number">6</span></span><br><span class="line"><span class="meta">irb(main):009:0&gt;</span> obj.send(<span class="symbol">:my_method</span>,<span class="number">3</span>)</span><br><span class="line">=&gt; <span class="number">6</span></span><br><span class="line"></span><br><span class="line">在send方法中，想调用的方法变成了参数，可以动态派发！</span><br><span class="line"></span><br><span class="line">值得注意的是在动态调用方法中，方法是以Symbol的形式作为参数的，因为Symbol是不可修改的，所以将方法名表示为Symbol，<span class="keyword">and</span>  String同样也可以作为方法的参数！</span><br><span class="line"></span><br><span class="line">last but <span class="keyword">not</span> least ----</span><br><span class="line"></span><br><span class="line">.send甚至可以调用私有方法，假如不想这么做，可以使用.public_send方法！！！</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
-</div>
+
+<h2 id="动态执行脚本"><a href="#动态执行脚本" class="headerlink" title="动态执行脚本"></a>动态执行脚本</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># eval</span></span><br><span class="line">代码执行最直接的方法，也是最直接的方式，就是使用eval</span><br><span class="line"><span class="meta">irb(main):009:0&gt;</span> eval(<span class="string">&quot;3-1&quot;</span>)</span><br><span class="line">=&gt; <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># instance_eval</span></span><br><span class="line">将暂时的变化带入对象的上下文中</span><br><span class="line"></span><br><span class="line"><span class="comment"># class_eval(module_eval)</span></span><br><span class="line">临时性的进入类定义块的上下文</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 ]]></content>
-  </entry>
-  <entry>
-    <title>关于我</title>
-    <url>/about/index.html</url>
-    <content><![CDATA[<div align=center>
-
-<h1><img src="https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430" width="30"/> Hey! Nice to see you 👋</h1>
-
-
-<p>Welcome to my blog! </br> I'm longbiu, developer from <b>Changsha, China</b></p>
-<p>I want to be a <b>Fullstack developer<img src="https://www.flaticon.com/premium-icon/icons/svg/3242/3242257.svg"width="35"/></b></p>
-
-
-</div>
-
-<br>
-<div>
-  <svg class="pie-chart"></svg>
-  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1.1/dist/chart.xkcd.min.js"></script>
-  <script>
-    const svg = document.querySelector('.pie-chart');
-    const pieChart = new chartXkcd.Pie(svg, {
-      title: 'Programming language', // optional
-      data: {
-        labels: ['Python', 'Ruby', 'Java', 'Javascript', 'Html', 'Css'],
-        datasets: [{
-          data: [300, 400, 200, 100, 50, 50],
-        }],
-      },
-      options: { // optional
-        innerRadius: 0.5,
-        legendPosition: chartXkcd.config.positionType.upRight,
-      },
-    });
-  </script>
-  
-</div>
-]]></content>
+      <categories>
+        <category>ruby</category>
+      </categories>
+      <tags>
+        <tag>书籍</tag>
+      </tags>
   </entry>
   <entry>
     <title>分类</title>
     <url>/categories/index.html</url>
     <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/js/utils.js</url>
+    <content><![CDATA[const btf = {
+  debounce: function (func, wait, immediate) {
+    let timeout
+    return function () {
+      const context = this
+      const args = arguments
+      const later = function () {
+        timeout = null
+        if (!immediate) func.apply(context, args)
+      }
+      const callNow = immediate && !timeout
+      clearTimeout(timeout)
+      timeout = setTimeout(later, wait)
+      if (callNow) func.apply(context, args)
+    }
+  },
+
+  throttle: function (func, wait, options) {
+    let timeout, context, args
+    let previous = 0
+    if (!options) options = {}
+
+    const later = function () {
+      previous = options.leading === false ? 0 : new Date().getTime()
+      timeout = null
+      func.apply(context, args)
+      if (!timeout) context = args = null
+    }
+
+    const throttled = function () {
+      const now = new Date().getTime()
+      if (!previous && options.leading === false) previous = now
+      const remaining = wait - (now - previous)
+      context = this
+      args = arguments
+      if (remaining <= 0 || remaining > wait) {
+        if (timeout) {
+          clearTimeout(timeout)
+          timeout = null
+        }
+        previous = now
+        func.apply(context, args)
+        if (!timeout) context = args = null
+      } else if (!timeout && options.trailing !== false) {
+        timeout = setTimeout(later, remaining)
+      }
+    }
+
+    return throttled
+  },
+
+  sidebarPaddingR: () => {
+    const innerWidth = window.innerWidth
+    const clientWidth = document.body.clientWidth
+    const paddingRight = innerWidth - clientWidth
+    if (innerWidth !== clientWidth) {
+      document.body.style.paddingRight = paddingRight + 'px'
+    }
+  },
+
+  snackbarShow: (text, showAction, duration) => {
+    const sa = (typeof showAction !== 'undefined') ? showAction : false
+    const dur = (typeof duration !== 'undefined') ? duration : 2000
+    const position = GLOBAL_CONFIG.Snackbar.position
+    const bg = document.documentElement.getAttribute('data-theme') === 'light' ? GLOBAL_CONFIG.Snackbar.bgLight : GLOBAL_CONFIG.Snackbar.bgDark
+    Snackbar.show({
+      text: text,
+      backgroundColor: bg,
+      showAction: sa,
+      duration: dur,
+      pos: position
+    })
+  },
+
+  initJustifiedGallery: function (selector) {
+    if (!(selector instanceof jQuery)) {
+      selector = $(selector)
+    }
+    selector.each(function (i, o) {
+      if ($(this).is(':visible')) {
+        $(this).justifiedGallery({
+          rowHeight: 220,
+          margins: 4
+        })
+      }
+    })
+  },
+
+  diffDate: (d, more = false) => {
+    const dateNow = new Date()
+    const datePost = new Date(d)
+    const dateDiff = dateNow.getTime() - datePost.getTime()
+    const minute = 1000 * 60
+    const hour = minute * 60
+    const day = hour * 24
+    const month = day * 30
+
+    let result
+    if (more) {
+      const monthCount = dateDiff / month
+      const dayCount = dateDiff / day
+      const hourCount = dateDiff / hour
+      const minuteCount = dateDiff / minute
+
+      if (monthCount > 12) {
+        result = datePost.toLocaleDateString().replace(/\//g, '-')
+      } else if (monthCount >= 1) {
+        result = parseInt(monthCount) + ' ' + GLOBAL_CONFIG.date_suffix.month
+      } else if (dayCount >= 1) {
+        result = parseInt(dayCount) + ' ' + GLOBAL_CONFIG.date_suffix.day
+      } else if (hourCount >= 1) {
+        result = parseInt(hourCount) + ' ' + GLOBAL_CONFIG.date_suffix.hour
+      } else if (minuteCount >= 1) {
+        result = parseInt(minuteCount) + ' ' + GLOBAL_CONFIG.date_suffix.min
+      } else {
+        result = GLOBAL_CONFIG.date_suffix.just
+      }
+    } else {
+      result = parseInt(dateDiff / day)
+    }
+    return result
+  },
+
+  loadComment: (dom, callback) => {
+    if ('IntersectionObserver' in window) {
+      const observerItem = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          callback()
+          observerItem.disconnect()
+        }
+      }, { threshold: [0] })
+      observerItem.observe(dom)
+    } else {
+      callback()
+    }
+  },
+
+  scrollToDest: (pos, time) => {
+    if (pos < 0 || time < 0) {
+      return
+    }
+
+    const currentPos = window.scrollY || window.screenTop
+    if (currentPos > pos) pos = pos - 70
+
+    if ('CSS' in window && CSS.supports('scroll-behavior', 'smooth')) {
+      window.scrollTo({
+        top: pos,
+        behavior: 'smooth'
+      })
+      return
+    }
+
+    let start = null
+    time = time || 500
+    window.requestAnimationFrame(function step (currentTime) {
+      start = !start ? currentTime : start
+      if (currentPos < pos) {
+        const progress = currentTime - start
+        window.scrollTo(0, ((pos - currentPos) * progress / time) + currentPos)
+        if (progress < time) {
+          window.requestAnimationFrame(step)
+        } else {
+          window.scrollTo(0, pos)
+        }
+      } else {
+        const progress = currentTime - start
+        window.scrollTo(0, currentPos - ((currentPos - pos) * progress / time))
+        if (progress < time) {
+          window.requestAnimationFrame(step)
+        } else {
+          window.scrollTo(0, pos)
+        }
+      }
+    })
+  },
+
+  fadeIn: (ele, time) => {
+    ele.style.cssText = `display:block;animation: to_show ${time}s`
+  },
+
+  fadeOut: (ele, time) => {
+    ele.addEventListener('animationend', function f () {
+      ele.style.cssText = "display: none; animation: '' "
+      ele.removeEventListener('animationend', f)
+    })
+    ele.style.animation = `to_hide ${time}s`
+  },
+
+  getParents: (elem, selector) => {
+    for (; elem && elem !== document; elem = elem.parentNode) {
+      if (elem.matches(selector)) return elem
+    }
+    return null
+  },
+
+  siblings: (ele, selector) => {
+    return [...ele.parentNode.children].filter((child) => {
+      if (selector) {
+        return child !== ele && child.matches(selector)
+      }
+      return child !== ele
+    })
+  },
+
+  /**
+   *
+   * @param {*} selector
+   * @param {*} eleType the type of create element
+   * @param {*} id id
+   * @param {*} cn class name
+   */
+  wrap: function (selector, eleType, id = '', cn = '') {
+    const creatEle = document.createElement(eleType)
+    if (id) creatEle.id = id
+    if (cn) creatEle.className = cn
+    selector.parentNode.insertBefore(creatEle, selector)
+    creatEle.appendChild(selector)
+  },
+
+  unwrap: function (el) {
+    const elParentNode = el.parentNode
+    if (elParentNode !== document.body) {
+      elParentNode.parentNode.insertBefore(el, elParentNode)
+      elParentNode.parentNode.removeChild(elParentNode)
+    }
+  },
+
+  isJqueryLoad: (fn) => {
+    if (typeof jQuery === 'undefined') {
+      getScript(GLOBAL_CONFIG.source.jQuery).then(fn)
+    } else {
+      fn()
+    }
+  },
+
+  isHidden: (ele) => ele.offsetHeight === 0 && ele.offsetWidth === 0,
+
+  getEleTop: (ele) => {
+    let actualTop = ele.offsetTop
+    let current = ele.offsetParent
+
+    while (current !== null) {
+      actualTop += current.offsetTop
+      current = current.offsetParent
+    }
+
+    return actualTop
+  }
+
+}
+]]></content>
   </entry>
   <entry>
     <title></title>
@@ -6301,144 +6708,6 @@ blockquote.pullquote.right {
   display: none;
   background: rgba(0,0,0,0.6);
 }
-#algolia-search .search-dialog {
-  -webkit-animation: titlescale 0.5s;
-  -moz-animation: titlescale 0.5s;
-  -o-animation: titlescale 0.5s;
-  -ms-animation: titlescale 0.5s;
-  animation: titlescale 0.5s;
-}
-#algolia-search .search-dialog .ais-search-box {
-  margin: 0 auto;
-  max-width: 100%;
-  width: 100%;
-}
-#algolia-search .search-dialog .ais-search-box input {
-  padding: 0.25rem 0.7rem;
-  outline: none;
-  border: 2px solid #49b1f5;
-  border-radius: 2rem;
-  background: var(--search-bg);
-  color: var(--search-input-color);
-}
-#algolia-search .search-dialog .ais-hits--item.algolia-hit-item {
-  position: relative;
-  padding-left: 1.2rem;
-}
-#algolia-search .search-dialog .ais-hits--item.algolia-hit-item:hover:before {
-  border-color: #ff7242;
-}
-#algolia-search .search-dialog .ais-hits--item.algolia-hit-item:before {
-  position: absolute;
-  top: 0.53em;
-  left: 0;
-  width: 0.5em;
-  height: 0.5em;
-  border: 0.15rem solid #49b1f5;
-  border-radius: 0.5em;
-  background: transparent;
-  content: '';
-  line-height: 0.5em;
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
-  -ms-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-}
-#algolia-search .search-dialog .ais-hits--item.algolia-hit-item a {
-  display: block;
-  color: var(--search-result-title);
-  cursor: pointer;
-}
-#algolia-search .search-dialog .ais-hits--item.algolia-hit-item a:hover {
-  color: #49b1f5;
-}
-#algolia-search .search-dialog .ais-hits--item.algolia-hit-item em {
-  color: #f47466;
-  font-weight: bold;
-}
-#algolia-search .search-dialog .ais-pagination.pagination {
-  margin: 0.8rem 0 0;
-  padding: 0;
-  text-align: center;
-}
-#algolia-search .search-dialog .ais-pagination.pagination .ais-pagination--item {
-  margin: 0 0.2rem;
-  padding: 0;
-}
-#algolia-search .search-dialog .ais-pagination.pagination .ais-pagination--item a {
-  display: inline-block;
-  min-width: 1.2rem;
-  height: 1.2rem;
-  text-align: center;
-  line-height: 1.2rem;
-}
-#algolia-search .search-dialog .ais-pagination.pagination .ais-pagination--item.current a {
-  background: #00c4b6;
-  color: #eee;
-  cursor: default;
-}
-#algolia-search .search-dialog .algolia-logo {
-  padding-top: 2px;
-  width: 4rem;
-  height: 1.5rem;
-}
-.search-dialog {
-  position: fixed;
-  top: 5rem;
-  left: 50%;
-  z-index: 1001;
-  display: none;
-  margin-left: -15rem;
-  padding: 1rem;
-  width: 30rem;
-  background: var(--search-bg);
-}
-@media screen and (max-width: 768px) {
-  .search-dialog {
-    top: 0;
-    left: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-  }
-}
-.search-dialog hr {
-  margin: 1rem auto;
-}
-.search-dialog span.search-close-button {
-  position: absolute;
-  top: 0.8rem;
-  right: 1rem;
-  color: #858585;
-  font-size: 1.4em;
-  line-height: 1;
-  cursor: pointer;
-  -webkit-transition: color 0.2s ease-in-out;
-  -moz-transition: color 0.2s ease-in-out;
-  -o-transition: color 0.2s ease-in-out;
-  -ms-transition: color 0.2s ease-in-out;
-  transition: color 0.2s ease-in-out;
-}
-.search-dialog span.search-close-button:hover {
-  color: #49b1f5;
-}
-.search-dialog__title {
-  padding: 0 0 0.7rem;
-  color: #49b1f5;
-  font-size: 1.4em;
-  line-height: 1;
-}
-#search-mask {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  display: none;
-  background: rgba(0,0,0,0.6);
-}
 #local-search .search-dialog {
   -webkit-animation: titlescale 0.5s;
   -moz-animation: titlescale 0.5s;
@@ -6516,19 +6785,351 @@ blockquote.pullquote.right {
 ]]></content>
   </entry>
   <entry>
-    <title>友情链接</title>
-    <url>/link/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title></title>
     <url>/css/var.css</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
+    <title>友情链接</title>
+    <url>/link/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>关于我</title>
+    <url>/about/index.html</url>
+    <content><![CDATA[<div align=center>
+
+<h1><img src="https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430" width="30"/> Hey! Nice to see you 👋</h1>
+
+
+<p>Welcome to my blog! </br> I'm longbiu, developer from <b>Changsha, China</b></p>
+<p>I want to be a <b>Fullstack developer<img src="https://www.flaticon.com/premium-icon/icons/svg/3242/3242257.svg"width="35"/></b></p>
+
+
+</div>
+
+<br>
+<div>
+  <svg class="pie-chart"></svg>
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1.1/dist/chart.xkcd.min.js"></script>
+  <script>
+    const svg = document.querySelector('.pie-chart');
+    const pieChart = new chartXkcd.Pie(svg, {
+      title: 'Programming language', // optional
+      data: {
+        labels: ['Python', 'Ruby', 'Java', 'Javascript', 'Html', 'Css'],
+        datasets: [{
+          data: [300, 400, 200, 100, 50, 50],
+        }],
+      },
+      options: { // optional
+        innerRadius: 0.5,
+        legendPosition: chartXkcd.config.positionType.upRight,
+      },
+    });
+  </script>
+  
+</div>
+]]></content>
+  </entry>
+  <entry>
     <title>标签</title>
     <url>/tags/index.html</url>
     <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/js/search/algolia.js</url>
+    <content><![CDATA[window.addEventListener('load', () => {
+  const openSearch = () => {
+    document.body.style.cssText = 'width: 100%;overflow: hidden'
+    document.querySelector('#algolia-search .search-dialog').style.display = 'block'
+    document.querySelector('#algolia-search .ais-search-box--input').focus()
+    btf.fadeIn(document.getElementById('search-mask'), 0.5)
+    // shortcut: ESC
+    document.addEventListener('keydown', function f (event) {
+      if (event.code === 'Escape') {
+        closeSearch()
+        document.removeEventListener('keydown', f)
+      }
+    })
+  }
+
+  const closeSearch = () => {
+    document.body.style.cssText = "width: '';overflow: ''"
+    const $searchDialog = document.querySelector('#algolia-search .search-dialog')
+    $searchDialog.style.animation = 'search_close .5s'
+    setTimeout(() => { $searchDialog.style.cssText = "display: none; animation: ''" }, 500)
+    btf.fadeOut(document.getElementById('search-mask'), 0.5)
+  }
+
+  const searchClickFn = () => {
+    document.querySelector('#search-button > .search').addEventListener('click', openSearch)
+    document.getElementById('search-mask').addEventListener('click', closeSearch)
+    document.querySelector('#algolia-search .search-close-button').addEventListener('click', closeSearch)
+  }
+
+  searchClickFn()
+
+  window.addEventListener('pjax:complete', function () {
+    getComputedStyle(document.querySelector('#algolia-search .search-dialog')).display === 'block' && closeSearch()
+    searchClickFn()
+  })
+
+  const algolia = GLOBAL_CONFIG.algolia
+  const isAlgoliaValid = algolia.appId && algolia.apiKey && algolia.indexName
+  if (!isAlgoliaValid) {
+    return console.error('Algolia setting is invalid!')
+  }
+
+  const search = instantsearch({
+    appId: algolia.appId,
+    apiKey: algolia.apiKey,
+    indexName: algolia.indexName,
+    searchParameters: {
+      hitsPerPage: algolia.hits.per_page || 10
+    },
+    searchFunction: function (helper) {
+      const searchInput = document.querySelector('#algolia-search-input input')
+
+      if (searchInput.value) {
+        helper.search()
+      }
+    }
+  })
+
+  search.addWidget(
+    instantsearch.widgets.searchBox({
+      container: '#algolia-search-input',
+      reset: false,
+      magnifier: false,
+      placeholder: GLOBAL_CONFIG.algolia.languages.input_placeholder
+    })
+  )
+  search.addWidget(
+    instantsearch.widgets.hits({
+      container: '#algolia-hits',
+      templates: {
+        item: function (data) {
+          const link = data.permalink ? data.permalink : (GLOBAL_CONFIG.root + data.path)
+          return (
+            '<a href="' + link + '" class="algolia-hit-item-link">' +
+            data._highlightResult.title.value +
+            '</a>'
+          )
+        },
+        empty: function (data) {
+          return (
+            '<div id="algolia-hits-empty">' +
+            GLOBAL_CONFIG.algolia.languages.hits_empty.replace(/\$\{query}/, data.query) +
+            '</div>'
+          )
+        }
+      },
+      cssClasses: {
+        item: 'algolia-hit-item'
+      }
+    })
+  )
+
+  search.addWidget(
+    instantsearch.widgets.stats({
+      container: '#algolia-stats',
+      templates: {
+        body: function (data) {
+          const stats = GLOBAL_CONFIG.algolia.languages.hits_stats
+            .replace(/\$\{hits}/, data.nbHits)
+            .replace(/\$\{time}/, data.processingTimeMS)
+          return (
+            '<hr>' +
+            stats +
+            '<span class="algolia-logo pull-right">' +
+            '  <img src="' + GLOBAL_CONFIG.root + 'img/algolia.svg" alt="Algolia" />' +
+            '</span>'
+          )
+        }
+      }
+    })
+  )
+
+  search.addWidget(
+    instantsearch.widgets.pagination({
+      container: '#algolia-pagination',
+      scrollTo: false,
+      showFirstLast: false,
+      labels: {
+        first: '<i class="fas fa-angle-double-left"></i>',
+        last: '<i class="fas fa-angle-double-right"></i>',
+        previous: '<i class="fas fa-angle-left"></i>',
+        next: '<i class="fas fa-angle-right"></i>'
+      },
+      cssClasses: {
+        root: 'pagination',
+        item: 'pagination-item',
+        link: 'page-number',
+        active: 'current',
+        disabled: 'disabled-item'
+      }
+    })
+  )
+  search.start()
+
+  window.pjax && search.on('render', () => {
+    window.pjax.refresh(document.getElementById('algolia-hits'))
+  })
+})
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/js/search/local-search.js</url>
+    <content><![CDATA[window.addEventListener('load', () => {
+  let loadFlag = false
+  const openSearch = function () {
+    document.body.style.cssText = 'width: 100%;overflow: hidden'
+    document.querySelector('#local-search .search-dialog').style.display = 'block'
+    document.querySelector('#local-search-input input').focus()
+    btf.fadeIn(document.getElementById('search-mask'), 0.5)
+    if (!loadFlag) {
+      search(GLOBAL_CONFIG.localSearch.path)
+      loadFlag = true
+    }
+    // shortcut: ESC
+    document.addEventListener('keydown', function f (event) {
+      if (event.code === 'Escape') {
+        closeSearch()
+        document.removeEventListener('keydown', f)
+      }
+    })
+  }
+
+  const closeSearch = function () {
+    document.body.style.cssText = "width: '';overflow: ''"
+    const $searchDialog = document.querySelector('#local-search .search-dialog')
+    $searchDialog.style.animation = 'search_close .5s'
+    setTimeout(() => { $searchDialog.style.cssText = "display: none; animation: ''" }, 500)
+    btf.fadeOut(document.getElementById('search-mask'), 0.5)
+  }
+
+  // click function
+  const searchClickFn = () => {
+    document.querySelector('#search-button > .search').addEventListener('click', openSearch)
+    document.getElementById('search-mask').addEventListener('click', closeSearch)
+    document.querySelector('#local-search .search-close-button').addEventListener('click', closeSearch)
+  }
+
+  searchClickFn()
+
+  // pjax
+  window.addEventListener('pjax:complete', function () {
+    getComputedStyle(document.querySelector('#local-search .search-dialog')).display === 'block' && closeSearch()
+    searchClickFn()
+  })
+
+  function search (path) {
+    fetch(GLOBAL_CONFIG.root + path)
+      .then(response => response.text())
+      .then(str => new window.DOMParser().parseFromString(str, 'text/xml'))
+      .then(data => {
+        const datas = [...data.querySelectorAll('entry')].map(function (item) {
+          return {
+            title: item.querySelector('title').textContent,
+            content: item.querySelector('content').textContent,
+            url: item.querySelector('url').textContent
+          }
+        })
+
+        const $input = document.querySelector('#local-search-input input')
+        const $resultContent = document.getElementById('local-search-results')
+        $input.addEventListener('input', function () {
+          let str = '<div class="search-result-list">'
+          const keywords = this.value.trim().toLowerCase().split(/[\s]+/)
+          $resultContent.innerHTML = ''
+          if (this.value.trim().length <= 0) return
+          let count = 0
+          // perform local searching
+          datas.forEach(function (data) {
+            let isMatch = true
+            if (!data.title || data.title.trim() === '') {
+              data.title = 'Untitled'
+            }
+            let dataTitle = data.title.trim().toLowerCase()
+            const dataContent = data.content.trim().replace(/<[^>]+>/g, '').toLowerCase()
+            const dataUrl = data.url.startsWith('/') ? data.url : GLOBAL_CONFIG.root + data.url
+            let indexTitle = -1
+            let indexContent = -1
+            let firstOccur = -1
+            // only match artiles with not empty titles and contents
+            if (dataTitle !== '' || dataContent !== '') {
+              keywords.forEach(function (keyword, i) {
+                indexTitle = dataTitle.indexOf(keyword)
+                indexContent = dataContent.indexOf(keyword)
+                if (indexTitle < 0 && indexContent < 0) {
+                  isMatch = false
+                } else {
+                  if (indexContent < 0) {
+                    indexContent = 0
+                  }
+                  if (i === 0) {
+                    firstOccur = indexContent
+                  }
+                }
+              })
+            } else {
+              isMatch = false
+            }
+
+            // show search results
+            if (isMatch) {
+              const content = data.content.trim().replace(/<[^>]+>/g, '')
+              if (firstOccur >= 0) {
+                // cut out 130 characters
+                let start = firstOccur - 30
+                let end = firstOccur + 100
+
+                if (start < 0) {
+                  start = 0
+                }
+
+                if (start === 0) {
+                  end = 100
+                }
+
+                if (end > content.length) {
+                  end = content.length
+                }
+
+                let matchContent = content.substring(start, end)
+
+                // highlight all keywords
+                keywords.forEach(function (keyword) {
+                  const regS = new RegExp(keyword, 'gi')
+                  matchContent = matchContent.replace(regS, '<span class="search-keyword">' + keyword + '</span>')
+                  dataTitle = dataTitle.replace(regS, '<span class="search-keyword">' + keyword + '</span>')
+                })
+
+                str += '<div class="local-search__hit-item"><a href="' + dataUrl + '" class="search-result-title">' + dataTitle + '</a>'
+                count += 1
+
+                if (dataContent !== '') {
+                  str += '<p class="search-result">' + matchContent + '...</p>'
+                }
+              }
+              str += '</div>'
+            }
+          })
+          if (count === 0) {
+            str += '<div id="local-search__hits-empty">' + GLOBAL_CONFIG.localSearch.languages.hits_empty.replace(/\$\{query}/, this.value.trim()) +
+              '</div>'
+          }
+          str += '</div>'
+          $resultContent.innerHTML = str
+          window.pjax && window.pjax.refresh($resultContent)
+        })
+      })
+  }
+})
+]]></content>
   </entry>
   <entry>
     <title></title>
@@ -7399,262 +8000,6 @@ blockquote.pullquote.right {
   </entry>
   <entry>
     <title></title>
-    <url>/js/utils.js</url>
-    <content><![CDATA[const btf = {
-  debounce: function (func, wait, immediate) {
-    let timeout
-    return function () {
-      const context = this
-      const args = arguments
-      const later = function () {
-        timeout = null
-        if (!immediate) func.apply(context, args)
-      }
-      const callNow = immediate && !timeout
-      clearTimeout(timeout)
-      timeout = setTimeout(later, wait)
-      if (callNow) func.apply(context, args)
-    }
-  },
-
-  throttle: function (func, wait, options) {
-    let timeout, context, args
-    let previous = 0
-    if (!options) options = {}
-
-    const later = function () {
-      previous = options.leading === false ? 0 : new Date().getTime()
-      timeout = null
-      func.apply(context, args)
-      if (!timeout) context = args = null
-    }
-
-    const throttled = function () {
-      const now = new Date().getTime()
-      if (!previous && options.leading === false) previous = now
-      const remaining = wait - (now - previous)
-      context = this
-      args = arguments
-      if (remaining <= 0 || remaining > wait) {
-        if (timeout) {
-          clearTimeout(timeout)
-          timeout = null
-        }
-        previous = now
-        func.apply(context, args)
-        if (!timeout) context = args = null
-      } else if (!timeout && options.trailing !== false) {
-        timeout = setTimeout(later, remaining)
-      }
-    }
-
-    return throttled
-  },
-
-  sidebarPaddingR: () => {
-    const innerWidth = window.innerWidth
-    const clientWidth = document.body.clientWidth
-    const paddingRight = innerWidth - clientWidth
-    if (innerWidth !== clientWidth) {
-      document.body.style.paddingRight = paddingRight + 'px'
-    }
-  },
-
-  snackbarShow: (text, showAction, duration) => {
-    const sa = (typeof showAction !== 'undefined') ? showAction : false
-    const dur = (typeof duration !== 'undefined') ? duration : 2000
-    const position = GLOBAL_CONFIG.Snackbar.position
-    const bg = document.documentElement.getAttribute('data-theme') === 'light' ? GLOBAL_CONFIG.Snackbar.bgLight : GLOBAL_CONFIG.Snackbar.bgDark
-    Snackbar.show({
-      text: text,
-      backgroundColor: bg,
-      showAction: sa,
-      duration: dur,
-      pos: position
-    })
-  },
-
-  initJustifiedGallery: function (selector) {
-    if (!(selector instanceof jQuery)) {
-      selector = $(selector)
-    }
-    selector.each(function (i, o) {
-      if ($(this).is(':visible')) {
-        $(this).justifiedGallery({
-          rowHeight: 220,
-          margins: 4
-        })
-      }
-    })
-  },
-
-  diffDate: (d, more = false) => {
-    const dateNow = new Date()
-    const datePost = new Date(d)
-    const dateDiff = dateNow.getTime() - datePost.getTime()
-    const minute = 1000 * 60
-    const hour = minute * 60
-    const day = hour * 24
-    const month = day * 30
-
-    let result
-    if (more) {
-      const monthCount = dateDiff / month
-      const dayCount = dateDiff / day
-      const hourCount = dateDiff / hour
-      const minuteCount = dateDiff / minute
-
-      if (monthCount > 12) {
-        result = datePost.toLocaleDateString().replace(/\//g, '-')
-      } else if (monthCount >= 1) {
-        result = parseInt(monthCount) + ' ' + GLOBAL_CONFIG.date_suffix.month
-      } else if (dayCount >= 1) {
-        result = parseInt(dayCount) + ' ' + GLOBAL_CONFIG.date_suffix.day
-      } else if (hourCount >= 1) {
-        result = parseInt(hourCount) + ' ' + GLOBAL_CONFIG.date_suffix.hour
-      } else if (minuteCount >= 1) {
-        result = parseInt(minuteCount) + ' ' + GLOBAL_CONFIG.date_suffix.min
-      } else {
-        result = GLOBAL_CONFIG.date_suffix.just
-      }
-    } else {
-      result = parseInt(dateDiff / day)
-    }
-    return result
-  },
-
-  loadComment: (dom, callback) => {
-    if ('IntersectionObserver' in window) {
-      const observerItem = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          callback()
-          observerItem.disconnect()
-        }
-      }, { threshold: [0] })
-      observerItem.observe(dom)
-    } else {
-      callback()
-    }
-  },
-
-  scrollToDest: (pos, time) => {
-    if (pos < 0 || time < 0) {
-      return
-    }
-
-    const currentPos = window.scrollY || window.screenTop
-    if (currentPos > pos) pos = pos - 70
-
-    if ('CSS' in window && CSS.supports('scroll-behavior', 'smooth')) {
-      window.scrollTo({
-        top: pos,
-        behavior: 'smooth'
-      })
-      return
-    }
-
-    let start = null
-    time = time || 500
-    window.requestAnimationFrame(function step (currentTime) {
-      start = !start ? currentTime : start
-      if (currentPos < pos) {
-        const progress = currentTime - start
-        window.scrollTo(0, ((pos - currentPos) * progress / time) + currentPos)
-        if (progress < time) {
-          window.requestAnimationFrame(step)
-        } else {
-          window.scrollTo(0, pos)
-        }
-      } else {
-        const progress = currentTime - start
-        window.scrollTo(0, currentPos - ((currentPos - pos) * progress / time))
-        if (progress < time) {
-          window.requestAnimationFrame(step)
-        } else {
-          window.scrollTo(0, pos)
-        }
-      }
-    })
-  },
-
-  fadeIn: (ele, time) => {
-    ele.style.cssText = `display:block;animation: to_show ${time}s`
-  },
-
-  fadeOut: (ele, time) => {
-    ele.addEventListener('animationend', function f () {
-      ele.style.cssText = "display: none; animation: '' "
-      ele.removeEventListener('animationend', f)
-    })
-    ele.style.animation = `to_hide ${time}s`
-  },
-
-  getParents: (elem, selector) => {
-    for (; elem && elem !== document; elem = elem.parentNode) {
-      if (elem.matches(selector)) return elem
-    }
-    return null
-  },
-
-  siblings: (ele, selector) => {
-    return [...ele.parentNode.children].filter((child) => {
-      if (selector) {
-        return child !== ele && child.matches(selector)
-      }
-      return child !== ele
-    })
-  },
-
-  /**
-   *
-   * @param {*} selector
-   * @param {*} eleType the type of create element
-   * @param {*} id id
-   * @param {*} cn class name
-   */
-  wrap: function (selector, eleType, id = '', cn = '') {
-    const creatEle = document.createElement(eleType)
-    if (id) creatEle.id = id
-    if (cn) creatEle.className = cn
-    selector.parentNode.insertBefore(creatEle, selector)
-    creatEle.appendChild(selector)
-  },
-
-  unwrap: function (el) {
-    const elParentNode = el.parentNode
-    if (elParentNode !== document.body) {
-      elParentNode.parentNode.insertBefore(el, elParentNode)
-      elParentNode.parentNode.removeChild(elParentNode)
-    }
-  },
-
-  isJqueryLoad: (fn) => {
-    if (typeof jQuery === 'undefined') {
-      getScript(GLOBAL_CONFIG.source.jQuery).then(fn)
-    } else {
-      fn()
-    }
-  },
-
-  isHidden: (ele) => ele.offsetHeight === 0 && ele.offsetWidth === 0,
-
-  getEleTop: (ele) => {
-    let actualTop = ele.offsetTop
-    let current = ele.offsetParent
-
-    while (current !== null) {
-      actualTop += current.offsetTop
-      current = current.offsetParent
-    }
-
-    return actualTop
-  }
-
-}
-]]></content>
-  </entry>
-  <entry>
-    <title></title>
     <url>/js/tw_cn.js</url>
     <content><![CDATA[/* eslint-disable no-undef */
 document.addEventListener('DOMContentLoaded', function () {
@@ -7755,300 +8100,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   translateInitialization()
   document.addEventListener('pjax:complete', translateInitialization)
-})
-]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/js/search/algolia.js</url>
-    <content><![CDATA[window.addEventListener('load', () => {
-  const openSearch = () => {
-    document.body.style.cssText = 'width: 100%;overflow: hidden'
-    document.querySelector('#algolia-search .search-dialog').style.display = 'block'
-    document.querySelector('#algolia-search .ais-search-box--input').focus()
-    btf.fadeIn(document.getElementById('search-mask'), 0.5)
-    // shortcut: ESC
-    document.addEventListener('keydown', function f (event) {
-      if (event.code === 'Escape') {
-        closeSearch()
-        document.removeEventListener('keydown', f)
-      }
-    })
-  }
-
-  const closeSearch = () => {
-    document.body.style.cssText = "width: '';overflow: ''"
-    const $searchDialog = document.querySelector('#algolia-search .search-dialog')
-    $searchDialog.style.animation = 'search_close .5s'
-    setTimeout(() => { $searchDialog.style.cssText = "display: none; animation: ''" }, 500)
-    btf.fadeOut(document.getElementById('search-mask'), 0.5)
-  }
-
-  const searchClickFn = () => {
-    document.querySelector('#search-button > .search').addEventListener('click', openSearch)
-    document.getElementById('search-mask').addEventListener('click', closeSearch)
-    document.querySelector('#algolia-search .search-close-button').addEventListener('click', closeSearch)
-  }
-
-  searchClickFn()
-
-  window.addEventListener('pjax:complete', function () {
-    getComputedStyle(document.querySelector('#algolia-search .search-dialog')).display === 'block' && closeSearch()
-    searchClickFn()
-  })
-
-  const algolia = GLOBAL_CONFIG.algolia
-  const isAlgoliaValid = algolia.appId && algolia.apiKey && algolia.indexName
-  if (!isAlgoliaValid) {
-    return console.error('Algolia setting is invalid!')
-  }
-
-  const search = instantsearch({
-    appId: algolia.appId,
-    apiKey: algolia.apiKey,
-    indexName: algolia.indexName,
-    searchParameters: {
-      hitsPerPage: algolia.hits.per_page || 10
-    },
-    searchFunction: function (helper) {
-      const searchInput = document.querySelector('#algolia-search-input input')
-
-      if (searchInput.value) {
-        helper.search()
-      }
-    }
-  })
-
-  search.addWidget(
-    instantsearch.widgets.searchBox({
-      container: '#algolia-search-input',
-      reset: false,
-      magnifier: false,
-      placeholder: GLOBAL_CONFIG.algolia.languages.input_placeholder
-    })
-  )
-  search.addWidget(
-    instantsearch.widgets.hits({
-      container: '#algolia-hits',
-      templates: {
-        item: function (data) {
-          const link = data.permalink ? data.permalink : (GLOBAL_CONFIG.root + data.path)
-          return (
-            '<a href="' + link + '" class="algolia-hit-item-link">' +
-            data._highlightResult.title.value +
-            '</a>'
-          )
-        },
-        empty: function (data) {
-          return (
-            '<div id="algolia-hits-empty">' +
-            GLOBAL_CONFIG.algolia.languages.hits_empty.replace(/\$\{query}/, data.query) +
-            '</div>'
-          )
-        }
-      },
-      cssClasses: {
-        item: 'algolia-hit-item'
-      }
-    })
-  )
-
-  search.addWidget(
-    instantsearch.widgets.stats({
-      container: '#algolia-stats',
-      templates: {
-        body: function (data) {
-          const stats = GLOBAL_CONFIG.algolia.languages.hits_stats
-            .replace(/\$\{hits}/, data.nbHits)
-            .replace(/\$\{time}/, data.processingTimeMS)
-          return (
-            '<hr>' +
-            stats +
-            '<span class="algolia-logo pull-right">' +
-            '  <img src="' + GLOBAL_CONFIG.root + 'img/algolia.svg" alt="Algolia" />' +
-            '</span>'
-          )
-        }
-      }
-    })
-  )
-
-  search.addWidget(
-    instantsearch.widgets.pagination({
-      container: '#algolia-pagination',
-      scrollTo: false,
-      showFirstLast: false,
-      labels: {
-        first: '<i class="fas fa-angle-double-left"></i>',
-        last: '<i class="fas fa-angle-double-right"></i>',
-        previous: '<i class="fas fa-angle-left"></i>',
-        next: '<i class="fas fa-angle-right"></i>'
-      },
-      cssClasses: {
-        root: 'pagination',
-        item: 'pagination-item',
-        link: 'page-number',
-        active: 'current',
-        disabled: 'disabled-item'
-      }
-    })
-  )
-  search.start()
-
-  window.pjax && search.on('render', () => {
-    window.pjax.refresh(document.getElementById('algolia-hits'))
-  })
-})
-]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/js/search/local-search.js</url>
-    <content><![CDATA[window.addEventListener('load', () => {
-  let loadFlag = false
-  const openSearch = function () {
-    document.body.style.cssText = 'width: 100%;overflow: hidden'
-    document.querySelector('#local-search .search-dialog').style.display = 'block'
-    document.querySelector('#local-search-input input').focus()
-    btf.fadeIn(document.getElementById('search-mask'), 0.5)
-    if (!loadFlag) {
-      search(GLOBAL_CONFIG.localSearch.path)
-      loadFlag = true
-    }
-    // shortcut: ESC
-    document.addEventListener('keydown', function f (event) {
-      if (event.code === 'Escape') {
-        closeSearch()
-        document.removeEventListener('keydown', f)
-      }
-    })
-  }
-
-  const closeSearch = function () {
-    document.body.style.cssText = "width: '';overflow: ''"
-    const $searchDialog = document.querySelector('#local-search .search-dialog')
-    $searchDialog.style.animation = 'search_close .5s'
-    setTimeout(() => { $searchDialog.style.cssText = "display: none; animation: ''" }, 500)
-    btf.fadeOut(document.getElementById('search-mask'), 0.5)
-  }
-
-  // click function
-  const searchClickFn = () => {
-    document.querySelector('#search-button > .search').addEventListener('click', openSearch)
-    document.getElementById('search-mask').addEventListener('click', closeSearch)
-    document.querySelector('#local-search .search-close-button').addEventListener('click', closeSearch)
-  }
-
-  searchClickFn()
-
-  // pjax
-  window.addEventListener('pjax:complete', function () {
-    getComputedStyle(document.querySelector('#local-search .search-dialog')).display === 'block' && closeSearch()
-    searchClickFn()
-  })
-
-  function search (path) {
-    fetch(GLOBAL_CONFIG.root + path)
-      .then(response => response.text())
-      .then(str => new window.DOMParser().parseFromString(str, 'text/xml'))
-      .then(data => {
-        const datas = [...data.querySelectorAll('entry')].map(function (item) {
-          return {
-            title: item.querySelector('title').textContent,
-            content: item.querySelector('content').textContent,
-            url: item.querySelector('url').textContent
-          }
-        })
-
-        const $input = document.querySelector('#local-search-input input')
-        const $resultContent = document.getElementById('local-search-results')
-        $input.addEventListener('input', function () {
-          let str = '<div class="search-result-list">'
-          const keywords = this.value.trim().toLowerCase().split(/[\s]+/)
-          $resultContent.innerHTML = ''
-          if (this.value.trim().length <= 0) return
-          let count = 0
-          // perform local searching
-          datas.forEach(function (data) {
-            let isMatch = true
-            if (!data.title || data.title.trim() === '') {
-              data.title = 'Untitled'
-            }
-            let dataTitle = data.title.trim().toLowerCase()
-            const dataContent = data.content.trim().replace(/<[^>]+>/g, '').toLowerCase()
-            const dataUrl = data.url.startsWith('/') ? data.url : GLOBAL_CONFIG.root + data.url
-            let indexTitle = -1
-            let indexContent = -1
-            let firstOccur = -1
-            // only match artiles with not empty titles and contents
-            if (dataTitle !== '' || dataContent !== '') {
-              keywords.forEach(function (keyword, i) {
-                indexTitle = dataTitle.indexOf(keyword)
-                indexContent = dataContent.indexOf(keyword)
-                if (indexTitle < 0 && indexContent < 0) {
-                  isMatch = false
-                } else {
-                  if (indexContent < 0) {
-                    indexContent = 0
-                  }
-                  if (i === 0) {
-                    firstOccur = indexContent
-                  }
-                }
-              })
-            } else {
-              isMatch = false
-            }
-
-            // show search results
-            if (isMatch) {
-              const content = data.content.trim().replace(/<[^>]+>/g, '')
-              if (firstOccur >= 0) {
-                // cut out 130 characters
-                let start = firstOccur - 30
-                let end = firstOccur + 100
-
-                if (start < 0) {
-                  start = 0
-                }
-
-                if (start === 0) {
-                  end = 100
-                }
-
-                if (end > content.length) {
-                  end = content.length
-                }
-
-                let matchContent = content.substring(start, end)
-
-                // highlight all keywords
-                keywords.forEach(function (keyword) {
-                  const regS = new RegExp(keyword, 'gi')
-                  matchContent = matchContent.replace(regS, '<span class="search-keyword">' + keyword + '</span>')
-                  dataTitle = dataTitle.replace(regS, '<span class="search-keyword">' + keyword + '</span>')
-                })
-
-                str += '<div class="local-search__hit-item"><a href="' + dataUrl + '" class="search-result-title">' + dataTitle + '</a>'
-                count += 1
-
-                if (dataContent !== '') {
-                  str += '<p class="search-result">' + matchContent + '...</p>'
-                }
-              }
-              str += '</div>'
-            }
-          })
-          if (count === 0) {
-            str += '<div id="local-search__hits-empty">' + GLOBAL_CONFIG.localSearch.languages.hits_empty.replace(/\$\{query}/, this.value.trim()) +
-              '</div>'
-          }
-          str += '</div>'
-          $resultContent.innerHTML = str
-          window.pjax && window.pjax.refresh($resultContent)
-        })
-      })
-  }
 })
 ]]></content>
   </entry>

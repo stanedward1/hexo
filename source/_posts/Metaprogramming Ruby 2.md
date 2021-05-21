@@ -1,5 +1,5 @@
 ---
-title: Ruby元编程
+title: 《Ruby元编程》
 date: 2021-05-04 07:03:32
 tags: 书籍
 categories: ruby
@@ -10,7 +10,325 @@ cover: /img/ruby.png
 
 # 对象模型
 
-# 方法：
+Ruby的世界除了对象，还有其他的语言构件，比如class，module，instance variable等，元编程操作的就是这些语言构件。
+
+所有这些语言构件存在的系统称之为对象模型。
+
+## 打开类
+
+```shell
+2.7.2 :011 > def to_alphanumeric(s)
+2.7.2 :012 >   s.gsub(/[^\w\s]/,'')
+2.7.2 :013 > end
+ => :to_alphanumeric 
+2.7.2 :014 > to_alphanumeric("hello, %% world")
+ => "hello  world" 
+```
+
+**更好的方法是让字符串本身来做这种转换**
+
+**可以去String类植入to_alphanumeric方法**
+
+### 类定义揭秘
+
+Ruby中，定义类的语句和其他语句没有本质区别
+
+```shell
+2.7.2 :015 > 3.times do
+2.7.2 :016 >   class C
+2.7.2 :017 >     puts "Hello Longbiu"
+2.7.2 :018 >   end
+2.7.2 :019 > end
+Hello Longbiu
+Hello Longbiu
+Hello Longbiu
+ => 3 
+```
+
+Ruby的class关键字更像是一个作用域操作符，而不是类型声明语句。class关键字的核心任务是把你带到类的上下文中，让你可以在里面定义方法。
+
+**重新打开已经存在的类并对之进行动态修改——打开类（open class）**
+
+### 打开类的问题
+
+```shell
+2.7.2 :005 > [].methods.grep /^re/
+ => [:reject!, :repeated_permutation, :repeated_combination, :reject, :reverse_each, :replace, :reverse, :reverse!, :reduce, :remove_instance_variable, :respond_to?] 
+```
+
+方法名冲突时可能会出现bug，这种粗暴的修改类的方法也叫做——**猴子补丁(Monkeypatch)**
+
+一般来说，添加新方法比修改已有的方法安全。
+
+## 类的真相
+
+### 对象中有什么
+
+![image-20210521101716315](/img/Metaprogramming/image-20210521101716315.png)
+
+假如说，my_method()是MyClass的一个实例方法，这就意味着这个方法定义在MyClass中，需要定义一个MyClass的实例才能调用它。
+
+同一个类的对象共享同样的方法，但不共享实例变量。
+
+### 类的真相
+
+类本身也是对象。
+
+其他语言只允许你读取类的相关信息，而Ruby允许你在运行时修改这些信息。
+
+**Ruby的类继承自它的超类**
+
+```shell
+2.7.2 :006 > Array.superclass
+ => Object 
+2.7.2 :007 > Object.superclass
+ => BasicObject 
+2.7.2 :008 > BasicObject.superclass
+ => nil 
+2.7.2 :009 > Class.superclass
+ => Module 
+```
+
+Ruby中，类与模块这两个概念十分接近，保留这两个概念的主要原因是为了获得代码的清晰性。
+
+把自己的代码include到别的代码——Module
+
+希望某段代码被实例化或被继承——Class
+
+![image-20210521103307143](/img/Metaprogramming/image-20210521103307143.png)
+
+```shell
+2.7.2 :010 > class MyClass;
+2.7.2 :011 > end
+ => nil 
+2.7.2 :012 > obj1 = MyClass.new
+ => #<MyClass:0x00007f8fa4353dc0> 
+2.7.2 :013 > obj2=MyClass.new
+ => #<MyClass:0x00007f8fa43f14d0> 
+2.7.2 :014 > MyClass.superclass
+ => Object 
+2.7.2 :016 > Class.new(MyClass)
+ => #<Class:0x00007f8fa42d7608> 
+2.7.2 :017 > Class.new(MyClass).superclass
+ => MyClass 
+```
+
+### 常量
+
+任何以大写字母开头的引用(包括类名和模块名)都是常量。
+
+Ruby中，常量和变量的区别在于它们的scope不同。
+
+```shell
+2.7.2 :018 > module MyModule
+2.7.2 :019 >   MyConstant = "A"
+2.7.2 :020 >   class MyClass
+2.7.2 :021 >     MyConstant = "B"
+2.7.2 :022 >   end
+2.7.2 :023 > end
+```
+
+我们可以使用Module来组织常量
+
+### 对象和类的小结
+
+|      | 描述                                       |
+| ---- | ------------------------------------------ |
+| 对象 | 一组实例变量+指向其类的引用                |
+| 类   | 一个对象+一组实例方法+对其superclass的引用 |
+
+```ruby
+module Bookworm
+	class Text
+```
+
+## 缺失的连接线
+
+```shell
+2.7.2 :026 > Object.class
+ => Class 
+2.7.2 :027 > Module.superclass
+ => Object 
+2.7.2 :028 > Class.class
+ => Class 
+```
+
+## 调用方法时发生了什么？
+
+1. **方法查找**
+2. **执行方法**
+
+### 方法查找
+
+调用一个方法前，Ruby会在对象的类中查找那个方法
+
+**两个概念：receiver+ancestors chain**
+
+receiver就是你调用方法所在的对象
+
+**Ruby首先在接受者的类中查找，然后顺着祖先链向上查找，直到找到这个方法为止**
+
+```shell
+2.7.2 :037 > class MyClass
+2.7.2 :038 >   def my_method;
+2.7.2 :039 >     'my_method()';
+2.7.2 :040 >   end
+2.7.2 :041 > end
+ => :my_method 
+2.7.2 :042 > class MySubclass < MyClass
+2.7.2 :043 > end
+ => nil 
+2.7.2 :044 > obj = MySubclass.new
+ => #<MySubclass:0x00007f8fa44b33c8> 
+2.7.2 :045 > obj.my_method()
+ => "my_method()" 
+```
+
+**"向右一步，再向上"——先向右一步来到接收者所在的类，然后沿着祖先链向上查找。**
+
+**模块与方法查找**
+
+```shell
+2.7.2 :046 > module M1
+2.7.2 :047 >   def my_method
+2.7.2 :048 >     "M1#my_method()"
+2.7.2 :049 >   end
+2.7.2 :050 > end
+ => :my_method 
+2.7.2 :051 > class C
+2.7.2 :052 >   include M1
+2.7.2 :053 > end
+ => C 
+2.7.2 :054 > class D < C;
+2.7.2 :055 > end
+ => nil 
+2.7.2 :056 > D.ancestors
+ => [D, C, M1, Object, JSON::Ext::Generator::GeneratorMethods::Object, Kernel, BasicObject] 
+```
+
+使用prepend方法，可以把module插入ancestors chain中包含它的该类的下方，而不是像include方法那样插入到上方。
+
+```shell
+2.7.2 :057 > class C2
+2.7.2 :058 >   prepend M1
+2.7.2 :059 > end
+ => C2 
+2.7.2 :060 > class D2 < C2;
+2.7.2 :061 > end
+ => nil 
+2.7.2 :062 > D2.ancestors
+ => [D2, M1, C2, Object, JSON::Ext::Generator::GeneratorMethods::Object, Kernel, BasicObject] 
+```
+
+**多重包含**
+
+```shell
+2.7.2 :063 > module M1;
+2.7.2 :064 > end
+ => nil 
+2.7.2 :065 > module M2
+2.7.2 :066 >   include M1
+2.7.2 :067 > end
+ => M2 
+2.7.2 :068 > module M3
+2.7.2 :069 >   prepend M1
+2.7.2 :070 >   include M2
+2.7.2 :071 > end
+ => M3 
+2.7.2 :072 > M3.ancestors
+ => [M1, M3, M2] 
+```
+
+如果该module已经存在于祖先链中，那么Ruby会悄悄忽略这个include或prepend指令。
+
+**Kernel模块**
+
+print方法其实是Kernel模块的私有实例方法
+
+```shell
+2.7.2 :075 > Kernel.private_instance_methods.grep(/^pr/)
+ => [:proc, :printf, :print] 
+```
+
+Object类包含了kernel模块，所以无论哪个对象都可以随意调用Kernel模块的方法。
+
+**内核方法**——给Kernel模块增加一个方法
+
+### 执行方法
+
+当前对象用self表示，因此可以用self关键字来对他进行访问。任何时刻，只有一个对象能充当当前对象，而且没有哪个对象可以长期充当此角色。
+
+**顶层上下文——top level context**
+
+对象main有时被称为顶层上下文----此时开发者处在堆栈的顶层，要没还没有调用任何方法，要么调用的方法已经返回。
+
+```shell
+2.7.2 :079 > self
+ => main 
+2.7.2 :080 > self.class
+ => Object 
+```
+
+在类和模块定义之中，self的角色由这个类或者模块本身担任。
+
+### 细化
+
+细化解决的问题是：解决破坏性的猴子补丁
+
+**细化**用法如下：
+
+```shell
+2.7.2 :081 > module StringExtensions
+2.7.2 :082 >   refine String do
+2.7.2 :083 >     def to_alphanumeric
+2.7.2 :084 >       gsub(/[^\w\s]/,'')
+2.7.2 :085 >     end
+2.7.2 :086 >   end
+2.7.2 :087 > end
+ => #<refinement:String@StringExtensions>
+```
+
+细化在默认情况下不生效，为了使细化生效，必须调用using方法。
+
+```shell
+2.7.2 :081 > module StringExtensions
+2.7.2 :082 >   refine String do
+2.7.2 :083 >     def to_alphanumeric
+2.7.2 :084 >       gsub(/[^\w\s]/,'')
+2.7.2 :085 >     end
+2.7.2 :086 >   end
+2.7.2 :087 > end
+ => #<refinement:String@StringExtensions> 
+2.7.2 :088 > module StringStuff
+2.7.2 :089 >   using StringExtensions
+2.7.2 :090 >   "my_string..".to_alphanumeric
+2.7.2 :091 > end
+ => "my_string" 
+2.7.2 :092 > "my_string...##".to_alphanumeric
+Traceback (most recent call last):
+```
+
+细化只在两种场合有效：refine代码内部，从using语句的位置开始到模块结束。
+
+细化并非全局性的，所以它不会带来类所具有的问题，可以让细化只作用在你希望生效的地方。
+
+## 混乱的模块
+
+## 对象模型小结
+
+- 对象由一组实例变量和类的引用组成。
+- 对象的方法存在于对象所属的类中（对类来说是实例方法）。类本身是Class类的对象。类的名字只是一个常量。
+- Class类是Module的子类。一个模块基本上就是由一组方法组成的包。类除了具有模块的特性之外，还可以被实例化（使用new方法） ，或者按一定的层次结构来组织（使用superclass方法）。
+- 常量像文件系统一样，是按照树形结构组织的。其中，模块和类的名字扮演目录的角色，其他普通的常量则扮演文件的角色。
+- 每个类都有一个祖先链，这个链从每个类自己开始，向上直到Basicobject结束。
+- 调用方法时， Ruby首先向右找到接收者所属的类，然后向上查找祖先链，直到找到该方法或到达链的顶端为止。
+- 在类中包含一个模块（使用include方法）时，这个模块会被插入祖先链中，位置就在类的正上方；而使用prepend方法包含一个模块时，这个模块也会被插入祖先链中，位置在类的正下方。
+- 调用一个方法时，接收者会扮演self的角色。
+- 定义一个模块（或类）时，该模块会扮演self的角色。实例变量永远被认定为self的实例变量。
+- 任何没有明确指定接收者的方法调用，都当做是调用self的方法。
+- 细化就像在原来的类上添加了一块补丁，而且它会覆盖正常的方法查找。此外，细化只在程序的部分区域生效：从using语句的位置开始，直到模块结束，或者直到文件结束。
+
+# 方法
 
 **static type checking**
 
@@ -204,29 +522,194 @@ class Computer < BasicObject
 
 ### 代码块基础知识
 
-```shell
+```ruby
 def a_method(a,b)
 	a+yield(a,b)
 end
 ```
 
-## Ruby的#符号
+```shell
+2.7.2 :103 > def a_method(a,b)
+2.7.2 :104 >   a+yield(a,b)
+2.7.2 :105 > end
+ => :a_method 
+2.7.2 :106 > a_method(1,2) {|x,y| (x+y)*3}
+ => 10 
+```
 
-### using关键字
+代码块可以用大括号定义，也可以用do……end关键字定义，通常来说，只有一行的块用大括号，而多行的块用do……end。
+
+只有调用一个方法时，才可以定义一个块。块会被直接传递给这个方法，该方法可以用yield关键字调用这个块。
+
+**使用Kernel#block_given?方法询问当前的方法调用是否包含块**
+
+```shell
+2.7.2 :107 > def a_method
+2.7.2 :108 >   return yield if block_given?
+2.7.2 :109 >   'no block'
+2.7.2 :110 > end
+ => :a_method 
+2.7.2 :111 > a_method
+ => "no block" 
+2.7.2 :112 > a_method { "here is a block" }
+ => "here is a block" 
+```
+
+## ~~Ruby的#符号~~
+
+### ~~using关键字~~
 
 ## 代码块是闭包
 
+代码块还可以把变量偷偷带出原来的作用域。
+
+代码块不能独立的运行。![screenshot-20210521-170353](/img/Metaprogramming/screenshot-20210521-170353.png)
+
+```shell
+2.7.2 :128 > def my_method
+2.7.2 :129 >   x = "goodbye"
+2.7.2 :130 >   yield("cruel")
+2.7.2 :131 > end
+ => :my_method 
+2.7.2 :132 > x = "hello"
+ => "hello" 
+2.7.2 :133 > my_method { |y| "#{x}, #{y} world" }
+ => "hello, cruel world" 
+2.7.2 :134 > my_method { |x| "#{x}, world" }
+ => "cruel, world" 
+```
+
+绑定在代码块里的变量在代码块结束之后，也跟着结束了。基于这样的特性，代码块也叫做闭包——closure。
+
 ### 作用域
+
+**此书里一段很魔幻的话**
+
+```tex
+设想你是一个微型调试器（debugger） ，正沿着代码穿过一段Ruby程序。你从一条语句蹦到另一条语句，直到遇到一个断点。看看周围的环境，这就是你的作用域。
+
+作用域里到处都是绑定。你的脚下有一堆局部变量。抬头向上看，你会发现自己站在一个对象里，它有自己的方法和实例变量。这个对象就是当前对象，也称为self。不远处有一棵挂满常量的树，你可以用它们来确定自己的位置。更远的地方，还有一组全局变量。
+```
+
+**Ruby的作用域之间是截然分开的，一旦进入一个新的作用域，原先的绑定会被替换成一组新的绑定。**
+
+```shell
+2.7.2 :149 > def a_scope
+2.7.2 :150 >   $var = "some value"
+2.7.2 :151 > end
+ => :a_scope 
+2.7.2 :152 > def another_scope
+2.7.2 :153 >   $var
+2.7.2 :154 > end
+ => :another_scope 
+2.7.2 :155 > a_scope
+ => "some value" 
+2.7.2 :156 > another_scope
+ => "some value" 
+```
+
+任何人都可以修改全局变量，开发者几乎无法确定是谁修改了它们。所以尽量不用$全局变量。有时顶级实例变量代替全局变量。
 
 ### 作用域门
 
+程序会在三个地方关闭前一个作用域，同时打开一个新的作用域：
+
+- 类定义
+- 模块定义
+- 方法
+
+我们可以这样说：class，module，def关键字都对应一个作用域门。
+
 ### 扁平化作用域
+
+**使用Class.new和define_method来穿越作用域门**
+
+```shell
+2.7.2 :170 > my_var = "Success"
+ => "Success" 
+2.7.2 :163 > MyClass = Class.new do
+2.7.2 :164 >   puts "#{my_var} in the class definition!"
+2.7.2 :165 >   define_method :my_method do
+2.7.2 :166 >   "# {my_var} in the method"
+2.7.2 :167 >   end
+2.7.2 :168 > end
+Success in the class definition!
+(irb):163: warning: already initialized constant MyClass
+(irb):158: warning: previous definition of MyClass was here
+ => MyClass 
+```
+
+**共享作用域**
 
 ### 闭包小结
 
+每个Ruby作用域都包含一组绑定，不同作用域之间被作用域门分隔开来。
+
+……
+
 ## instance_eval方法
 
+这是另外一种混合代码和绑定的方式。
+
+```shell
+2.7.2 :214 > class MyClass
+2.7.2 :215 >   def initialize
+2.7.2 :216 >     @v = 1
+2.7.2 :217 >   end
+2.7.2 :218 > end
+ => :initialize 
+2.7.2 :219 > obj = MyClass.new
+ => #<MyClass:0x00007f8fa39d4380 @v=1> 
+2.7.2 :220 > obj.instance_eval do
+2.7.2 :221 >   self
+2.7.2 :222 >   @v
+2.7.2 :223 > end
+ => 1 
+2.7.2 :224 > v = 2
+ => 2 
+2.7.2 :225 > obj.instance_eval { @v = v }
+ => 2 
+2.7.2 :226 > obj.instance_eval { @v}
+ => 2 
+```
+
+我们把传递给instance_eval方法的代码块称为**上下文探针**，因为它就像是一个深入到对象中的代码片段，并可以对那个对象进行操作。
+
 ### 打破封装
+
+Instance_exec方法稍微灵活一些，允许对代码块传入参数。
+
+```shell
+2.7.2 :256 > class C
+2.7.2 :257 >   def initialize
+2.7.2 :258 >     @x=1
+2.7.2 :259 >   end
+2.7.2 :260 > end
+ => :initialize 
+2.7.2 :261 > class D
+2.7.2 :262 >   def twisted_method
+2.7.2 :263 >     @y = 2
+2.7.2 :264 >     C.new.instance_eval { "@x: #{@x}, @y: #{@y}" }
+2.7.2 :265 >   end
+2.7.2 :266 > end
+ => :twisted_method 
+2.7.2 :267 > D.new.twisted_method
+ => "@x: 1, @y: " 
+```
+
+**如上代码所示：instance_eval方法把receiver变成当前对象self时，调用者的实例变量就落在了作用域范围外面。**
+
+```shell
+2.7.2 :275 > class D
+2.7.2 :276 >   def twisted_method
+2.7.2 :277 >     @y = 2
+2.7.2 :278 >     C.new.instance_exec(@y) {|y| "@x: #{@x}, @y: #{y}" }
+2.7.2 :279 >   end
+2.7.2 :280 > end
+ => :twisted_method 
+2.7.2 :281 > D.new.twisted_method
+ => "@x: 1, @y: 2" 
+```
 
 ### 洁净室
 
