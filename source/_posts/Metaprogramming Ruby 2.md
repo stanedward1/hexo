@@ -699,6 +699,8 @@ Instance_exec方法稍微灵活一些，允许对代码块传入参数。
 
 **如上代码所示：instance_eval方法把receiver变成当前对象self时，调用者的实例变量就落在了作用域范围外面。**
 
+***Instance_exec方法可以解决此问题***
+
 ```shell
 2.7.2 :275 > class D
 2.7.2 :276 >   def twisted_method
@@ -713,13 +715,124 @@ Instance_exec方法稍微灵活一些，允许对代码块传入参数。
 
 ### 洁净室
 
+洁净室只是一个用来执行块的环境。它可以提供若干有用的方法供代码块调用。但是，一个理想化的洁净室是不应该有任何方法或者实例变量的。因为这样的话，其中的方法名或实例变量名有可能和代码块从其环境中带来的名字冲突。
+
+因此，BasicObject的实例往往用来充当洁净室，**因为它是白板类**，几乎没有任何方法。
+
 ## 可调用对象
+
+从底层看，使用代码块的两步：
+
+- 将代码打包备用
+- 调用代码块，执行代码
+
+这种打包代码，之后调用的机制主要有：
+
+- 使用proc，proc是由块转换而来的对象
+- 使用lambda，它是proc的变种
+- 使用方法
 
 ### Proc对象
 
+Ruby中的绝大多数东西都是对象，但是代码块不是。那么想存储一个块供以后执行则需要一个对象。
+
+Ruby在标准库中提供了一个名为proc的类。proc就是由块转换而来的对象。
+
+开发者可以把代码块传给Proc.new方法来创建一个proc，并使用Proc#call方法来执行这个由代码块转换而来的对象——延迟执行
+
+```shell
+2.7.2 :002 > inc  = Proc.new { |x| x+1}
+ => #<Proc:0x00007fde808a7620 (irb):2> 
+2.7.2 :003 > inc.call(2)
+ => 3 
+```
+
+```shell
+2.7.2 :004 > dec = lambda { |x| x-1 }
+ => #<Proc:0x00007fde8087c100 (irb):4 (lambda)> 
+2.7.2 :005 > dec.class
+ => Proc 
+2.7.2 :006 > dec.call(2)
+ => 1 
+```
+
+*p = ->(x) {x+1}***等价于***p=lambda{|x| x+1}*
+
+**使用&可以实现Proc和代码块的互相转换**
+
+```shell
+2.7.2 :010 > p = my_method{|name| "hello #{name}"}
+ => #<Proc:0x00007fde7aba5c38 (irb):10> 
+2.7.2 :011 > p.class
+ => Proc 
+2.7.2 :012 > p.call("Bill")
+ => "hello Bill" 
+```
+
+```shell
+2.7.2 :013 > def my_method(greeting)
+2.7.2 :014 >   "#{greeting}, #{yield}"
+2.7.2 :015 > end
+ => :my_method 
+2.7.2 :017 > my_proc = proc{"Bill"}
+ => #<Proc:0x00007fde80c98310 (irb):17> 
+2.7.2 :018 > my_method("hello",&my_proc)
+ => "hello, Bill" 
+```
+
+调用如上的my_method方法时，&操作符会把my_proc转换为代码块，再把代码块传给这个方法。
+
 ### Proc与Lambda的对比
 
+**使用Proc#lambda？方法检测Proc是不是lambda**
+
+Proc和lambda的重要差别有两个：
+
+- return关键字
+- 参数校验
+
+lambda中，return仅表示从这个lambda中返回
+
+proc中，return表示从定义proc的作用域中返回
+
+```shell
+2.7.2 :034 > p = Proc.new { |a,b| [a,b]}
+ => #<Proc:0x00007fde80c60910 (irb):34> 
+2.7.2 :035 > p.arity
+ => 2 
+2.7.2 :036 > p.call(1,2,3)
+ => [1, 2] 
+2.7.2 :037 > p.call(1)
+ => [1, nil] 
+```
+
+简单说：proc会把传来的参数调整成自己期望的形式，而lambda假如和自己所期望的形式不同，则抛出错误。
+
+整体来说：lambda更直观，因为它更像是一个方法，它对参数数量要求严格，而且调用return时仅从代码中返回。
+
 ### Method对象
+
+```shell
+2.7.2 :038 > class MyClass
+2.7.2 :039 >   def initialize(value)
+2.7.2 :040 >     @x=value
+2.7.2 :041 >   end
+2.7.2 :042 >   def my_method
+2.7.2 :043 >     @x
+2.7.2 :044 >   end
+2.7.2 :045 > end
+ => :my_method 
+2.7.2 :046 > object = MyClass.new(1)
+ => #<MyClass:0x00007fde7b071a50 @x=1> 
+2.7.2 :048 > m = object.method :my_method
+ => #<Method: MyClass#my_method() (irb):42> 
+2.7.2 :049 > m.call
+ => 1 
+```
+
+**通过调用Kernel#method方法，可以获得一个用Method对象表示的方法，可以在以后使用Method#call方法对它进行调用。**
+
+Method对象类似代码块或者lambda，实际上，可以通过Method#to_proc方法把Method对象转换为Proc。另外还可以通过define_method方法把代码块转换为方法。
 
 ### 可调用对象小结
 
