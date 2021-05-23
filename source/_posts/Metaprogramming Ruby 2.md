@@ -895,9 +895,40 @@ class_eval会同时修改self和当前类
 
 - 如果你有一个类的引用，则可以用class_eval （或module—eval）方法打开这个类。
 
-### 实例类变量
+### 类实例变量
 
-Ruby解释器假定所有的实例变量都属于当前对象self
+Ruby解释器假定所有的实例变量都属于当前对象self，在类定义时也如此！
+
+```shell
+irb(main):002:1* class MyClass
+irb(main):003:1*   @my_var = 1
+irb(main):004:2*   def self.read;
+irb(main):005:2*     @my_var;
+irb(main):006:1*   end
+irb(main):007:2*   def write;
+irb(main):008:2*     @my_var = 2;
+irb(main):009:1*   end
+irb(main):010:2*   def read;
+irb(main):011:2*     @my_var;
+irb(main):012:1*   end
+irb(main):013:0> end
+=> :read
+irb(main):014:0> obj = MyClass.new
+irb(main):015:0> obj.read
+=> nil
+irb(main):016:0> obj.write
+=> 2
+irb(main):017:0> obj.read
+=> 2
+irb(main):018:0> MyClass.read
+=> 1
+```
+
+其中一个@my_var变量定义于obj充当self的时刻，它是obj对象的实例变量。
+
+另外一个@my_var变量定义于MyClass充当self的时刻，它是MyClass的实例变量，也就是**类实例变量**
+
+一个类实例变量只可以被类本身所访问，而不能被类的实例或者子类所访问。
 
 ## Taboo类
 
