@@ -930,37 +930,103 @@ irb(main):018:0> MyClass.read
 
 一个类实例变量只可以被类本身所访问，而不能被类的实例或者子类所访问。
 
-## Taboo类
+**类变量**
+
+​	类变量以@@打头，它们可以被子类或者类的实例所使用。
+
+## ~~Taboo类~~
 
 ## 单件方法
 
+**给单个对象增加一个方法**
+
 ### 使用单件方法
+
+```shell
+irb(main):019:0> str = "just a regular string"
+irb(main):020:1* def str.title?
+irb(main):021:1*   self.upcase == self
+irb(main):022:0> end
+=> :title?
+irb(main):023:0> str.title?
+=> false
+irb(main):024:0> str.methods.grep(/title?/)
+=> [:title?, :titleize, :titlecase]
+irb(main):025:0> str.singleton_methods
+=> [:title?]
+```
+
+这段代码为str添加了一个title？方法。其他的对象，包括String对象，都没有这个方法。这种只对单个对象生效的方法，称之为**单件方法——Singleton Method**。
 
 ### 类方法的真相
 
+类也是对象，而类名只是常量，所以在类上调用方法其实就跟在对象上调用方法一样。
+
 ### 类宏
 
-## 单件类
+**类宏可以声明旧的方法名已被弃用，这样就可以修改这些方法名了。**
 
-### 单件方法的神奇之处
+eg:
 
-### 揭秘单件类
+```ruby
+deprecate :GetTitle, :title
+```
 
-### 补充方法查找
+## ~~单件类~~
 
-## 模块的麻烦
+### ~~单件方法的神奇之处~~
+
+### ~~揭秘单件类~~
+
+### ~~补充方法查找~~
+
+## ~~模块的麻烦~~
 
 ## 方法包装器
 
+有一个不能直接修改的方法（比如在一个库中），而开发者希望为这个方法包装额外的特性，这样所有的客户端都能自动获得这个额外的特性。
+
 ### 方法别名
 
-### 更多的方法包装器
+使用alias关键字，可以给Ruby方法取一个别名
 
-### 解决Amazon难题
+```shell
+irb(main):002:1* class MyClass
+irb(main):003:2*   def my_method;
+irb(main):004:2*     'my_method()';
+irb(main):005:1*   end
+irb(main):006:1*   alias_method :m, :my_method
+irb(main):007:0> end
+=> MyClass
+irb(main):008:0> obj = MyClass.new
+irb(main):009:0> obj.my_method
+=> "my_method()"
+irb(main):010:0> obj.m
+=> "my_method()"
+```
 
-## 打破数学规律
+**当开发者需要在顶级作用域中修改方法时，需要使用alias关键字，因为这里的Module#alias_method方法不可用。**
+
+```shell
+irb(main):011:1* class MyClass
+irb(main):012:1*   alias_method :m2, :m
+irb(main):013:0> end
+=> MyClass
+irb(main):014:0> obj.m2
+=> "my_method()"
+```
+
+### 更多的方法包装器 
+
+**下包含包装器（Prepended Wrapper）**：Moudule#prepend方法，被prepend方法包含的模块可以复写该类的同名方法，同时通过super调用该类中的原始方法。
+
+### ~~解决Amazon难题~~                                                                                                                                                               
+
+## ~~打破数学规律~~
 
 ## 小结
+
+**本章关于类的知识也可以运用到模块上**
 
 # 编写代码的代码
 
