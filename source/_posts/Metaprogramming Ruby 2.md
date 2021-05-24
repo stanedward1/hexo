@@ -972,6 +972,8 @@ eg:
 deprecate :GetTitle, :title
 ```
 
+**attr_accessor:Ruby对象没有属性，attr_accessor解决的就是这样一个问题**
+
 ## ~~单件类~~
 
 ### ~~单件方法的神奇之处~~
@@ -1030,6 +1032,8 @@ irb(main):014:0> obj.m2
 
 # 编写代码的代码
 
+**元编程像是一个包罗万象的魔法包，所有跟Ruby对象模型相关的东西都包含其中。**
+
 ## 通向周末的编程之路
 
 ### 老板的任务
@@ -1037,6 +1041,17 @@ irb(main):014:0> obj.m2
 ### 开发计划
 
 ## Kernel#eval方法
+
+**String of Code**
+
+```shell
+2.7.2 :074 > array = [10,20]
+ => [10, 20] 
+2.7.2 :075 > element = 30
+ => 30 
+2.7.2 :076 > eval("array << element")
+ => [10, 20, 30] 
+```
 
 ### REST Client的例子
 
