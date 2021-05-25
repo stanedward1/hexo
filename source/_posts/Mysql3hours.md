@@ -189,7 +189,7 @@ from customers c, products p
 
 ```
 # 多张表的连接
-``` 
+```
 
 ## INSERT INTO
 

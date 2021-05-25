@@ -60,7 +60,7 @@ OOP即针对对象来进行编程。
 
 **多态表示不同的对象可以执行相同的动作，但是要通过它们自己的实现代码来执行。**
 
-![img](/img/设计模式概览/java-polymorphism-111.png)
+![img](/img/OverviewOfDesignPatterns/java-polymorphism-111.png)
 
 (图片来自菜鸟教程)
 
