@@ -54,3 +54,23 @@ false
 - 在不影响原有功能的前提下追加新功能
 - 重定义原有功能，使名称相同的方法产生不同的效果
 - 在已有功能的基础上追加处理，扩展已有功能
+
+# 创建类
+
+```shell
+irb(main):001:1* class HelloWorld
+irb(main):002:2*   def initialize(myname = "Ruby")
+irb(main):003:2*     @name = myname
+irb(main):004:1*   end
+irb(main):005:2*   def hello
+irb(main):006:2*     puts "Hello, world. I am #{@name}"
+irb(main):007:1*   end
+irb(main):008:0> end
+=> :hello
+irb(main):009:0> bob = HelloWorld.new("BOb")
+irb(main):010:0> alice = HelloWorld.new("Alice")
+irb(main):011:0> ruby = HelloWorld.new
+irb(main):012:0> bob.hello
+Hello, world. I am BOb
+```
+
