@@ -1,5 +1,5 @@
 ---
-title: dependent: :destroy VS dependent: :delete_all
+title: destroy VS delete_all
 date: 2021-06-03 20:55:17
 tags: ruby
 categories: ruby
