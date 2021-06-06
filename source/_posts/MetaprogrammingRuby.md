@@ -1040,6 +1040,11 @@ irb(main):014:0> obj.m2
 
 ### 开发计划
 
+1.使用eval方法编写一个名为add_ checked_ attribute的内核方法，用来为类添加一个最简单的经过校验的属性。
+2.重构add_ checked_ attribute 方法，去掉eval方法。
+3.通过代码块来校验属性。
+4.把add checked attribute方法修改为名为attr_ chheck:ked的类宏，它对所有类可用。
+
 ## Kernel#eval方法
 
 **String of Code**
@@ -1053,15 +1058,47 @@ irb(main):014:0> obj.m2
  => [10, 20, 30] 
 ```
 
-### REST Client的例子
+### ~~REST Client的例子~~
 
 ### 绑定对象
+
+Binding就是一个用对象表示的完整作用域。可以通过创建Binding对象来捕.获并带走当前的作用域。然后，可以通过eval方法在这个Binding对象所携带的作用域中执行代码。Kernel #binding方法可以用来创建Binding对象: 
+
+```shell
+irb(main):007:1* class MyClass
+irb(main):008:2*   def my_method
+irb(main):009:2*     @x=1
+irb(main):010:2*     binding
+irb(main):011:1*   end
+irb(main):012:0> end
+=> :my_method
+irb(main):013:0> b = MyClass.new.my_method
+irb(main):014:0> eval "@x", b
+=> 1
+```
+
+```shell
+irb(main):015:1* class AnotherClass
+irb(main):016:2*   def my_method
+irb(main):017:2*     eval "self", TOPLEVEL_BINDING
+irb(main):018:1*   end
+irb(main):019:0> end
+=> :my_method
+irb(main):020:0> AnotherClass.new.my_method
+=> main
+```
+
+**使用binding.pry方法会在当前绑定上打开一个Ruby解释器。正好处在当前的进程当中。从这里开始，开发者可以按照自己的意愿读取和修改变量。**
 
 ### irb的例子
 
 ### 对比代码字符串与块
 
+**eval方法只能执行代码字符串，不能执行代码块。**
+
 ### eval方法的麻烦
+
+代码字符串非常强大，但是能力越大责任也越大，同时危险也更大。
 
 ## 校验过的属性(第一步)
 
