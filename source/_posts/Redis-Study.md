@@ -1,10 +1,10 @@
-```
+---
 title: Redis-Study
 date: 2021-06-21 21:04:32
 tags: Redis
 categories: Redis
 cover: /img/redis.png
-```
+---
 
 # Redis简介
 
