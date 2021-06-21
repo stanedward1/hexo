@@ -20,3 +20,9 @@ cover: /img/redis.png
 - 自带了发布订阅系统
 - 定时器，计数器
 
+# Redis安装
+
+## 四种方式获取一个redis
+
+1. 
+
