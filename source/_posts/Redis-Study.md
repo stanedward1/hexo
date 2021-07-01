@@ -91,3 +91,5 @@ https://try.redis.io/
 
 ## 在后台启动redis
 
+首先，修改redis.conf配置文件：
+
