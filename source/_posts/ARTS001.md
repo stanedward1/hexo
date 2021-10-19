@@ -18,6 +18,12 @@ cover: /img/75960.jpg
 
 ## Tip
 
+**显示db中所有进程**
+
+```sql
+show processlist;
+```
+
 **查询有无慢查询**
 
 ```sql
