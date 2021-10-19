@@ -37,7 +37,7 @@ WHERE
 ORDER BY table_rows desc;
 ```
 
-**参与的项目使用sidekiq做后台作业调度处理，并使用sidekiq-corn允许将作业设置为在指定时间运行**
+**使用sidekiq做后台作业调度处理，并使用sidekiq-corn允许将作业设置为在指定时间运行**
 
 [sidekiq-corn文档](https://www.rubydoc.info/gems/sidekiq-cron/1.2.0)
 
