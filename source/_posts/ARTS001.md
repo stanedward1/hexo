@@ -12,6 +12,64 @@ cover: /img/75960.jpg
 
 ## Algorithm
 
+```java
+import java.util.*;
+
+/**
+ * @Classname T638
+ * @Description 20211024每日一题-大礼包
+ * @Date 2021/10/24 21:48
+ * @Author Longbiu
+ */
+public class T638 {
+    List<Integer> price;
+    List<List<Integer>> special;
+    Map<String, Integer> cache;
+
+    public int shoppingOffers(List<Integer> price_, List<List<Integer>> special_, List<Integer> needs) {
+        price = price_;
+        special = special_;
+        cache = new HashMap<>();
+        return dfs(needs);
+    }
+
+    private int dfs(List<Integer> needs) {
+        int ans = 0;
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<needs.size();i++){
+            ans += price.get(i) * needs.get(i);
+            sb.append(needs.get(i) + "#");
+        }
+        if(ans != 0){
+            String key = sb.toString();
+            if(cache.containsKey(key)){
+                ans = cache.get(key);
+            }else{
+                for(List<Integer> sp: special){
+                    boolean check = true;
+                    for(int i=0;i<needs.size();i++)
+                        if(sp.get(i) > needs.get(i)){
+                            check = false;
+                            break;
+                        }
+                    if(check){
+                        List<Integer> next = new ArrayList<>();
+                        for(int i=0;i<needs.size();i++){
+                            next.add(needs.get(i) - sp.get(i));
+                        }
+                        ans = Math.min(ans, dfs(next) + sp.get(sp.size()-1));
+                    }
+                }
+                cache.put(key, ans);
+            }
+        }
+        return ans;
+    }
+}
+```
+
+
+
 ## Review
 
 [Teach Yourself Programming in Ten Years](http://norvig.com/21-days.html)
