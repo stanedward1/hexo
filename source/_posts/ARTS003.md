@@ -1,6 +1,6 @@
 ---
-title: ARTS002
-date: 2021-10-30 14:22:12
+title: ARTS003
+date: 2021-11-06 14:22:12
 tags: ARTS
 categories: ARTS
 cover: /img/75960.jpg
@@ -43,19 +43,17 @@ class Solution {
 
 ## Review
 
-这周在疯狂改bug，没有看到比较好的英文技术文章，于是从左耳朵耗子的专栏里找了一篇推荐的文章——[What every programmer should know about memory](https://lwn.net/Articles/250967/)
+这周在疯狂改bug+写需求，没有看到比较好的英文技术文章，于是从左耳朵耗子的专栏里找了一篇推荐的文章——[What every programmer should know about memory](https://lwn.net/Articles/250967/)
 
 ## Tip
 
-**这周思考了一个技巧——学着成为一个“傲慢”的程序员**
+这周没有什么技术技巧，只有周末想了想最近的事情，并手写了一点点随想，主要是觉得自己的有效学习和时间管理方面要加强，另外对我来说比较新，或者说较少接触的技术知识也要挤时间学。
 
-故事发生在一个晚上，业务跟开发反应了一个他眼中的bug，于是菜鸟开发开始检查代码，检查数据，可是没查出问题，于是，当天晚上，菜鸟开发失眠了，第二天，菜鸟开发继续排查问题，直到中午，测试工程师路过菜鸟开发的工位时，才发现业务把一个feature当成了一个bug。
+![image-20211107233150239](../img/ARTS0301.png)
 
-这半个月我们开发的项目上线了，这半个月发生了蛮多这样子的事， 有时候，代码逻辑没问题，但是业务觉得场景对不上，数据对不上等，所以整的菜鸟开发很难受。
-
-辣么，这周的技巧是——**你可以相信通过自测和测试工程师测试的代码**。
+在一个群里看得了这个图片，烂道理谁都懂，但是很多人都是思想上的巨人，行动上的侏儒，谁又能免俗呢，我也一样。知行合一是一个很nice的方法论，要坚持，要扎实。希望自己继续坚持ARTS。
 
 ## Share
 
-[程序员之路](https://icyfenix.cn/tricks/2021/geekbang.html)
+[一个开发者的Linux机器](https://dev.to/deepu105/my-sleek-and-modern-linux-development-machine-in-2021-2d8f)
 
