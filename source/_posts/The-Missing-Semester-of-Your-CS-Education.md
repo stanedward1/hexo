@@ -4,6 +4,8 @@ date: 2021-11-10 23:38:01
 tags:
 ---
 
+[The Missing Semester of Your CS Education](https://missing.csail.mit.edu/)
+
 # Course overview + the shell
 
 ## Exercises

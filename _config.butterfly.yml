@@ -650,7 +650,9 @@ aside:
   card_announcement:
     enable: true
     content: <img src="https://img.shields.io/badge/rubyist-ruby%20on%20rails-red"/>
-              <br>This is my Blog
+             <img src="https://img.shields.io/badge/Django%20%20-blue"/>
+             <img src="https://img.shields.io/badge/%E6%8D%A1%E5%9B%9EJava%E4%B8%AD%20%20-red"/>
+             <br>This is my Blog
   card_recent_post:
     enable: true
     limit: 5 # if set 0 will show all
