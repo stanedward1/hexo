@@ -15,7 +15,7 @@ cover: /img/75960.jpg
 
 ```java
 # T500 键盘行
-class Solution {    
+class Solution {
     public String[] findWords(String[] words) {
         List<String> list = new ArrayList<String>();
         String rowIdx = "12210111011122000010020202";
@@ -49,7 +49,7 @@ class Solution {
 
 这周没有什么技术技巧，只有周末想了想最近的事情，并手写了一点点随想，主要是觉得自己的有效学习和时间管理方面要加强，另外对我来说比较新，或者说较少接触的技术知识也要挤时间学。
 
-![image-20211107233150239](../img/ARTS0301.png)
+![image-20211107233150239](/img/ARTS0301.png)
 
 在一个群里看得了这个图片，烂道理谁都懂，但是很多人都是思想上的巨人，行动上的侏儒，谁又能免俗呢，我也一样。知行合一是一个很nice的方法论，要坚持，要扎实。希望自己继续坚持ARTS。
 
