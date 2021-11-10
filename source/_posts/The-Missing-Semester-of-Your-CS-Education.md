@@ -36,3 +36,19 @@ tags:
 10. Use `|` and `>` to write the “last modified” date output by `semester` into a file called `last-modified.txt` in your home directory.
 
 11. Write a command that reads out your laptop battery’s power level or your desktop machine’s CPU temperature from `/sys`. Note: if you’re a macOS user, your OS doesn’t have sysfs, so you can skip this exercise.
+
+## Answer
+
+```shell
+# 使用Manjaro
+echo '#!/bin/sh' > semester
+echo 'curl --head --silent https://missing.csail.mit.edu' >> semester
+cat semester
+chmod 777 semester
+./semester
+# 使用cut对信息按空格进行分割，选择第6,7,8段输出
+ls -l semester | cut -d" " -f6,7,8 > ~/last-modified.txt
+cat ~/last-modified.txt
+cat /sys/class/power_supply/hid-f4:73:35:03:24:63-battery/capacity
+```
+
