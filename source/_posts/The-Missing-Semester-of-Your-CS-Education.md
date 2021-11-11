@@ -1,7 +1,7 @@
 ---
 title: The Missing Semester of Your CS Education
 date: 2021-11-10 23:38:01
-tags:
+tags: 其他
 ---
 
 # [The Missing Semester of Your CS Education](https://missing.csail.mit.edu/)
@@ -27,6 +27,8 @@ cat /sys/class/power_supply/hid-f4:73:35:03:24:63-battery/capacity
 
 ## [Shell Tools and Scripting](https://missing.csail.mit.edu/2020/shell-tools/)
 
+这一节有趣了一点点，Shell工具和脚本
+
 1.Read man ls and write an ls command that lists files in the following manner
 
   - Includes all files, including hidden files
@@ -44,10 +46,7 @@ drwx------+ 47 user group 1.5K Jan 12 18:08 ..
 ```
 
 ```shell
-# -t(sort by time, newest first; see --time)
-# -l(use a long listing format when showing file information for a symbolic link, #    show informa‐ tion for the file the link references rather than for  the      #    link itself)
-# -a, --all(do not ignore entries starting with)
-# --block-size('--block-size=M'; see SIZE format below)
+# 相关信息——Read man ls
 ls -lt -a --block-size=k --color
 ```
 
