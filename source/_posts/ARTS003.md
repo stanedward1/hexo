@@ -1,3 +1,4 @@
+
 ---
 title: ARTS003
 date: 2021-11-06 14:22:12
@@ -43,7 +44,9 @@ class Solution {
 
 ## Review
 
-这周在疯狂改bug+写需求，没有看到比较好的英文技术文章，于是从左耳朵耗子的专栏里找了一篇推荐的文章——[What every programmer should know about memory](https://lwn.net/Articles/250967/)
+[Idea官网的文档](https://www.jetbrains.com/help/idea/your-first-spring-application.html#add-home-page)
+
+复习了一下Java开发，Idea确实是一个很成功的ide！
 
 ## Tip
 
@@ -56,4 +59,3 @@ class Solution {
 ## Share
 
 [一个开发者的Linux机器](https://dev.to/deepu105/my-sleek-and-modern-linux-development-machine-in-2021-2d8f)
-
