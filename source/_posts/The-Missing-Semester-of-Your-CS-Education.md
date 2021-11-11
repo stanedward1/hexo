@@ -27,3 +27,27 @@ cat /sys/class/power_supply/hid-f4:73:35:03:24:63-battery/capacity
 
 ## [Shell Tools and Scripting](https://missing.csail.mit.edu/2020/shell-tools/)
 
+1.Read man ls and write an ls command that lists files in the following manner
+
+  - Includes all files, including hidden files
+  - Sizes are listed in human readable format (e.g. 454M instead of 454279954)
+  - Files are ordered by recency
+  - Output is colorized
+  - A sample output would look like this
+
+```shell
+-rw-r--r--   1 user group 1.1M Jan 14 09:53 baz
+drwxr-xr-x   5 user group  160 Jan 14 09:53 .
+-rw-r--r--   1 user group  514 Jan 14 06:42 bar
+-rw-r--r--   1 user group 106M Jan 13 12:12 foo
+drwx------+ 47 user group 1.5K Jan 12 18:08 ..
+```
+
+```shell
+# -t(sort by time, newest first; see --time)
+# -l(use a long listing format when showing file information for a symbolic link, #    show informa‐ tion for the file the link references rather than for  the      #    link itself)
+# -a, --all(do not ignore entries starting with)
+# --block-size('--block-size=M'; see SIZE format below)
+ls -lt -a --block-size=k --color
+```
+
