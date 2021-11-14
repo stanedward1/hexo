@@ -1,8 +1,8 @@
 ---
 title: Proc类
 date: 2021-05-05 07:03:32
-tags: ruby
-categories: ruby
+tags: Ruby基础
+categories: Ruby
 cover: /img/ruby.png
 ---
 

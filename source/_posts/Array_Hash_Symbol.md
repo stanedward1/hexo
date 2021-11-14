@@ -1,8 +1,8 @@
 ---
 title: Array&Hash&Symbol
 date: 2021-05-04 07:04:32
-tags: ruby
-categories: ruby
+tags: Ruby基础
+categories: Ruby
 cover: /img/ruby.png
 ---
 

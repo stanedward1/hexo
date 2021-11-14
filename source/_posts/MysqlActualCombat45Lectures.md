@@ -1,8 +1,8 @@
 ---
 title: Mysql45讲
 date: 2021-05-03 09:03:32
-tags: from 极客时间
-categories: mysql
+tags: Mysql
+categories: 数据库
 cover: /img/IMG_2317.jpg
 ---
 

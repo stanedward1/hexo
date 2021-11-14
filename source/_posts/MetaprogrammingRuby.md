@@ -1,8 +1,8 @@
 ---
 title: 《Ruby元编程》
 date: 2021-05-04 07:03:32
-tags: 书籍
-categories: ruby
+tags: 读书笔记
+categories: ARTS及其他
 cover: /img/ruby.png
 ---
 

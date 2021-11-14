@@ -1,8 +1,8 @@
 ---
 title: 三小时mysql
 date: 2021-05-02 09:03:32
-tags: 视频
-categories: mysql
+tags: Mysql
+categories: 数据库
 cover: /img/IMG_2317.jpg
 ---
 

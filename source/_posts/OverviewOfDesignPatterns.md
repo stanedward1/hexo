@@ -1,8 +1,8 @@
 ---
 title: 设计模式概览
 date: 2021-05-23 01:05:05
-tags: 书籍
-categories: 设计模式
+tags: 设计模式
+categories: 系统设计
 cover: /img/DesignPatterns/设计模式.jpg
 ---
 

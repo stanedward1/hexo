@@ -2,7 +2,7 @@
 title: vscode theme
 date: 2021-05-20 22:42:52
 tags: 颜值正义
-categories: 其他
+categories: ARTS及其他
 cover: /img/vscode-theme/image-20210520224536810.png
 ---
 

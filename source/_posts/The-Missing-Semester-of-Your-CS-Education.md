@@ -1,7 +1,7 @@
 ---
 title: The Missing Semester of Your CS Education
 date: 2021-11-10 23:38:01
-tags: 其他
+tags: Linux&Git&Kali
 ---
 
 # [The Missing Semester of Your CS Education](https://missing.csail.mit.edu/)
