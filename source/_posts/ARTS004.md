@@ -17,7 +17,7 @@ cover: /img/75960.jpg
 ## Review
 
 ## Tip
-   这周在工作上主要是写一些新需求，以及改bug,都是比较小的改动，或者是代码量比较小的feature，这周的工作基本上都是使用vim完成的，个人感觉体验不错。
+   这周在工作上主要是写一些新需求，以及改bug,都是比较小的改动，或者是代码量比较小的feature，所以选择使用vim完成，个人感觉体验不错。
    这里的资源看起来不错，可以偶尔看看：[vim用户指南系列文章](https://linux.cn/article-8143-1.html)
    用过的命令行工具有Konsole,iTerm2,Terminator,它们关于分屏的操作不太一样，这个时候，可以看tmux,这里是资料[tmux中文资料](https://www.ruanyifeng.com/blog/2019/10/tmux.html)
 ## Share
