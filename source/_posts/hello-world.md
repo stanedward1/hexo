@@ -22,6 +22,8 @@ cover: /img/MVC_Rails.png
 
 ### 数据结构与算法
 
+#### [1.DataStructureLinearTable.md](1.DataStructureLinearTable.md)
+
 ### 计算机网络
 
 ### 操作系统
