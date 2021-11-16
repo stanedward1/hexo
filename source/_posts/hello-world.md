@@ -22,7 +22,7 @@ cover: /img/MVC_Rails.png
 
 ### 数据结构与算法
 
-#### [1.DataStructureLinearTable.md](1.DataStructureLinearTable.md)
+[1.数据结构——线性表](https://www.jiangnanshaojiu.com/2021/05/22/1.DataStructureLinearTable/)
 
 ### 计算机网络
 
