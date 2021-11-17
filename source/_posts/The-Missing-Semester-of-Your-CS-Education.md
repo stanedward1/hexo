@@ -8,7 +8,7 @@ tags: Linux&Git&Kali
 
 **回顾一下一些工具的使用**
 
-## [Course overview + the shell](https://missing.csail.mit.edu/2020/course-shell/)
+# [Course overview + the shell](https://missing.csail.mit.edu/2020/course-shell/)
 
 第一节都是一些比较常规的操作，不过课后习题中的T9让我很好的回顾了一下cut的用法——**remove sections from each line of files**
 
@@ -25,7 +25,7 @@ cat ~/last-modified.txt
 cat /sys/class/power_supply/hid-f4:73:35:03:24:63-battery/capacity
 ```
 
-## [Shell Tools and Scripting](https://missing.csail.mit.edu/2020/shell-tools/)
+# [Shell Tools and Scripting](https://missing.csail.mit.edu/2020/shell-tools/)
 
 这一节有趣了一点点，Shell工具和脚本
 
@@ -50,3 +50,6 @@ drwx------+ 47 user group 1.5K Jan 12 18:08 ..
 ls -lt -a --block-size=k --color
 ```
 
+# [Editors (Vim)](https://missing.csail.mit.edu/2020/editors/)
+
+工作中有些改动比较小的代码，或者比较简单的功能，我会选择使用Vim，看了看这一节，发现我大致掌握了，跳过。
