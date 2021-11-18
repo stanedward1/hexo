@@ -5,7 +5,13 @@ tags: Redis
 categories: 数据库
 ---
 
-**学习自【尚硅谷】Redis 6 入门到精通 超详细 教程**
+**学习自[【尚硅谷】Redis 6 入门到精通 超详细 教程](https://www.bilibili.com/video/BV1Rv41177Af)**
+
+参考文档：
+
+http://redisdoc.com/
+
+https://devdocs.io/
 
 # NoSQL数据库简介
 
@@ -37,7 +43,19 @@ http://db-engines.com/en/ranking
 # Redis6概述和安装
 https://phoenixnap.com/kb/install-redis-on-ubuntu-20-04
 
+## 应用场景
+
+### **配合关系型数据库做高速缓存**
+
+- 高频次，热门访问的数据，降低数据库IO
+
+- 分布式架构，做session共享
+
+### **多样的数据结构存储持久化数据**
+
 # 常用五大数据类型
+
+redis常见数据类型操作命令http://www.redis.cn/commands.html
 
 ## 键（key）操作
 

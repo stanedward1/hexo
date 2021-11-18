@@ -26,13 +26,12 @@ delete p1.* from Person p1,Person p2 where p1.Email=p2.Email and p1.Id > p2.Id;
 # 197. 上升的温度
 # Write your MySQL query statement below
 SELECT
-    weather.id AS 'Id'
+    Weather.id AS 'Id'
 FROM
-    weather
+    Weather
         JOIN
-    weather w ON DATEDIFF(weather.date, w.date) = 1
-        AND weather.Temperature > w.Temperature
-;
+    Weather w ON DATEDIFF(Weather.recordDate , w.recordDate ) = 1
+        AND Weather.Temperature > w.Temperature
 ```
 
 # Review
