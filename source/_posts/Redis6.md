@@ -15,6 +15,18 @@ https://devdocs.io/
 
 # NoSQL数据库简介
 
+## 概述
+
+NoSQL(NoSQL = **Not Only SQL** )，意即“不仅仅是SQL”，泛指**非关系型的数据库**。 
+
+NoSQL 不依赖业务逻辑方式存储，而以简单的key-value模式存储。因此大大的增加了数据库的扩展能力。
+
+- 不遵循SQL标准。
+
+- 不支持ACID。
+
+- 远超于SQL的性能。
+
 ## 技术发展
 
 **解决CPU及内存压力**
