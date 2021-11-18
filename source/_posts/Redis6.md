@@ -37,7 +37,7 @@ http://db-engines.com/en/ranking
 # Redis6概述和安装
 https://phoenixnap.com/kb/install-redis-on-ubuntu-20-04
 
-# 3、常用五大数据类型
+# 常用五大数据类型
 
 ## 键（key）操作
 
