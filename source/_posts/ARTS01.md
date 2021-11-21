@@ -16,6 +16,10 @@ cover: /img/75960.jpg
 
 ## 数据库题库练手
 
+```
+
+```
+
 ```sql
 # 196. 删除重复的电子邮箱
 # Write your MySQL query statement below
@@ -36,7 +40,20 @@ FROM
 
 # Review
 
+[Where is Ruby Headed in 2021?](https://bignerdranch.com/blog/where-is-ruby-headed-in-2021/)
+
+```tex
+讲了一些开发人员对Ruby这门语言的优化，另外重申了Ruby开发者Matz将Ruby称为一种面向人类的语言。
+主要是Ruby3开始的一些优化，包括并发，I/O，Ruby执行速度等的一些优化。
+```
+
+相关链接：
+
+https://botreetechnologies.medium.com/5-saas-solutions-built-with-ruby-on-rails-d2d37f184745
+
 # Tip
+
+这周并没有总结啥技术技巧，不过又用回了Jetbrains公司的编辑器，原因是使用Vim和Vscode的时候改变了代码的格式。
 
 # Share
 
