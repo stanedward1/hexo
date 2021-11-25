@@ -13,6 +13,8 @@ http://redisdoc.com/
 
 https://devdocs.io/
 
+https://www.redis.net.cn/tutorial/3501.html
+
 # NoSQL数据库简介
 
 ## 概述
@@ -261,3 +263,26 @@ zset底层使用了两个数据结构
 （1）hash，hash的作用就是关联元素value和权重score，保障元素value的唯一性，可以通过元素value找到相应的score值。
 
 （2）跳跃表，跳跃表的目的在于给元素value排序，根据score的范围获取元素列表。
+
+# Redis6配置文件详解
+
+https://docs.bitnami.com/installer/apps/redash/get-started/understand-default-config/
+
+[配置Redis服务器、设置密码并允许IP访问](https://juejin.cn/post/6844903589270257678)
+
+# Redis的发布和订阅
+
+## 什么是发布和订阅
+
+**Redis 发布订阅 (pub/sub) 是一种消息通信模式：发送者 (pub) 发送消息，订阅者 (sub) 接收消息。**
+
+Redis 客户端可以订阅任意数量的频道。
+
+## 发布订阅命令行实现
+
+```shell
+SUBSCRIBE channel1
+publish channel1 hello
+```
+
+发布的消息没有持久化，如果在订阅的客户端收不到hello，只能收到订阅后发布的消息
