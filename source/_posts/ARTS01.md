@@ -57,3 +57,9 @@ https://botreetechnologies.medium.com/5-saas-solutions-built-with-ruby-on-rails-
 
 # Share
 
+发现了一本蛮不错的书籍，叫做——[冒号课堂----编程范式与OOP思想](https://book.douban.com/subject/4031906/)，讲了一些编程范式，语言很风趣，但也还是难免曲高和寡。
+
+总之，是一本值得一读的，难得的好书。
+
+另外，一直以来都有很多计算机软件开发方面走的比较远的开发者推荐阅读英文文档，浏览英文社区，这本书的作者也不例外，我现在完全赞同这种看法。
+
