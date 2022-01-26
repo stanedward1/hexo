@@ -5,9 +5,6 @@ tags: 设计模式
 categories: 系统设计
 cover: /img/DesignPatterns/设计模式.jpg
 ---
-
-
-
 **我们谈到面向对象的时候，免不了会说到对象和类，偶尔看到一个很有意思的说法：*对象可以类比我喜欢某人，而类则是我喜欢某类人***
 
 # 类与实例
@@ -63,4 +60,3 @@ OOP即针对对象来进行编程。
 ![img](/img/OverviewOfDesignPatterns/java-polymorphism-111.png)
 
 (图片来自菜鸟教程)
-

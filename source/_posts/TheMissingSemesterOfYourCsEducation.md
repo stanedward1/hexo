@@ -3,7 +3,6 @@ title: The Missing Semester of Your CS Education
 date: 2021-11-10 23:38:01
 tags: Linux&Git&Kali
 ---
-
 # [The Missing Semester of Your CS Education](https://missing.csail.mit.edu/)
 
 **回顾一下一些工具的使用**
@@ -31,11 +30,11 @@ cat /sys/class/power_supply/hid-f4:73:35:03:24:63-battery/capacity
 
 1.Read man ls and write an ls command that lists files in the following manner
 
-  - Includes all files, including hidden files
-  - Sizes are listed in human readable format (e.g. 454M instead of 454279954)
-  - Files are ordered by recency
-  - Output is colorized
-  - A sample output would look like this
+- Includes all files, including hidden files
+- Sizes are listed in human readable format (e.g. 454M instead of 454279954)
+- Files are ordered by recency
+- Output is colorized
+- A sample output would look like this
 
 ```shell
 -rw-r--r--   1 user group 1.1M Jan 14 09:53 baz

@@ -1,8 +1,8 @@
 ---
 title: destroy VS delete_all
 date: 2021-06-03 20:55:17
-tags: Ruby基础
-categories: Ruby
+tags: Rails基础
+categories: Rails
 cover: /img/ruby.png
 ---
 
