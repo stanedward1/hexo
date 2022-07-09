@@ -82,7 +82,7 @@ logo:
   width: 50
   height: 50
   url: https://avatars.githubusercontent.com/u/48550717?v=4
-  gravatar: false
+  gravatar: true
   grayout: false
 
 # Customize the favicons.
