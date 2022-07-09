@@ -15,7 +15,7 @@ type: "link"
 |    屠·城     |     https://www.haomwei.com/     | 工程师，制作了一个我很喜欢但是没使用的hexo博客主题 |
 
 
-| theme's name \| link                                                 | description                                       |
+| theme's name                                                 | description                                       |
 | ------------------------------------------------------------ | ------------------------------------------------- |
 | [no-style-please](https://github.com/riggraz/no-style-please) | A (nearly) no-CSS, fast, minimalist Jekyll theme. |
 | [Jekyll-Paper](https://github.com/ghosind/Jekyll-Paper)      | Jekyll Paper is a simple Jekyll theme             |
