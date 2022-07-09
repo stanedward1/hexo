@@ -4,9 +4,7 @@ date: 2021-05-03 00:00:00
 type: "link"
 ---
 
-一个排名不分先后的友链表格:
-
-|     name     |               link               |                    description                     |
+|     link's name     |               link               |                    description                     |
 | :----------: | :------------------------------: | :------------------------------------------------: |
 |    胡涂说    |       https://hutusi.com/        |           任抛星汉归园圃，留取乾坤盛酒囊           |
 | 我的学习点滴 |  https://stanedward1.github.io/  |                 longbiu的学习点滴                  |
@@ -16,9 +14,7 @@ type: "link"
 |  Yihui Xie   |        https://yihui.org/        |                这是谢益辉的个人主页                |
 |    屠·城     |     https://www.haomwei.com/     | 工程师，制作了一个我很喜欢但是没使用的hexo博客主题 |
 
-theme:
-
-| name \| link                                                 | description                                       |
+| theme's name \| link                                                 | description                                       |
 | ------------------------------------------------------------ | ------------------------------------------------- |
 | [no-style-please](https://github.com/riggraz/no-style-please) | A (nearly) no-CSS, fast, minimalist Jekyll theme. |
 | [Jekyll-Paper](https://github.com/ghosind/Jekyll-Paper)      | Jekyll Paper is a simple Jekyll theme             |
