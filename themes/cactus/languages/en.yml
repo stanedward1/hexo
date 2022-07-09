@@ -3,10 +3,13 @@ nav:
   about: About
   articles: Writing
   tag: Tag
-  links: Link
   category: Category
   projects: Projects
   search: Search
+
+icons:
+  menu: Menu
+  top: Top
 
 footer:
   copyright: Copyright
