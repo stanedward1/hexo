@@ -29,7 +29,7 @@ nav:
 # only 'mail' is an exception.
 social_links:
   github: https://github.com/stanedward1
-  mail: longbiu@foxmail.com
+  mail: mailto:longbiu@foxmail.com
 
 # Customize the overview with displaying a tagcloud on the index page.
 # Options: https://hexo.io/docs/helpers.html#tagcloud
