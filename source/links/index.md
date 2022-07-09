@@ -16,7 +16,7 @@ type: "link"
 
 <br>
 
-| theme's name                                                 |               link               |                    description                     |
+|        theme                                                |               link               |                    description                     |
 | :----------: | :------------------------------: | :------------------------------------------------: |
 | no-style-please | https://github.com/riggraz/no-style-please | A (nearly) no-CSS, fast, minimalist Jekyll theme. |
 | Jekyll-Paper      | https://github.com/ghosind/Jekyll-Paper | Jekyll Paper is a simple Jekyll theme             |
