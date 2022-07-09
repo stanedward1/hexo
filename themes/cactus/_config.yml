@@ -83,7 +83,7 @@ logo:
   height: 50
   url: https://avatars.githubusercontent.com/u/48550717?v=4
   gravatar: false
-  grayout: true
+  grayout: false
 
 # Customize the favicons.
 # Cactus supports a limited set of the three most important icons:
