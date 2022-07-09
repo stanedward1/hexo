@@ -15,9 +15,12 @@ direction: ltr
 # languages/*.yml
 nav:
   home: /
-  about: /about/
   articles: /archives/
-  projects: https://github.com/stanedward1
+  about: /about/
+  # tag: /tags/
+  category: /categories/
+  links: /link/
+  # projects: https://github.com/stanedward1
 
 
 # Links to your social media accounts.
@@ -78,9 +81,9 @@ logo:
   enabled: true
   width: 50
   height: 50
-  url: /images/logo.png
+  url: https://avatars.githubusercontent.com/u/48550717?v=4
   gravatar: false
-  grayout: true
+  grayout: false
 
 # Customize the favicons.
 # Cactus supports a limited set of the three most important icons:
@@ -93,14 +96,14 @@ logo:
 #   - gravatar: whether to create a favicon from your Gravatar
 favicon:
   desktop:
-    url: /images/favicon.ico
-    gravatar: false
+    url: https://avatars.githubusercontent.com/u/48550717?v=4
+    gravatar: true
   android:
-    url: /images/favicon-192x192.png
-    gravatar: false
+    url: https://avatars.githubusercontent.com/u/48550717?v=4
+    gravatar: true
   apple:
-    url: /images/apple-touch-icon.png
-    gravatar: false
+    url: https://avatars.githubusercontent.com/u/48550717?v=4
+    gravatar: true
 
 # The color scheme that should be used to highlight codeblocks.
 # See source/css/_highlight for a list of all available color schemes.
@@ -109,7 +112,7 @@ favicon:
 # Set the color scheme.
 # Available color schemes are 'dark', 'light', 'classic' and 'white'.
 # Alternatively, add your own custom color scheme to source/css/_colors.
-colorscheme: dark
+colorscheme: classic
 
 # Maximal width of the page in rem units.
 page_width: 48

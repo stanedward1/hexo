@@ -15,9 +15,12 @@ direction: ltr
 # languages/*.yml
 nav:
   home: /
-  about: /about/
   articles: /archives/
-  projects: https://github.com/stanedward1
+  about: /about/
+  # tag: /tags/
+  category: /categories/
+  links: /link/
+  # projects: https://github.com/stanedward1
 
 
 # Links to your social media accounts.
