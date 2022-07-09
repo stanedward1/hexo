@@ -1,0 +1,44 @@
+- class_name: 友情链接
+  class_desc: 那些人，那些事
+  link_list:
+    - name: L Blog
+      link: https://www.liulei.ltd/
+      avatar: https://www.liulei.ltd/img/avatar.png
+      descr: 每天亿个小bug
+    - name: 胡涂说
+      link: https://hutusi.com/
+      avatar: https://avatars.githubusercontent.com/u/487036?v=4
+      descr: 任抛星汉归园圃，留取乾坤盛酒囊
+    - name: 我的学习点滴
+      link: https://stanedward1.github.io/
+      avatar: https://avatars.githubusercontent.com/u/48550717?v=4
+      descr: 这才是longbiu的学习点滴
+    - name: boyzhang
+      link: https://sweetboyzhang.gitee.io/
+      avatar: https://sweetboyzhang.gitee.io/images/user.jpg
+      descr: 热爱微风，并与暴风同行
+    - name: 编程妙妙屋
+      link: https://www.skypyb.com/
+      avatar: https://avatars.githubusercontent.com/u/38156498?v=4
+      descr: 编程妙妙屋
+    - name: 甜欣屋
+      link: https://tcxx.info/
+      avatar: https://tcxx.info/wp-content/themes/StarryW/images/bg/me.jpg
+      descr: 我不是天才，我只是甜菜
+#  https://www.cnblogs.com/liuqingzheng/
+
+#- class_name: 網站
+#  class_desc: 值得推薦的網站
+#  link_list:
+#    - name: Youtube
+#      link: https://www.youtube.com/
+#      avatar: https://i.loli.net/2020/05/14/9ZkGg8v3azHJfM1.png
+#      descr: 視頻網站
+#    - name: Weibo
+#      link: https://www.weibo.com/
+#      avatar: https://i.loli.net/2020/05/14/TLJBum386vcnI1P.png
+#      descr: 中國最大社交分享平臺
+#    - name: Twitter
+#      link: https://twitter.com/
+#      avatar: https://i.loli.net/2020/05/14/5VyHPQqR6LWF39a.png
+#      descr: 社交分享平臺
