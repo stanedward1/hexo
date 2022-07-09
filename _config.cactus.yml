@@ -16,10 +16,10 @@ direction: ltr
 nav:
   home: /
   articles: /archives/
-  about: /about/
   # tag: /tags/
   category: /categories/
   links: /link/
+  about: /about/
   # projects: https://github.com/stanedward1
 
 
