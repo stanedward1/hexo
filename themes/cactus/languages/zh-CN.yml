@@ -3,8 +3,8 @@ nav:
   about: 关于
   articles: 归档
   projects: 项目
-  tags: 标签
-  categories: 分类
+  tags: Tags
+  categories: Categories
   search: 搜索
 
 footer:
