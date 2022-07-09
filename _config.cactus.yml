@@ -83,7 +83,7 @@ logo:
   height: 50
   url: https://avatars.githubusercontent.com/u/48550717?v=4
   gravatar: false
-  grayout: false
+  grayout: true
 
 # Customize the favicons.
 # Cactus supports a limited set of the three most important icons:
@@ -179,7 +179,7 @@ umami_analytics:
 # logo and/or favicons of you website.
 # To generate hash: `$ echo -n "name@email.com" | md5`.
 gravatar:
-  email: name@email.com
+  email: longbiu@foxmail.com
   hash: d41d8cd98f00b204e9800998ecf8427e
 
 # loads libraries and styles from CDN instead or relying on local files
