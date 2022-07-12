@@ -16,9 +16,9 @@ type:
 
 |                         name                          |                         description                          |
 | :---------------------------------------------------: | :----------------------------------------------------------: |
-|         [PlantUML](https://plantuml.com/zh/)          |  **PlantUML** is a component that allows to quickly write:   |
+|         [PlantUML](https://plantuml.com/zh/)          |    PlantUML is a component that allows to quickly write:     |
 |        [TablePlus](https://www.tableplus.com/)        |     Modern, native, and friendly GUI tool for relational     |
 | [Visual Studio Code](https://code.visualstudio.com/)  | Visual Studio Code is a lightweight but powerful source code editor |
 |   [IntelliJ IDEA](https://www.jetbrains.com/idea/)    |              Capable and Ergonomic IDEA for JVM              |
-|           [Vim](https://github.com/vim/vim)           | Vim is a greatly improved version of the good old UNIX editor [Vi](https://en.wikipedia.org/wiki/Vi) |
-| [VundleVim)](https://github.com/VundleVim/Vundle.vim) | [Vundle](http://github.com/VundleVim/Vundle.vim) is short for *Vim bundle* and is a [Vim](http://www.vim.org/) plugin manager. |
+|           [Vim](https://github.com/vim/vim)           | Vim is a greatly improved version of the good old UNIX editor VI |
+| [VundleVim)](https://github.com/VundleVim/Vundle.vim) | Vundle is short for *Vim bundle* and is a Vim plugin manager. |
