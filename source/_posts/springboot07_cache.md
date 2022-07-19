@@ -10,8 +10,6 @@ Spring3.1中开始对缓存提供支持，核心思路是对方法的缓存，�
 [Caching Data with Spring](https://spring.io/guides/gs/caching/)
 [gs-caching](https://github.com/spring-guides/gs-caching)
 
-1、添加项目依赖
-
-2、添加缓存配置信息
-
-3、使用@EnableCaching，在项目入口类开启缓存
+1、添加项目依赖  
+2、添加缓存配置信息  
+3、使用@EnableCaching，在项目入口类开启缓存  
