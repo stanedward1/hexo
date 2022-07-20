@@ -1,10 +1,16 @@
----
-title: 《Ruby元编程》笔记
-date: 2021-05-04 07:03:32
-tags: 读书笔记
-categories: Ruby on Rails
-cover: /img/ruby.png
----
+[//]: # (---)
+
+[//]: # (title: 《Ruby元编程》笔记)
+
+[//]: # (date: 2021-05-04 07:03:32)
+
+[//]: # (tags: 读书笔记)
+
+[//]: # (categories: Ruby on Rails)
+
+[//]: # (cover: /img/ruby.png)
+
+[//]: # (---)
 
 # 元这个字眼
 
