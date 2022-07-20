@@ -14,7 +14,7 @@ type: "link"
 |  Yihui Xie  |                                    https://yihui.org/                                     |            这是谢益辉的个人主页          |
 |     屠·城     |                                 https://www.haomwei.com/                                  |   工程师，制作了一个我很喜欢但是没使用的hexo博客主题  |
 | shengyayun  |                               https://shengyayun.github.io/                               |            Full Stack          |
-|   云游君的小站    |                                 https://www.yunyoujun.cn/                                 |                希望能成为一个有趣的人。希望能创造出可以成为他人回忆的事物。                |
+|   云游君的小站    |                                 https://www.yunyoujun.cn/                                 |                希望能成为一个有趣的人             |
 |   Limboy    |                                 https://limboy.me/                                 |               也算是挺早接触互联网的那一小撮人了                 |
 
 [//]: # (|         秦关属楚         |                            https://gonglexin.com/archive.html                             |                 Alchemist&#40;Elixir&#41; & Rubyist                 |)
