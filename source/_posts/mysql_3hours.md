@@ -8,19 +8,12 @@ cover: /img/IMG_2317.jpg
 
 
 # [3小时Mysql入门](https://www.bilibili.com/video/BV1iJ411m7Fj)
-
 ## sql语句中<>与!=作用一样
-
 ## REGEXP--正则
-
 1. REGEXP '[gim]e'----搜索ge ie me
-
 2. REGEXP '[a-h]e'
-
 3. where中，^----beginning    $----end    |----logical or
-
 4. excise
-
    ```sql
    select *
    from customers
@@ -39,17 +32,13 @@ cover: /img/IMG_2317.jpg
    where first_name REGEXP 'b[ru]'
    # (br|bu)
    ```
-
 ## NULL
-
 ```sql
 select *  
 from orders
 where shipper_id is null
 ```
-
 ## ORDER BY
-
 ```sql
 # 按first_name升序排列
 select *  
@@ -72,9 +61,7 @@ select first_name,last_name,10 AS point
 from customers
 ORDER BY 1, 2
 ```
-
 ## LIMIT
-
 ```sql
 # 拿到300条数据，不足则那最大的
 select *
@@ -92,9 +79,7 @@ from customers
 order by points desc
 limit 3
 ```
-
 ## JOIN
-
 ```sql
 # 从orders&customers拿数据
 select order_id, orders.customer_id, first_name, last_name
@@ -111,9 +96,7 @@ join customers c
 	
 # 关联的表可以使用join on来进行操作
 ```
-
 ##  LEFT_JOIN&RIGHT_JOIN
-
 ```sql
 # 左连接和右连接
 # 简单理解就是满足左边条件的保存，右边可以为空；反过来也一样
@@ -139,9 +122,7 @@ left join shippers sh
 	on o.shipper_id = sh.shipper_id
  order by c.customer_id
 ```
-
 ## USING
-
 ```sql
 # o.customer_id = c.customer_id
 # 0.shipper_id = sh.shipper_id
@@ -155,9 +136,7 @@ join customers c
 join shippers sh
 	using (shipper_id)
 ```
-
 ## NATURAL JOIN
-
 ```sql
 # 自然关联，数据库去猜你要那些公共列（字段）
 select 
@@ -167,9 +146,7 @@ select
 from orders o
 natural join customers c
 ```
-
 ## CROSS JOIN
-
 ```sql
 select 
 	o.order_id
@@ -184,15 +161,11 @@ select
 	p.name
 from customers c, products p 
 ```
-
 ## UNION
-
 ```
 # 多张表的连接
 ```
-
 ## INSERT INTO
-
 ```sql
 insert into customers
 values (DEFAULT, 'john', 'smith', NULL)
@@ -204,17 +177,13 @@ insert into shippers (name)
 values ("asdf"),
 		("asdjf")
 ```
-
 ## last_insert_id
-
 ```sql
 # 字面意思，返回一个最后的id
 insert into order_items
 values (LAST_INSERT_ID(),1,2,3)
 ```
-
 ## CREATE
-
 ```sql
 # 新建一个表，数据as same as orders
 create table orders_archived as
@@ -225,9 +194,7 @@ insert into orders_archived as
 select * from orders
 where ……
 ```
-
 ## UPDATE
-
 ```sql
 update invoices
 set payment_total = 10, payment_date = '2021-09-09'
@@ -244,11 +211,8 @@ where invoice_id = (
 					from clients
 					where state in ('ca','ny')) 
 ```
-
 ## DELETE
-
 ```sql
 delete from invoices
 where client_id=1
 ```
-
