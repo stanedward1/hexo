@@ -12,6 +12,7 @@ Os: Fedora35
 - 首先是查看现有分区，使用如下命令：`fdisk -l`
 - 定位到想要挂载的分区，如`/dev/sda3`
 - 挂载分区，使用如下命令：`mount /dev/sda3 /data`  
+
 ## 自动挂载分区  
 ### 编辑/etc/fstab
 ```shell
