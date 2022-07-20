@@ -14,7 +14,7 @@ Os: Fedora35
 - 挂载分区，使用如下命令：`mount /dev/sda3 /data`  
 
 ## 自动挂载分区  
-### 编辑/etc/fstab
+编辑/etc/fstab  
 ```shell
 /dev/sda3 /data ntfs defaults 0 0
 ```
