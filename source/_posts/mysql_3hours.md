@@ -14,24 +14,25 @@ cover: /img/IMG_2317.jpg
 2. REGEXP '[a-h]e'
 3. where中，^----beginning    $----end    |----logical or
 4. excise
-   ```sql
-   select *
-   from customers
-   where first_name REGEXP 'elka|ambur'
+
+```sql
+select *
+from customers
+where first_name REGEXP 'elka|ambur'
    
-   select *
-   from customers
-   where first_name REGEXP 'ey$|on$'
+select *
+from customers
+where first_name REGEXP 'ey$|on$'
    
-   select *
-   from customers
-   where first_name REGEXP '^my|se'
+select *
+from customers
+where first_name REGEXP '^my|se'
    
-   select *
-   from customers
-   where first_name REGEXP 'b[ru]'
-   # (br|bu)
-   ```
+select *
+from customers
+where first_name REGEXP 'b[ru]'
+# (br|bu)
+```
 ## NULL
 ```sql
 select *  
