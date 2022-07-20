@@ -1,16 +1,16 @@
-[//]: # (---)
+---
 
-[//]: # (title: Mysql45讲)
+title: Mysql45讲
 
-[//]: # (date: 2021-05-03 09:03:32)
+date: 2021-05-03 09:03:32
 
-[//]: # (tags: Mysql)
+tags: Mysql
 
-[//]: # (categories: Database)
+categories: Database
 
-[//]: # (cover: /img/IMG_2317.jpg)
+cover: /img/IMG_2317.jpg
 
-[//]: # (---)
+---
 
 # 基础篇
 
@@ -18,7 +18,11 @@
 
 ```sql
 
-mysql> select * from T where ID=10；
+mysql
+>
+select *
+from T
+where ID = 10；
 ```
 
 ![image-20210406035934530](/img/image-20210406035934530.png)
@@ -27,7 +31,8 @@ Server 层包括连接器、查询缓存、分析器、优化器、执行器等�
 
 而存储引擎层负责数据的存储和提取。其架构模式是插件式的，支持 InnoDB、MyISAM、Memory 等多个存储引擎。现在最常用的存储引擎是 InnoDB，它从 MySQL 5.5.5 版本开始成为了默认存储引擎。
 
-也就是说，你执行 create table 建表的时候，如果不指定引擎类型，默认使用的就是 InnoDB。不过，你也可以通过指定存储引擎的类型来选择别的引擎，比如在 create table 语句中使用 engine=memory, 来指定使用内存引擎创建表。不同存储引擎的表数据存取方式不同，
+也就是说，你执行 create table 建表的时候，如果不指定引擎类型，默认使用的就是 InnoDB。不过，你也可以通过指定存储引擎的类型来选择别的引擎，比如在 create table 语句中使用 engine=memory,
+来指定使用内存引擎创建表。不同存储引擎的表数据存取方式不同，
 
 ### 优化器
 
@@ -36,7 +41,13 @@ Server 层包括连接器、查询缓存、分析器、优化器、执行器等�
 那么
 
 ```sql
-mysql> select * from t1 join t2 using(ID)  where t1.c=10 and t2.d=20;
+mysql
+>
+select *
+from t1
+         join t2 using (ID)
+where t1.c = 10
+  and t2.d = 20;
 ```
 
 对于这条sql语句，
@@ -64,16 +75,27 @@ MySQL 从你输入的"select"这个关键字识别出来，这是一个查询语
 我们还是从一个表的一条更新语句说起，下面是这个表的创建语句，这个表有一个主键 ID 和一个整型字段 c：
 
 ```sql
-mysql> create table T(ID int primary key, c int);
+mysql
+>
+create table T
+(
+    ID int primary key,
+    c  int
+);
 ```
 
 如果要将 ID=2 这一行的值加 1，SQL 语句就会这么写：
 
 ```sql
-mysql> update T set c=c+1 where ID=2;
+mysql
+>
+update T
+set c=c + 1
+where ID = 2;
 ```
 
-与查询流程不一样的是，更新流程还涉及两个重要的日志模块，它们正是我们今天要讨论的主角：redo log（重做日志）和 binlog（归档日志）。如果接触 MySQL，那这两个词肯定是绕不过的，我后面的内容里也会不断地和你强调。不过话说回来，redo log 和 binlog 在设计上有很多有意思的地方，这些设计思路也可以用到你自己的程序里。
+与查询流程不一样的是，更新流程还涉及两个重要的日志模块，它们正是我们今天要讨论的主角：redo log（重做日志）和 binlog（归档日志）。如果接触
+MySQL，那这两个词肯定是绕不过的，我后面的内容里也会不断地和你强调。不过话说回来，redo log 和 binlog 在设计上有很多有意思的地方，这些设计思路也可以用到你自己的程序里。
 
 每一次的更新操作都需要写进磁盘，然后磁盘也要找到对应的那条记录，然后再更新，整个过程 IO 成本、查找成本都很高。
 
@@ -83,7 +105,8 @@ mysql> update T set c=c+1 where ID=2;
 
 write pos 是当前记录的位置，一边写一边后移，写到第 3 号文件末尾后就回到 0 号文件开头。checkpoint 是当前要擦除的位置，也是往后推移并且循环的，擦除记录前要把记录更新到数据文件。
 
-write pos 和 checkpoint 之间的是“粉板”上还空着的部分，可以用来记录新的操作。如果 write pos 追上 checkpoint，表示“粉板”满了，这时候不能再执行新的更新，得停下来先擦掉一些记录，把 checkpoint 推进一下。
+write pos 和 checkpoint 之间的是“粉板”上还空着的部分，可以用来记录新的操作。如果 write pos 追上 checkpoint，表示“粉板”满了，这时候不能再执行新的更新，得停下来先擦掉一些记录，把
+checkpoint 推进一下。
 
 有了 redo log，InnoDB 就可以保证即使数据库发生异常重启，之前提交的记录都不会丢失，这个能力称为 crash-safe。
 
@@ -111,17 +134,21 @@ redo log 是循环写的，空间固定会用完；binlog 是可以追加写入�
 
 先写 redo log 后写 binlog。
 
-假设在 redo log 写完，binlog 还没有写完的时候，MySQL 进程异常重启。由于我们前面说过的，redo log 写完之后，系统即使崩溃，仍然能够把数据恢复回来，所以恢复后这一行 c 的值是 1。但是由于 binlog 没写完就 crash 了，这时候 binlog 里面就没有记录这个语句。因此，之后备份日志的时候，存起来的 binlog 里面就没有这条语句。然后你会发现，如果需要用这个 binlog 来恢复临时库的话，由于这个语句的 binlog 丢失，这个临时库就会少了这一次更新，恢复出来的这一行 c 的值就是 0，与原库的值不同。
+假设在 redo log 写完，binlog 还没有写完的时候，MySQL 进程异常重启。由于我们前面说过的，redo log 写完之后，系统即使崩溃，仍然能够把数据恢复回来，所以恢复后这一行 c 的值是 1。但是由于 binlog
+没写完就 crash 了，这时候 binlog 里面就没有记录这个语句。因此，之后备份日志的时候，存起来的 binlog 里面就没有这条语句。然后你会发现，如果需要用这个 binlog 来恢复临时库的话，由于这个语句的 binlog
+丢失，这个临时库就会少了这一次更新，恢复出来的这一行 c 的值就是 0，与原库的值不同。
 
 先写 binlog 后写 redo log。
 
-如果在 binlog 写完之后 crash，由于 redo log 还没写，崩溃恢复以后这个事务无效，所以这一行 c 的值是 0。但是 binlog 里面已经记录了“把 c 从 0 改成 1”这个日志。所以，在之后用 binlog 来恢复的时候就多了一个事务出来，恢复出来的这一行 c 的值就是 1，与原库的值不同
+如果在 binlog 写完之后 crash，由于 redo log 还没写，崩溃恢复以后这个事务无效，所以这一行 c 的值是 0。但是 binlog 里面已经记录了“把 c 从 0 改成 1”这个日志。所以，在之后用 binlog
+来恢复的时候就多了一个事务出来，恢复出来的这一行 c 的值就是 1，与原库的值不同
 
 不只是误操作后需要用这个过程来恢复数据。当你需要扩容的时候，也就是需要再多搭建一些备库来增加系统的读能力的时候，现在常见的做法也是用全量备份加上应用 binlog 来实现的，这个“不一致”就会导致你的线上出现主从数据库不一致的情况。
 
 简单说，redo log 和 binlog 都可以用于表示事务的提交状态，而两阶段提交就是让这两个状态保持逻辑上的一致。
 
-**redo log 用于保证 crash-safe 能力。innodb_flush_log_at_trx_commit 这个参数设置成 1 的时候，表示每次事务的 redo log 都直接持久化到磁盘。这个参数我建议你设置成 1，这样可以保证 MySQL 异常重启之后数据不丢失。**
+**redo log 用于保证 crash-safe 能力。innodb_flush_log_at_trx_commit 这个参数设置成 1 的时候，表示每次事务的 redo log 都直接持久化到磁盘。这个参数我建议你设置成
+1，这样可以保证 MySQL 异常重启之后数据不丢失。**
 
 **sync_binlog 这个参数设置成 1 的时候，表示每次事务的 binlog 都持久化到磁盘。这个参数我也建议你设置成 1，这样可以保证 MySQL 异常重启之后 binlog 不丢失。**
 

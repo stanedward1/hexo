@@ -30,7 +30,7 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render:
+skip_render: [_posts/mysql_actual_combat_45_lectures.md, _posts/ruby00_meta_programming.md]
 
 # Writing
 new_post_name: :title.md # File name of new posts
