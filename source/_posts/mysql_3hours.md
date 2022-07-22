@@ -1,5 +1,9 @@
 ---
-title: 三小时mysql date: 2021-05-02 09:03:32 tags: Mysql categories: Database cover: /img/IMG_2317.jpg
+title: 三小时mysql
+date: 2021-05-02 09:03:32
+tags: Mysql
+categories: Database
+cover: /img/IMG_2317.jpg
 ---
 
 # [3小时Mysql入门](https://www.bilibili.com/video/BV1iJ411m7Fj)
@@ -172,7 +176,7 @@ from customers c
 select o.order_id
     p.name
 from customers c,
-     products p 
+     products p
 ```
 
 ## UNION
@@ -238,7 +242,7 @@ set payment_total = 10,
 where invoice_id = (
     select client_id
     from clients
-    where state in ('ca', 'ny')) 
+    where state in ('ca', 'ny'))
 ```
 
 ## DELETE
