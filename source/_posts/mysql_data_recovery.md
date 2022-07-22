@@ -48,9 +48,9 @@ cat mysqllog.sql
 **语句转换**
 DELETE语句转成Insert语句
 使用Linux进行操作
-``
+```shell
 cat mysqllog.sql | sed -n '/###/p' | sed 's/### //g;s/\/\*.*/,/g;s/DELETE FROM/;INSERT INTO/g;s/WHERE/SELECT/g;' |sed -r 's/(@17.*),/\1;/g' | sed 's/@1=//g'| sed 's/@[1-9]=/,/g' | sed 's/@[1-9][0-9]=/,/g' > mysqllogOK.sql
-``
+```
 得到结果如图所示：
 ![msyql_data_recovery_02](/img/Database/msyql_data_recovery_02.png)
 
