@@ -32,12 +32,10 @@ show variables where variable_name in ('log_bin','datadir', 'basedir');
 ```
 
 **mysqlbinlog的使用**
-1、在datadir下找到对应删除数据时间段的数据日志文件
 ```shell
+# 1、在datadir下找到对应删除数据时间段的数据日志文件
 cd /var/lib/mysql && ll
-```
-2、进入mysql安装目录使用mysqlbinlog命令
-```shell
+# 2、进入mysql安装目录使用mysqlbinlog命令
 cd /usr
 sudo touch mysqllog.sql
 sudo chmod 777 mysqllog.sql
