@@ -7,15 +7,13 @@ cover: /img/IMG_2317.jpg
 ---
 **背景**
 最近为了在公司很久前配发的8G内存MacBook Pro上少开几个软件，我选择了idea提供的Database Client和Http Client，然而因为自己的不够细心加上对idea提供的Database Client不够熟悉，导致了误删了某张表的全部数据。
-<!-- 好在对应的数据库是中间数据库，对应的表存的也是过程数据，对用户没有造成不好的影响。 -->
-好在不影响用户使用……
+万幸不影响用户使用……
 那么，也该谈谈**Mysql误删数据后的恢复**了
 
 **delete**
 ```sql
 -- input
 delete from user;
-
 -- output
 -- delete from user
 -- > Affected rows: 4
@@ -26,7 +24,6 @@ delete from user;
 ```sql
 -- input
 show variables where variable_name in ('log_bin','datadir', 'basedir');
-
 -- output
 -- basedir	/usr/
 -- datadir	/var/lib/mysql/
