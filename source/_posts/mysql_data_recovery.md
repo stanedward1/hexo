@@ -8,7 +8,7 @@ cover: /img/IMG_2317.jpg
 **背景**
 最近为了在公司很久前配发的8G内存MacBook Pro上少开几个软件，我选择了idea提供的Database Client和Http Client，然而因为自己的不够细心加上对idea提供的Database Client不够熟悉，导致了误删了某张表的全部数据。
 万幸不影响用户使用……
-那么，也该谈谈**Mysql误删数据后的恢复**了
+在这里复盘一下**Mysql误删数据后的恢复**
 
 **delete**
 ```sql
