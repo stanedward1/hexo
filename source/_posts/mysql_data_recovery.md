@@ -5,12 +5,12 @@ tags: Mysql
 categories: Database
 cover: /img/IMG_2317.jpg
 ---
-**背景**
+## 背景
 最近为了在公司很久前配发的8G内存MacBook Pro上少开几个软件，我选择了idea提供的Database Client和Http Client，然而因为自己的不够细心加上对idea提供的Database Client不够熟悉，导致了误删了某张表的全部数据。
 万幸不影响用户使用……
 在这里复盘一下**Mysql误删数据后的恢复**
 
-**delete**
+## SQL命令
 ```sql
 -- input
 delete from user;
@@ -18,10 +18,7 @@ delete from user;
 -- delete from user
 -- > Affected rows: 4
 -- > 时间: 0.035s
-```
 
-**关于binlog**
-```sql
 -- input
 show variables where variable_name in ('log_bin','datadir', 'basedir');
 -- output
@@ -31,7 +28,7 @@ show variables where variable_name in ('log_bin','datadir', 'basedir');
 -- log_bin	ON
 ```
 
-**mysqlbinlog的使用**
+## mysqlbinlog的使用
 ```shell
 # 1、在datadir下找到对应删除数据时间段的数据日志文件
 cd /var/lib/mysql && ll
@@ -45,7 +42,7 @@ cat mysqllog.sql
 得到结果如图所示：
 ![msyql_data_recovery_01](/img/Database/msyql_data_recovery_01.png)
 
-**语句转换**
+## 语句转换
 DELETE语句转成Insert语句
 使用Linux命令
 ```shell
@@ -54,5 +51,5 @@ cat mysqllog.sql | sed -n '/###/p' | sed 's/### //g;s/\/\*.*/,/g;s/DELETE FROM/;
 得到结果如图所示：
 ![msyql_data_recovery_02](/img/Database/msyql_data_recovery_02.png)
 
-**数据恢复**
+## 数据恢复
 运行此sql语句即可
