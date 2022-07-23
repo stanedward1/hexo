@@ -64,18 +64,19 @@
     color: $color-accent-1
 
   #menu
-    display: none
+    display: inline
     margin-right: 2rem
 
   #nav
     color: $color-accent-1
     letter-spacing: .01em
-    font-weight: 200
+    // font-weight: 200
     font-style: normal
     font-size: .8rem
 
     ul
       line-height: 15px
+      margin-right: 15px
 
       a
         margin-right: 15px
@@ -83,6 +84,9 @@
 
       a:hover
         underline(5px, $color-accent-1)
+        color: $color-link
+        background-image:linear-gradient(transparent, transparent 5px, $color-link 5px, $color-link)
+
 
       li
         border-right: 1px dotted $color-accent-1
@@ -96,7 +100,7 @@
 
   #actions
     float: right
-    margin-top: 2rem
+    margin-top: 1rem
     margin-right: 2rem
     width: 100%
     text-align: right
@@ -188,7 +192,7 @@
 @media screen and (min-width: 1199px)
   #header-post
     #actions
-      width: auto
+      // width: auto
 
       ul
         display: inline-block
@@ -196,7 +200,7 @@
 
       .info
         display: inline
-        float: left
+        // float: left
         margin-right: 2rem
         font-style: italic
 

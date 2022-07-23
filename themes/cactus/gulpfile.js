@@ -3,11 +3,10 @@ var del = require('del');
 var download = require("gulp-download");
 var fs = require('fs');
 var gulp = require('gulp');
+var jshint = require('gulp-jshint');
 var path = require('path');
 var stylint = require('gulp-stylint');
-var stylelintFormatter = require('stylelint-formatter-pretty');
-var jshint = require('gulp-jshint');
-var jshintFormatter = require('jshint-stylish');
+var stylish = require('jshint-stylish');
 var yaml = require('js-yaml');
 
 
@@ -62,7 +61,7 @@ gulp.task('lint:js', function() {
   return gulp.src([
     './source/js/**/*.js',
   ]).pipe(jshint())
-    .pipe(jshint.reporter(jshintFormatter));
+    .pipe(jshint.reporter(stylish));
 });
 
 gulp.task('lint:stylus', function () {
@@ -72,17 +71,21 @@ gulp.task('lint:stylus', function () {
     './source/css/_colors/*.styl'
   ]).pipe(stylint({
       config: '.stylintrc',
-      reporters: [
-        {formatter: stylelintFormatter, console: true}
-      ]
+      reporter: {
+        reporter: 'stylint-stylish',
+        reporterOptions: {
+          verbose: true
+        }
+      }
     }))
+    .pipe(stylint.reporter());
 });
 
 gulp.task('validate:config', function(cb) {
   var themeConfig = fs.readFileSync(path.join(__dirname, '_config.yml'));
 
   try {
-    yaml.load(themeConfig);
+    yaml.safeLoad(themeConfig);
     cb();
   } catch(error) {
     cb(new Error(error));
@@ -96,7 +99,7 @@ gulp.task('validate:languages', function(cb) {
   for (var i in languages) {
     var languagePath = path.join(languagesPath, languages[i]);
     try {
-      yaml.load(fs.readFileSync(languagePath), {
+      yaml.safeLoad(fs.readFileSync(languagePath), {
         filename: path.relative(__dirname, languagePath)
       });
     } catch(error) {

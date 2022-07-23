@@ -1,29 +1,29 @@
 // ref: https://github.com/primer/primer/blob/master/modules/primer-tooltips/lib/tooltips.scss
 .tooltipped
   position: relative
-  
+
 // This is the tooltip bubble
 .tooltipped::after
   position: absolute
   z-index: 1000000
   display: none
   padding: .2em .5em
-  -webkit-font-smoothing: subpixel-antialiased
+  border-radius: 3px
+  background: $color-text
   color: $color-background
-  font-display: swap // @stylint ignore
+  content: attr(aria-label)
+  text-align: center
+  white-space: pre
+  word-wrap: break-word
   font-weight: 400
-  font-size: $font-size * 0.8
+  font-size: $font-size * .8
   font-family: $font-family-body
   line-height: $line-height
-  text-rendering: geometricPrecision
-  text-align: center
-  word-wrap: break-word
-  white-space: pre
-  content: attr(aria-label)
-  background: $color-text
-  border-radius: 3px
   opacity: 0
-  
+  -webkit-font-smoothing: subpixel-antialiased
+  font-display: swap // @stylint ignore
+  text-rendering: geometricPrecision
+
 // This is the tooltip arrow
 .tooltipped::before
   position: absolute
@@ -31,48 +31,47 @@
   display: none
   width: 0
   height: 0
-  color: $color-text
-  pointer-events: none
-  content: ''
   border: 6px solid transparent
+  color: $color-text
+  content: ""
   opacity: 0
-  
+  pointer-events: none
+
 // delay animation for tooltip
 @keyframes tooltip-appear
   from
     opacity: 0
+
   to
     opacity: 1
-    
+
 // This will indicate when we'll activate the tooltip
-.tooltipped:hover,
-.tooltipped:active,
-.tooltipped:focus
-  &::before,
-  &::after
+.tooltipped:hover, .tooltipped:active, .tooltipped:focus
+  &::before, &::after
     display: inline-block
     text-decoration: none
     animation-name: tooltip-appear
-    animation-duration: 0.1s
-    animation-fill-mode: forwards
+    animation-duration: .1s
     animation-timing-function: ease-in
-    
+    animation-fill-mode: forwards
+
 // Tooltipped south
-.tooltipped-s,
-.tooltipped-sw
+.tooltipped-s, .tooltipped-sw
   &::after
     top: 100%
     right: 50%
     margin-top: 6px
+
   &::before
     top: auto
     right: 50%
     bottom: -7px
     margin-right: -6px
     border-bottom-color: $color-text
+
 .tooltipped-sw::after
   margin-right: -16px
-  
+
 // Move the tooltip body to the center of the object.
 .tooltipped-s::after
   transform: translateX(50%)
