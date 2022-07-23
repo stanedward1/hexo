@@ -51,5 +51,6 @@ cat mysqllog.sql | sed -n '/###/p' | sed 's/### //g;s/\/\*.*/,/g;s/DELETE FROM/;
 得到结果如图所示：
 ![msyql_data_recovery_02](/img/Database/msyql_data_recovery_02.png)
 
-## 数据恢复
+## 数据恢复与一点小结
 运行此sql语句即可
+大批量删除数据时，可以将这些数据插入到一个新表中，确认之后再删除。
