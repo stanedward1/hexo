@@ -5,18 +5,12 @@ tags: 设计模式
 categories: 系统设计
 cover: /img/DesignPatterns/设计模式.jpg
 ---
-# 模式定义
-
+## 模式定义
 **保证一个类只有一个实例，并且提供一个全局访问点**，也就是如何实例化一个**唯一的对象**
-
-# 应用场景
-
+## 应用场景
 重量级的对象，不需要多个实例，如线程池，数据库连接池
-
-# 代码演示
-
-## 延迟加载
-
+## 代码演示
+### 延迟加载
 ```java
 package com.biu.designpattern.singleton.lazysingleton;
 
@@ -45,32 +39,25 @@ class LazySingleton {
     }
 }
 ```
-
-延迟加载方式在多线程下有问题，获取到的不是同一个对象
-
+延迟加载方式在多线程下有问题，获取到的不是同一个对象  
 加入多线程进行测试：
-
 ```java
- new Thread(() -> {
-    LazySingleton uniqueInstance = LazySingleton.getInstance();
-    System.out.println(uniqueInstance);
-}).start();
+ new Thread(()->{
+        LazySingleton uniqueInstance=LazySingleton.getInstance();
+        System.out.println(uniqueInstance);
+        }).start();
 
-new Thread(() -> {
-    LazySingleton uniqueInstance = LazySingleton.getInstance();
-    System.out.println(uniqueInstance);
-}).start();
+        new Thread(()->{
+        LazySingleton uniqueInstance=LazySingleton.getInstance();
+        System.out.println(uniqueInstance);
+        }).start();
 ```
-
-### output
-
+#### output
 ```shell
 com.biu.designpattern.singleton.lazysingleton.LazySingleton@616831d4
 com.biu.designpattern.singleton.lazysingleton.LazySingleton@1e057600
 ```
-
-## 处理多线程
-
+### 处理多线程
 ```java
 class LazySingleton {
     private static LazySingleton uniqueInstance;
@@ -92,30 +79,22 @@ class LazySingleton {
     }
 }
 ```
-
-### output
-
+#### output
 ```shell
 com.biu.designpattern.singleton.lazysingleton.LazySingleton@1e057600
 com.biu.designpattern.singleton.lazysingleton.LazySingleton@1e057600
 ```
-
-## 立即创建实例（改善多线程）
-
+### 立即创建实例（改善多线程）
 ```java
 // 利用这个做法，JVM在加载这个类的时候会马上创建唯一的单件实例，并保证了在任何线程访问uniqueInstance静态变量之前，一定先创建这个实例
-private static LazySingleton uniqueInstance = new LazySingleton();
+private static LazySingleton uniqueInstance=new LazySingleton();
 ```
-
-### output
-
+#### output
 ```shell
 com.biu.designpattern.singleton.lazysingleton.LazySingleton@4388eabf
 com.biu.designpattern.singleton.lazysingleton.LazySingleton@4388eabf
 ```
-
-## 用“双重检查加锁”，在getInstance()中减少使用同步
-
+### 用“双重检查加锁”，在getInstance()中减少使用同步
 ```java
 class LazySingleton {
     // volatile关键词确保了当uniqueInstance变量被初始化成为Singleton实例时，多个线程正确的处理uniqueInstance变量
@@ -136,18 +115,13 @@ class LazySingleton {
     }
 }
 ```
-
-### output
-
+#### output
 ```shell
 com.biu.designpattern.singleton.lazysingleton.LazySingleton@1e057600
 com.biu.designpattern.singleton.lazysingleton.LazySingleton@1e057600
 ```
-
-# 字节码
-
+## 字节码
 ![DesignPatterns02Singleton01](/img/Java_and_Spring/DesignPatterns02Singleton01.png)
-
 ```class
 public class com.biu.designpattern.lazysingleton.Demo
   minor version: 0
@@ -213,13 +187,8 @@ Constant pool:
 }
 SourceFile: "Demo.java"
 ```
-
-# 字节码指令重排序
-
-# 类加载机制
-
-# JVM序列化机制
-
+## 字节码指令重排序
+## 类加载机制
+## JVM序列化机制
 有些JVM的实现是：在用到的时候才创建对象
-
-# 单例模式在源码中的应用
+## 单例模式在源码中的应用
