@@ -18,7 +18,7 @@ OOM有多种情况，包括**堆内存溢出，方法区（运行时常量池）
 java -jar -XX:+PrintGCDetails -Xloggc:gc.log.$(date +%y%m%d%H%M) wiki-0.0.1-SNAPSHOT.jar&
 ```
 发生OOM之后，可以将此日志文件进行分析，一般可以将日志文件上传至某些专门的GC分析的网站，如[GCeasy](https://gceasy.io/gc-index.jsp)  
-![image-GCeasy](/img/vscode-Java_and_Spring/jvm01/jvm01.png)
+![image-GCeasy](/img/Java_and_Spring/jvm01/jvm01.png)
 ## JVM相关参数
 ## JDK相关的命令行工具
 
