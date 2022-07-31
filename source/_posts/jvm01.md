@@ -17,7 +17,7 @@ OOM有多种情况，包括**堆内存溢出，方法区（运行时常量池）
 ```shell
 java -jar -XX:+PrintGCDetails -Xloggc:gc.log.$(date +%y%m%d%H%M) wiki-0.0.1-SNAPSHOT.jar&
 ```
-发生OOM之后，可以将此日志文件进行分析，一般可以将日志文件上传至某些专门的GC分析的网站，如[GCeasy](https://gceasy.io/gc-index.jsp)  
+发生OOM之后，可以将此日志文件进行分析，一般可以将日志文件上传至某些专门的GC分析的网站，如[GCeasy](https://gceasy.io/gc-index.jsp) ,后续根据分析情况修改对应参数即可。  
 ![image-GCeasy](/img/Java_and_Spring/jvm01/jvm01.png)
 ## JVM相关参数
 
@@ -39,11 +39,11 @@ java -jar -XX:+PrintGCDetails -Xloggc:gc.log.$(date +%y%m%d%H%M) wiki-0.0.1-SNAP
 | -XX:MaxGCPauseMillis       | 每次年轻代垃圾回收的最长时间(最大暂停时间)                 |                      | 如果无法满足此时间,JVM会自动调整年轻代大小,以满足此值.       |
 
 ## JDK相关的命令行工具
-1. jps：虚拟机进程状况工具
-2. jstat：虚拟机统计信息监视工具
-3. jinfo：Java配置信息工具
-4. jmap：Java内存映像工具
-5. jhat：虚拟机堆转储快照分析工具
-6. jstack：Java堆栈跟踪工具
+### jps：虚拟机进程状况工具
+### jstat：虚拟机统计信息监视工具
+### jinfo：Java配置信息工具
+### jmap：Java内存映像工具
+### jhat：虚拟机堆转储快照分析工具
+### jstack：Java堆栈跟踪工具
 
 
