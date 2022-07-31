@@ -50,6 +50,8 @@ java -jar -XX:+PrintGCDetails -Xloggc:gc.log.$(date +%y%m%d%H%M) wiki-0.0.1-SNAP
    
 2. jstat：虚拟机统计信息监视工具
 
+   **用于监视虚拟机各种运行状态信息**
+
    |       选项        |                             作用                             |
    | :---------------: | :----------------------------------------------------------: |
    |      -class       |       监视类装载，卸载数量，总空间及类装载所耗费的时间       |
@@ -75,6 +77,13 @@ java -jar -XX:+PrintGCDetails -Xloggc:gc.log.$(date +%y%m%d%H%M) wiki-0.0.1-SNAP
    ```
 
 3. jinfo：Java配置信息工具
+
+   **实时的查看和调整虚拟机的各项参数**
+
+   ```shell
+   jinfo -flag CMSInitiatingOccupancyFraction 86137
+   -XX:CMSInitiatingOccupancyFraction=-1
+   ```
 
 4. jmap：Java内存映像工具
 
