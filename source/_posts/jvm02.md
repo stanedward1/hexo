@@ -5,7 +5,6 @@ tags: Java && Spring
 categories: Java && Spring
 cover: /img/springboot.jpg
 ---
-![jvm_02_01](/img/Java_and_Spring/jvm02/jvm_02_01.png)
 ## 1、类加载检查
 ## 2、分配内存
 ## 3、初始化零值
