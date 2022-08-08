@@ -12,7 +12,7 @@ cover: /img/springboot.jpg
 
 相关链接：https://docs.oracle.com/javase/7/docs/api/java/lang/reflect/Modifier.html
 
-# 访问修饰符
+## 访问修饰符
 
 | name      | description                                                  |
 | --------- | ------------------------------------------------------------ |
@@ -23,13 +23,13 @@ cover: /img/springboot.jpg
 
 **默认的访问修饰符是public**
 
-## 方法继承的规则
+### 方法继承的规则
 
 - 父类中声明为 public 的方法在子类中也必须为 public。
 - 父类中声明为 protected 的方法在子类中要么声明为 protected，要么声明为 public，不能声明为 private。
 - 父类中声明为 private 的方法，不能够被子类继承。
 
-# 非访问修饰符
+## 非访问修饰符
 
 在Java中，有7个非访问修饰符
 

@@ -17,11 +17,11 @@ Java 集合， 也叫作容器，所有集合类都位于 java.util 包下。Jav
 
 *实现类：8个实现类（实线表示），对接口的具体实现。*
 
-# Collerction
+## Collerction
 
-## List
+### List
 
-### ArrayList
+#### ArrayList
 
 **使用场景**
 
@@ -41,7 +41,7 @@ Java 集合， 也叫作容器，所有集合类都位于 java.util 包下。Jav
 
 最常用的List实现类，继承自AbstractList，允许对元素进行快速的随机访问，相关链接：https://devdocs.io/openjdk~8/java/util/arraylist
 
-### Vector
+#### Vector
 
 **使用场景**
 
@@ -57,7 +57,7 @@ Java 集合， 也叫作容器，所有集合类都位于 java.util 包下。Jav
 
 Vector支持线程的同步，也就是某一时刻只有一个线程可以写Vector，避免多线程同时写而引起的不一致性，但实现同步需要很高的花费，因此，访问它比访问ArrayList慢。相关链接：https://devdocs.io/openjdk~8/java/util/vector
 
-### LinkedList
+#### LinkedList
 
 **使用场景**
 
@@ -72,9 +72,9 @@ Vector支持线程的同步，也就是某一时刻只有一个线程可以写Ve
 双向链表，没有初始化大小，也没有扩容的机制，就是一直在前面或者后面新增就好。
 ```
 
-## Set
+### Set
 
-### HashSet
+#### HashSet
 
 **使用场景**
 
@@ -92,7 +92,7 @@ HashSet 存储元素的顺序并不是按照存入时的顺序（和 List 显然
 
 HashSet 首先判断两个元素的哈希值，如果哈希值一样，接着会比较 equals 方法 如果 equls 结果为 true ，HashSet 就视为同一个元素。如果 equals 为 false 就不是 同一个元素。
 
-### TreeSet
+#### TreeSet
 
 **使用场景**
 
@@ -104,7 +104,7 @@ HashSet 首先判断两个元素的哈希值，如果哈希值一样，接着会
 非线程安全
 ```
 
-### LinkedHashSet
+#### LinkedHashSet
 
 **使用场景**
 
@@ -117,21 +117,19 @@ HashSet 首先判断两个元素的哈希值，如果哈希值一样，接着会
 内部是LinkedHashMap
 ```
 
-## Queue
+### Queue
 
-### PriorityQueue
+#### PriorityQueue
 
-### ArrayQueue
+#### ArrayQueue
 
-# Map
+## Map
 
-## HashMap
+### HashMap
 
-## HashTable
+#### TreeMap
 
-## TreeMap
-
-# 总结
+## 总结
 
 ![java04_collection02](/img/Java_and_Spring/gaitubao_java04_collection02.png)
 
