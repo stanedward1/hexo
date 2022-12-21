@@ -10,7 +10,6 @@ cover: /img/75960.jpg
 大致思路：  
 ​	用字典存储按照楼栋及房间号分配网段及IP地址的信息  
 ​    用户输入房间号或者用户名，程序执行修改计算机网络配置  
-
 ```python
 # -*- coding: UTF-8 -*-
 import wmi
@@ -123,5 +122,5 @@ while True:
         break
 ```
 
-最后可以使用pyinstaller将代码打包为exe文件，并添加图标，如：`pyinstaller -f -i xxx.ico fix_information.py`
+最后可以使用pyinstaller将代码打包为exe文件，并添加图标，如：**pyinstaller -f -i xxx.ico fix_information.py**
 
