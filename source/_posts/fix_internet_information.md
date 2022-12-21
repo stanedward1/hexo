@@ -122,5 +122,5 @@ while True:
         break
 ```
 
-最后可以使用pyinstaller将代码打包为exe文件，并添加图标，如：**pyinstaller -f -i xxx.ico fix_information.py**
+最后可以使用pyinstaller将代码打包为exe文件，并添加图标，如：**pyinstaller -F -i xxx.ico fix_information.py**
 
