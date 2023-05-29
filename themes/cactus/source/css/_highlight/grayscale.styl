@@ -3,66 +3,79 @@
 grayscale style (c) MY Sun <simonmysun@gmail.com>
 
 */
+
 .highlight
-  background: #fff
-  color: #333
+    color: #333
+    background: #fff
+    .code
+        .comment,
+        .quote
+            color: #777
+            font-style: italic
 
-  .code
-    .comment, .quote
-      color: #777
-      font-style: italic
+        .keyword,
+        .selector-tag,
+        .subst
+            color: #333
+            font-weight: bold
 
-    .keyword, .selector-tag, .subst
-      color: #333
-      font-weight: bold
+        .number,
+        .literal
+            color: #777
 
-    .number, .literal
-      color: #777
+        .string,
+        .doctag,
+        .formula
+            color: #333
+            background: url('data:image/pngbase64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJ0lEQVQIW2O8e/fufwYGBgZBQUEQxcCIIfDu3Tuwivfv30NUoAsAALHpFMMLqZlPAAAAAElFTkSuQmCC') repeat
 
-    .string, .doctag, .formula
-      background: url("data:image/pngbase64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJ0lEQVQIW2O8e/fufwYGBgZBQUEQxcCIIfDu3Tuwivfv30NUoAsAALHpFMMLqZlPAAAAAElFTkSuQmCC") repeat
-      color: #333
+        .title,
+        .section,
+        .selector-id
+            color: #000
+            font-weight: bold
 
-    .title, .section, .selector-id
-      color: #000
-      font-weight: bold
+        .subst
+            font-weight: normal
 
-    .subst
-      font-weight: normal
+        .class .title,
+        .type,
+        .name
+            color: #333
+            font-weight: bold
 
-    .class .title, .type, .name
-      color: #333
-      font-weight: bold
+        .tag
+            color: #333
 
-    .tag
-      color: #333
+        .regexp
+                color: #333
+                background: url('data:image/pngbase64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAAPUlEQVQYV2NkQAN37979r6yszIgujiIAU4RNMVwhuiQ6H6wQl3XI4oy4FMHcCJPHcDS6J2A2EqUQpJhohQDexSef15DBCwAAAABJRU5ErkJggg==') repeat
 
-    .regexp
-      background: url("data:image/pngbase64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAAPUlEQVQYV2NkQAN37979r6yszIgujiIAU4RNMVwhuiQ6H6wQl3XI4oy4FMHcCJPHcDS6J2A2EqUQpJhohQDexSef15DBCwAAAABJRU5ErkJggg==") repeat
-      color: #333
+        .symbol,
+        .bullet,
+        .link
+            color: #000
+            background: url('data:image/pngbase64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAKElEQVQIW2NkQAO7d+/+z4gsBhJwdXVlhAvCBECKwIIwAbhKZBUwBQA6hBpm5efZsgAAAABJRU5ErkJggg==') repeat
 
-    .symbol, .bullet, .link
-      background: url("data:image/pngbase64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAKElEQVQIW2NkQAO7d+/+z4gsBhJwdXVlhAvCBECKwIIwAbhKZBUwBQA6hBpm5efZsgAAAABJRU5ErkJggg==") repeat
-      color: #000
+        .built_in,
+        .builtin-name
+            color: #000
+            text-decoration: underline
 
-    .built_in, .builtin-name
-      color: #000
-      text-decoration: underline
+        .meta
+            color: #999
+            font-weight: bold
 
-    .meta
-      color: #999
-      font-weight: bold
+        .deletion
+            color: #fff
+            background:url('data:image/pngbase64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAADCAYAAABS3WWCAAAAE0lEQVQIW2MMDQ39zzhz5kwIAQAyxweWgUHd1AAAAABJRU5ErkJggg==') repeat
 
-    .deletion
-      background: url("data:image/pngbase64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAADCAYAAABS3WWCAAAAE0lEQVQIW2MMDQ39zzhz5kwIAQAyxweWgUHd1AAAAABJRU5ErkJggg==") repeat
-      color: #fff
+        .addition
+            color: #000
+            background: url('data:image/pngbase64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAALUlEQVQYV2N89+7dfwYk8P79ewZBQUFkIQZGOiu6e/cuiptQHAPl0NtNxAQBAM97Oejj3Dg7AAAAAElFTkSuQmCC') repeat
 
-    .addition
-      background: url("data:image/pngbase64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAALUlEQVQYV2N89+7dfwYk8P79ewZBQUFkIQZGOiu6e/cuiptQHAPl0NtNxAQBAM97Oejj3Dg7AAAAAElFTkSuQmCC") repeat
-      color: #000
+        .emphasis
+            font-style: italic
 
-    .emphasis
-      font-style: italic
-
-    .strong
-      font-weight: bold
+        .strong
+            font-weight: bold

@@ -2,39 +2,56 @@
  * GitHub Gist Theme
  * Author : Louis Barranqueiro - https://github.com/LouisBarranqueiro
  */
+
 .highlight
-  padding: .5em
-  color: #333333
+    padding: 0.5em
+    color: #333333
+    .code
+        .comment,
+        .meta
+            color: #969896
 
-  .code
-    .comment, .meta
-      color: #969896
+        .string,
+        .variable,
+        .template-variable,
+        .strong,
+        .emphasis,
+        .quote
+            color: #df5000
 
-    .string, .variable, .template-variable, .strong, .emphasis, .quote
-      color: #df5000
+        .keyword,
+        .selector-tag,
+        .type
+            color: #a71d5d
 
-    .keyword, .selector-tag, .type
-      color: #a71d5d
+        .literal,
+        .symbol,
+        .bullet,
+        .attribute
+            color: #0086b3
 
-    .literal, .symbol, .bullet, .attribute
-      color: #0086b3
+        .section,
+        .name
+            color: #63a35c
 
-    .section, .name
-      color: #63a35c
+        .tag
+            color: #333333
 
-    .tag
-      color: #333333
+        .title,
+        .attr,
+        .selector-id,
+        .selector-class,
+        .selector-attr,
+        .selector-pseudo
+            color: #795da3
 
-    .title, .attr, .selector-id, .selector-class, .selector-attr, .selector-pseudo
-      color: #795da3
+        .addition
+            color: #55a532
+            background-color: #eaffea
 
-    .addition
-      background-color: #eaffea
-      color: #55a532
+        .deletion
+            color: #bd2c00
+            background-color: #ffecec
 
-    .deletion
-      background-color: #ffecec
-      color: #bd2c00
-
-    .link
-      text-decoration: underline
+        .link
+            text-decoration: underline

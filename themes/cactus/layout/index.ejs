@@ -1,38 +1,31 @@
-<section id="about">
+<section id="about" class="p-note">
   <% if (config.description) { %>
     <%- markdown(config.description) %>
   <% } %>
   <% if (theme.social_links) { %>
-    <p class="iconlist">
-      <!-- # > index.find_me_on -->
-      <%= __('') %>
-      <% var nb_links = Object.keys(theme.social_links).length %>
+    <p>
+      <%= __('index.find_me_on') %>
+      <% var nb_links = theme.social_links.length %>
       <% var i = 0 %>
-      <% for(var link in theme.social_links) { %>
-        <% if (link == 'mail') { %>
-          <a class="icon" target="_blank" rel="noopener" href="<%- theme.social_links[link] %>" aria-label="<%- link %>">
-            <i class="fas fa-envelope"></i>
-          </a>
-        <% } else if (link == 'rss') { %>
-          <a class="icon" target="_blank" rel="noopener" href="<%- theme.social_links[link] %>" aria-label="<%- link %>">
-            <i class="fas fa-rss"></i>
-          </a>
-        <% } else if (link == 'gitee') { %>
-          <a class="icon" target="_blank" rel="noopener" href="<%- theme.social_links[link] %>">
-            <i><svg class='diyIcon'  viewBox="0 0 1024 1024" ><path d="M512 1024C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m259.168-568.896h-290.752a25.28 25.28 0 0 0-25.28 25.28l-0.032 63.232c0 13.952 11.296 25.28 25.28 25.28h177.024a25.28 25.28 0 0 1 25.28 25.28v12.64a75.84 75.84 0 0 1-75.84 75.84h-240.224a25.28 25.28 0 0 1-25.28-25.28v-240.192a75.84 75.84 0 0 1 75.84-75.84h353.92a25.28 25.28 0 0 0 25.28-25.28l0.064-63.2a25.312 25.312 0 0 0-25.28-25.312H417.184a189.632 189.632 0 0 0-189.632 189.6v353.952c0 13.952 11.328 25.28 25.28 25.28h372.928a170.656 170.656 0 0 0 170.656-170.656v-145.376a25.28 25.28 0 0 0-25.28-25.28z"></path></svg></i>
-          </a>
-        <% } else if (link == 'notion') { %>
-          <a class="icon" target="_blank" rel="noopener" href="<%- theme.social_links[link] %>">
-            <i><svg class="diyIcon" viewBox="0 0 1024 1024"><path d="M190.3619 179.479263c31.818329 25.847061 43.760866 23.885073 103.558852 19.875793l563.645073-33.822969c11.942537 0 2.00464-11.942537-1.961988-13.904525L761.940229 83.938971c-17.913805-13.904525-41.84153-29.856341-87.649688-25.889713L128.559273 97.886148c-19.875793 1.961988-23.885073 11.942537-15.951816 19.875793z m33.822969 131.367902v593.032243c0 31.860981 15.909165 43.803518 51.779427 41.798878l619.433779-35.827609c35.870262-1.961988 39.879542-23.885073 39.879541-49.774787V271.010276c0-25.847061-9.937896-39.794238-31.903633-37.83225l-647.328132 37.83225c-23.885073 2.00464-31.860981 13.947177-31.860982 39.794237z m611.500523 31.775678c3.966628 17.913805 0 35.82761-17.913805 37.874902l-29.856341 5.971268v437.779268c-25.932365 13.947177-49.817438 21.923085-69.735883 21.923085-31.903633 0-39.879542-9.980548-63.764615-39.794238l-195.21782-306.49667v296.516122L520.956902 810.386408s0 35.82761-49.817438 35.82761l-137.424474 7.933256c-3.966628-7.933256 0-27.851701 13.947177-31.818329l35.827609-9.937897V420.291982L333.800294 416.282702c-4.00928-17.913805 5.971268-43.760866 33.82297-45.765506l147.405022-9.937896 203.193729 310.463298v-274.678341l-51.822078-5.928616c-3.966628-21.923085 11.942537-37.83225 31.860981-39.794238zM82.751115 44.144733l567.697005-41.798878c69.693231-5.971268 87.649688-2.00464 131.453206 29.856342l181.227992 127.358622c29.856341 21.880433 39.83689 27.851701 39.83689 51.736774v698.553084c0 43.760866-15.909165 69.693231-71.65522 73.617207l-659.313321 39.83689c-41.798878 2.00464-61.759975-3.966628-83.683059-31.860982l-133.457846-173.166779c-23.885073-31.860981-33.82297-55.703403-33.82297-83.597756V113.752661c0-35.784958 15.951817-65.683951 61.717323-69.607928z"></path></svg></i>
+      <% for(var {label, icon, link} of theme.social_links) { %>
+        <% var title = label || icon %>
+        <% if (icon == 'mail') { %>
+          <a class="icon u-email" target="_blank" rel="noopener" href="<%- link %>" aria-label="<%- title %>" title="<%- title %>">
+            <i class="fa-solid fa-envelope"></i><!--
+      ---></a>
+        <% } else if (icon == 'rss') { %>
+          <a class="icon" target="_blank" rel="noopener" href="<%- link %>" aria-label="<%- title %>" title="<%- title %>">
+            <i class="fa-solid fa-rss"></i>
           </a>
         <% } else { %>
-          <a class="icon" target="_blank" rel="noopener" href="<%- url_for(theme.social_links[link]) %>" aria-label="<%- link %>">
-            <i class="fab fa-<%= link %>"></i></a>
-            <% } %>
-    <%= ( nb_links > 0 && i < nb_links-1 ?
+          <a class="icon u-url" target="_blank" rel="noopener me" href="<%- url_for(link) %>" aria-label="<%- title %>" title="<%- title %>">
+            <i class="fa-brands fa-<%= icon %>"></i><!--
+      ---></a><!--
+    ---><% } %><!--
+    ---><%= ( nb_links > 0 && i < nb_links-1 ?
             ( i == nb_links-2 ? ' '+__('index.enum_and')+' '
             : __('index.enum_comma')+' ' )
-            : '' ) %>
+            : '.' ) %>
         <% i+=1 %>
       <% } %>
     </p>
@@ -57,12 +50,8 @@
     <% } %>
     <% show_posts.each(function(post, i){ %>
       <li class="post-item">
-        <span class="title">
-          <%- partial('_partial/post/title', { post: post, index: true, class_name: '' }) %>
-          <span class="slug"></span>
-        </span>
-        <%- partial('_partial/post/date', { post: post, class_name: 'meta' }) %> 
-        
+        <%- partial('_partial/post/date', { post: post, class_name: 'meta' }) %>
+        <span><%- partial('_partial/post/title', { post: post, index: true, class_name: '' }) %></span>
       </li>
     <% }); %>
   </ul>

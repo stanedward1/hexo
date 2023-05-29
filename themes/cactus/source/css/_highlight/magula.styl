@@ -6,31 +6,53 @@ Version: 1.0
 Date: 2009-01-03
 Music: Aphex Twin / Xtal
 */
+
 .highlight
-  background-color: #f4f4f4
+    background-color: #f4f4f4
+    .code
+        .highlight,
+        .subst
+            color: black
 
-  .code
-    .highlight, .subst
-      color: black
+        .string,
+        .title,
+        .symbol,
+        .bullet,
+        .attribute,
+        .addition,
+        .variable,
+        .template-tag,
+        .template-variable
+            color: #050
 
-    .string, .title, .symbol, .bullet, .attribute, .addition, .variable, .template-tag, .template-variable
-      color: #050
+        .comment,
+        .quote
+            color: #777
 
-    .comment, .quote
-      color: #777
+        .number,
+        .regexp,
+        .literal,
+        .type,
+        .link
+            color: #800
 
-    .number, .regexp, .literal, .type, .link
-      color: #800
+        .deletion,
+        .meta
+            color: #00e
 
-    .deletion, .meta
-      color: #00e
+        .keyword,
+        .selector-tag,
+        .doctag,
+        .title,
+        .section,
+        .built_in,
+        .tag,
+        .name
+            font-weight: bold
+            color: navy
 
-    .keyword, .selector-tag, .doctag, .title, .section, .built_in, .tag, .name
-      color: navy
-      font-weight: bold
+        .emphasis
+            font-style: italic
 
-    .emphasis
-      font-style: italic
-
-    .strong
-      font-weight: bold
+        .strong
+            font-weight: bold

@@ -3,48 +3,69 @@
 Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
 
 */
+
 .highlight
-  background: #FFFFFF
-  color: #434f54
+    color: #434f54
+    background: #FFFFFF
+    .code
+        .subst
+            color: #434f54
 
-  .code
-    .subst
-      color: #434f54
+        .keyword,
+        .attribute,
+        .selector-tag,
+        .doctag,
+        .name
+            color: #00979D
 
-    .keyword, .attribute, .selector-tag, .doctag, .name
-      color: #00979D
+        .built_in,
+        .literal,
+        .bullet,
+        .code,
+        .addition
+            color: #D35400
 
-    .built_in, .literal, .bullet, .code, .addition
-      color: #D35400
+        .regexp,
+        .symbol,
+        .variable,
+        .template-variable,
+        .link,
+        .selector-attr,
+        .selector-pseudo
+            color: #00979D
 
-    .regexp, .symbol, .variable, .template-variable, .link, .selector-attr, .selector-pseudo
-      color: #00979D
+        .type,
+        .string,
+        .selector-id,
+        .selector-class,
+        .quote,
+        .template-tag,
+        .deletion
+            color: #005C5F
 
-    .type, .string, .selector-id, .selector-class, .quote, .template-tag, .deletion
-      color: #005C5F
+        .title,
+        .section
+            color: #880000
+            font-weight: bold
 
-    .title, .section
-      color: #880000
-      font-weight: bold
+        .comment
+            color: rgba(149,165,166,.8)
 
-    .comment
-      color: rgba(149, 165, 166, .8)
+        .meta-keyword
+            color: #728E00
 
-    .meta-keyword
-      color: #728E00
+        .meta
+            color: #728E00
+            color: #434f54
 
-    .meta
-      color: #728E00
-      color: #434f54
+        .emphasis
+            font-style: italic
 
-    .emphasis
-      font-style: italic
+        .strong
+            font-weight: bold
 
-    .strong
-      font-weight: bold
+        .function
+            color: #728E00
 
-    .function
-      color: #728E00
-
-    .number
-      color: #8A7B52
+        .number
+            color: #8A7B52

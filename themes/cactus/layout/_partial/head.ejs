@@ -48,16 +48,12 @@
       <% } %>
     <% } %>
     <!-- title -->
-    <% if (page_title() == config.title){ %>
-      <title><%= page_title() +'-'+ config.subtitle %></title>
-    <% } else {%>
-      <title><%= page_title() %></title>
-    <% } %>
-
+    <title><%= page_title() %></title>
+    <!-- async scripts -->
+    <%- partial('./google_analytics.ejs') %>
+    <%- partial('./umami_analytics.ejs') %>
     <!-- styles -->
-
-    <!-- 默认CSS引入方法 -->
-    <%- css('css/whiteStyle') %>
+    <%- css('css/style') %>
     <!-- persian styles -->
     <% if (theme.direction && theme.direction === 'rtl') { %>
       <%- css('css/rtl') %>
@@ -79,37 +75,6 @@
 			}
 		  });
 		</script>
-		<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script> -->
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
 	<% } %>
-
-
-
-  <!-- L2Dwidget -->
-  <!-- <%- js('lib/live2d/L2Dwidget.min') %> -->
-
-  <!-- <script>
-  // 猫
-  L2Dwidget.init({
-    model: {
-      jsonPath: "<%= config.root %>lib/live2d/tororo/assets/tororo.model.json",
-    },
-    display: {
-      superSample: 2,
-      width: 60,
-      height: 80,
-      position: 'right',
-      hOffset: 0,
-      vOffset: 20,
-    },
-    mobile: {
-      show: true,
-      scale: 1,
-      motion: true,
-    },
-    react: {
-      opacityDefault: 1,
-      opacityOnHover: 1,
-    }
-  })
-  </script> -->
 </head>

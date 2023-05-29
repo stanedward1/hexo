@@ -5,7 +5,7 @@
 # Link to a page that gives an overview of all your projects.
 # This can be an external link (e.g., to you GitHub profile) or to another
 # page within your website.
-projects_url: https://github.com/stanedward1
+projects_url: http://github.com/probberechts
 
 # Set the page direction to RTL or LTR. default is LTR. (if you set it 'rtl', the 'vazir' font will be loaded.)
 direction: ltr
@@ -24,12 +24,32 @@ nav:
 
 
 # Links to your social media accounts.
-# The keys should correspond to Fontawesome icon names
+# The 'icon' keys should correspond to Fontawesome icon names
 # (see https://fontawesome.com/icons?d=gallery&s=brands);
 # only 'mail' is an exception.
+# You can optionally add a 'label' key to set the title attribute on the link.
+# 'icon' value will be used as title when 'label' is missing.
 social_links:
-  github: https://github.com/stanedward1
-  mail: mailto:longbiu@foxmail.com
+  -
+    icon: github
+    link: http://github.com/probberechts/cactus-dark
+  # -
+  #   icon: twitter
+  #   link: /
+  # -
+  #   icon: facebook
+  #   link: /
+  -
+    icon: mail
+    link: mailto:name@email.com
+  # -
+  #   icon: mastodon
+  #   label: mastodon.social
+  #   link: https://mastodon.social/@alice
+  # -
+  #   icon: mastodon
+  #   label: fosstodon.org
+  #   link: https://fosstodon.org/@alice
 
 # Customize the overview with displaying a tagcloud on the index page.
 # Options: https://hexo.io/docs/helpers.html#tagcloud
@@ -43,7 +63,7 @@ tags_overview: false
 posts_overview:
   show_all_posts: false
   post_count: 9
-  sort_updated: false
+  sort_updated: true
 
 # Customize the archive view.
 # Options:
@@ -64,6 +84,15 @@ post:
 copyright:
   start_year: 2018
   end_year:
+
+# Customize the 404 page
+# Options:
+#   - enabled: whether to enable the 404 page (404.html).
+error_404:
+  enabled: true
+  title: "404 Page Not Found"
+  description: "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable."
+
 
 ##############################################################################
 # Look and Feel
@@ -96,14 +125,14 @@ logo:
 #   - gravatar: whether to create a favicon from your Gravatar
 favicon:
   desktop:
-    url: https://avatars.githubusercontent.com/u/48550717?v=4
-    gravatar: true
+    url: /images/favicon.ico
+    gravatar: false
   android:
-    url: https://avatars.githubusercontent.com/u/48550717?v=4
-    gravatar: true
+    url: /images/favicon-192x192.png
+    gravatar: false
   apple:
-    url: https://avatars.githubusercontent.com/u/48550717?v=4
-    gravatar: true
+    url: /images/apple-touch-icon.png
+    gravatar: false
 
 # The color scheme that should be used to highlight codeblocks.
 # See source/css/_highlight for a list of all available color schemes.
@@ -174,12 +203,13 @@ umami_analytics:
   enabled: false
   id: e77e68be-f6e4-4br3-9365-2b76b57cd571
   host: https://analytics.domain.com
+  script_name: umami.js
 
 # Fill in you Gravatar email or hash if you want to use your gravatar as the
 # logo and/or favicons of you website.
 # To generate hash: `$ echo -n "name@email.com" | md5`.
 gravatar:
-  email: longbiu@foxmail.com
+  email: name@email.com
   hash: d41d8cd98f00b204e9800998ecf8427e
 
 # loads libraries and styles from CDN instead or relying on local files
@@ -187,6 +217,6 @@ cdn:
   enable: true
   jquery: https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js
   clipboard: https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js
-  font_awesome: https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css
+  font_awesome: https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css
   justified_gallery_css: https://cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css
   justified_gallery_js: https://cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js

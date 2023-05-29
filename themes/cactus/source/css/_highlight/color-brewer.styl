@@ -5,31 +5,55 @@ Original: https://github.com/mbostock/colorbrewer-theme (c) Mike Bostock <mike@o
 Ported by Fabrício Tavares de Oliveira
 
 */
+
 .highlight
-  background: #fff
-  color: #000
+    color: #000
+    background: #fff
+    .code
+        .subst
+            color: #000
 
-  .code
-    .subst
-      color: #000
+        .string,
+        .meta,
+        .symbol,
+        .template-tag,
+        .template-variable,
+        .addition
+            color: #756bb1
 
-    .string, .meta, .symbol, .template-tag, .template-variable, .addition
-      color: #756bb1
+        .comment,
+        .quote
+            color: #636363
 
-    .comment, .quote
-      color: #636363
+        .number,
+        .regexp,
+        .literal,
+        .bullet,
+        .link
+            color: #31a354
 
-    .number, .regexp, .literal, .bullet, .link
-      color: #31a354
+        .deletion,
+        .variable
+            color: #88f
 
-    .deletion, .variable
-      color: #88f
 
-    .keyword, .selector-tag, .title, .section, .built_in, .doctag, .type, .tag, .name, .selector-id, .selector-class, .strong
-      color: #3182bd
 
-    .emphasis
-      font-style: italic
+        .keyword,
+        .selector-tag,
+        .title,
+        .section,
+        .built_in,
+        .doctag,
+        .type,
+        .tag,
+        .name,
+        .selector-id,
+        .selector-class,
+        .strong
+            color: #3182bd
 
-    .attribute
-      color: #e6550d
+        .emphasis
+            font-style: italic
+
+        .attribute
+            color: #e6550d
