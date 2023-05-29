@@ -18,6 +18,8 @@ type: "link"
 |   Limboy    |                                      https://limboy.me/                                       |       也算是挺早接触互联网的那一小撮人了        |
 |   BYVoid    |                                    https://byvoid.com/zhs/                                    |                BYVoid                |
 |   林海草原    |               https://lhcy.org/                                   |                林海草原                |
+|   zhebk    |               https://zhebk.cn/                                  |                zhebk                |
+|   王子亭的博客    |               https://jysperm.me/                                  |              王子亭的博客               |
 
 [//]: # (|         秦关属楚         |                            https://gonglexin.com/archive.html                             |                 Alchemist&#40;Elixir&#41; & Rubyist                 |)
 [//]: # (|         曹小华的博客         |                                 http://blog.mangege.com/                                  |                 一个程序员的博客                 |)
