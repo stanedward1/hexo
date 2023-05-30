@@ -16,10 +16,12 @@ type: "link"
 | shengyayun  |                                 https://shengyayun.github.io/                                 |           Full Stack           |
 |   云游君的小站    |                                   https://www.yunyoujun.cn/                                   |          希望能成为一个有趣的人           |
 |   Limboy    |                                      https://limboy.me/                                       |       也算是挺早接触互联网的那一小撮人了        |
-|   BYVoid    |                                    https://byvoid.com/zhs/                                    |                BYVoid                |
-|   林海草原    |               https://lhcy.org/                                   |                林海草原                |
-|   zhebk    |               https://zhebk.cn/                                  |                zhebk                |
-|   王子亭的博客    |               https://jysperm.me/                                  |              王子亭的博客               |
+|   BYVoid    |                    https://byvoid.com/zhs/                        |                BYVoid                |
+|   林海草原    |               https://lhcy.org/                |      愿我经历的苦难你不要经历，愿我已有的幸福你触手可及        |
+|   zhebk    |               https://zhebk.cn/                 |                Carpe Diem and Do what I like                |
+|   王子亭的博客    |               https://jysperm.me/                        | 这个博客创建于作者7岁第一天上学的时候               |
+|   胡方运的博客    |               https://hufangyun.com/                                  |       年轻无为，卖码为生              |
+
 
 [//]: # (|         秦关属楚         |                            https://gonglexin.com/archive.html                             |                 Alchemist&#40;Elixir&#41; & Rubyist                 |)
 [//]: # (|         曹小华的博客         |                                 http://blog.mangege.com/                                  |                 一个程序员的博客                 |)
