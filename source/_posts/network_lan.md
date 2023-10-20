@@ -1,8 +1,8 @@
 ---
-title: 网络基础-局域网
+title: 计算机网络-局域网
 date: 2023-10-20 14:03:32
-tags: 网络基础
-categories: 网络基础
+tags: 计算机网络
+categories: 计算机网络
 cover: /img/IMG_2317.jpg
 ---
 
