@@ -25,6 +25,6 @@ eNSP依赖VirtualBox和WinPcap等第三方组件，存在系统兼容性和安�
 
 
 
-使用windows11电脑时候，参照此链接，解决了启动不了的问题
+使用windows11电脑时候，参照此链接，解决了启动不了的问题，组件的版本是一致的
 
 https://blog.csdn.net/jingxinguofeng/article/details/122492831
