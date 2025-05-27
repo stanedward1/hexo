@@ -1,8 +1,8 @@
 ---
 title: 计算机网络-局域网
 date: 2023-10-20 14:03:32
-tags: 计算机网络
-categories: 计算机网络
+tags: 网工
+categories: 网工
 cover: /img/IMG_2317.jpg
 ---
 
