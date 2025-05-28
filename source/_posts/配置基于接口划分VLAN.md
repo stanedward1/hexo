@@ -1,3 +1,10 @@
+---
+title: 配置基于接口划分VLAN
+date: 202-05-28 22:29:11
+tags: 网工
+categories: 网工
+cover: /img/75960.jpg
+---
 [配置基于接口划分VLAN示例](https://support.huawei.com/enterprise/zh/doc/EDOC1100468714/526f31bd)
 
 参照华为的文档进行基于接口划分VLAN，预期的结果是同一VLAN同一网段，但是处于不同路由器的两台电脑能够相互通信。
